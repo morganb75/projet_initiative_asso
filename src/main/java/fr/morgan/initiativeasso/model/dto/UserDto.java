@@ -1,5 +1,6 @@
-package fr.morgan.initiativeasso.model;
+package fr.morgan.initiativeasso.model.dto;
 
+import fr.morgan.initiativeasso.model.Adresse;
 import fr.morgan.initiativeasso.model.enums.PlateForme;
 import fr.morgan.initiativeasso.model.enums.UserRole;
 
@@ -9,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter

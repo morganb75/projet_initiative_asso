@@ -8,7 +8,6 @@ import jakarta.persistence.Entity;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Parrain extends User{
+public class Parrain extends User {
 
     private String parcours;
     private SecteursReseaux domaineActivite;
@@ -26,12 +25,14 @@ public class Parrain extends User{
     private String disponibilites;
 
     @Builder
-    public Parrain(Long id, String nom, String prenom, String email, String entreprise, Adresse adresse, PlateForme plateForme, UserRole role, String password,
+    public Parrain(Long id, String nom, String prenom, String email, String entreprise, Adresse adresse, PlateForme plateForme, UserRole role,
+            String password,
             String parcours, SecteursReseaux domaineActivite, List<ZonesDeplacement> zonesDeDeplacement, String disponibilites) {
-        super(id, nom, prenom,email, entreprise, adresse, plateForme, role, password);
+        super(id, nom, prenom, email, entreprise, adresse, plateForme, role, password);
         this.parcours = parcours;
         this.domaineActivite = domaineActivite;
         this.zonesDeDeplacement = zonesDeDeplacement;
         this.disponibilites = disponibilites;
     }
+
 }

@@ -17,9 +17,9 @@ public class SalarieAsso extends User {
     private String fonction;
 
     @Builder
-    public SalarieAsso(Long id, String nom, String prenom, String email, String entreprise, Adresse adresse, PlateForme plateForme, UserRole role, String password,
-            String fonction) {
-        super(id, nom, prenom, entreprise, email, adresse, plateForme, role, password);
+    public SalarieAsso(Long id, String nom, String prenom, String email, String entreprise, Adresse adresse, PlateForme plateForme, UserRole role,
+            String password, String fonction) {
+        super(id, nom, prenom, email,entreprise, adresse, plateForme, role, password);
         this.fonction = fonction;
     }
 }

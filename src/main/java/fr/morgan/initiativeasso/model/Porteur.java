@@ -10,10 +10,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,15 +21,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Porteur extends User{
+public class Porteur extends User {
 
     private LocalDate dateDebutActivite;
     private SecteursReseaux domaineActivite;
     private String descriptifActivite;
     @ManyToMany
     @JoinTable(name = "porteur_typeaccompagnement",
-                    joinColumns = @JoinColumn(name="porteur_id"),
-                    inverseJoinColumns = @JoinColumn(name = "type_accompagnement_id"))
+            joinColumns = @JoinColumn(name = "porteur_id"),
+            inverseJoinColumns = @JoinColumn(name = "type_accompagnement_id"))
     private List<TypeAccompagnement> besoinsPotentiel;
     @ManyToOne
     @JoinColumn(name = "lieu_activite_id")
@@ -39,8 +37,8 @@ public class Porteur extends User{
     private String disponibilites;
 
     @Builder
-
-    public Porteur(Long id, String nom, String prenom, String email, String entreprise, Adresse adresse, PlateForme plateForme, UserRole role, String password,
+    public Porteur(Long id, String nom, String prenom, String email, String entreprise, Adresse adresse, PlateForme plateForme, UserRole role,
+            String password,
             LocalDate dateDebutActivite, SecteursReseaux domaineActivite, String descriptifActivite, List<TypeAccompagnement> besoinsPotentiel,
             Adresse lieuActivite, String disponibilites) {
         super(id, nom, prenom, email, entreprise, adresse, plateForme, role, password);
