@@ -14,6 +14,8 @@ public interface UserService extends UserDetailsService {
         void preInscriptionUser(UserDto user);
         Optional<User> findByEmail(String email);
 
+        // Renvoie l'utilisateur de la BDD quand il existe au DAO Provider (userDetailService)
+        // A implementer dans UserServiceImpl
         @Override
         UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 }

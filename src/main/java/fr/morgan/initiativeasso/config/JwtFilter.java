@@ -31,7 +31,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String token = null;
         String username = null;
-        String role = null;
         boolean isTokenExpired = true;
 
         // Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVsaXNhQGVsaXNhLmZyIiwibm9tIjoiZWxpc2EifQ.Q8PuS8qei6fhSq-8C96g11-dQweOfSQJmBHYTQDtRp0
@@ -41,7 +40,6 @@ public class JwtFilter extends OncePerRequestFilter {
             token = authorization.substring(7);
             isTokenExpired = jwtService.isTokenExpired(token);
             username = jwtService.extractUsername(token);
-            role = jwtService.extractRole(token);
         }
 
         if (!isTokenExpired && username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

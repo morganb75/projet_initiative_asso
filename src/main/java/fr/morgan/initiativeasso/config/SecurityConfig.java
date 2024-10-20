@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         //ATTENTION: /api défini context path dans le yml, si on met l'url /api/user, ça ne marche pas, erreur 403
-                        .requestMatchers("/admin/user", "/favicon.ico").hasRole("ASSO")
+                        .requestMatchers("/admin/**", "/favicon.ico").hasRole("ADMIN")
                         .requestMatchers("/connexion").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(httpSecuritySessionManagementConfigurer ->
@@ -46,11 +46,13 @@ public class SecurityConfig {
         return http.build();
     }
 
+    //1. Gestion de l'authentification: s'appuie sur le UserDetailService qui est étendu par le userService
+    //---> Implementation de la méthode loadUserByUsername
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
+    //2. Permet l'accès à la base de données (DAO Database Access Object)
     @Bean
     public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();

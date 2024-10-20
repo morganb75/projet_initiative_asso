@@ -10,6 +10,7 @@ import fr.morgan.initiativeasso.model.enums.UserRole;
 import fr.morgan.initiativeasso.repository.AdresseRepository;
 import fr.morgan.initiativeasso.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,44 +55,79 @@ public class UserServiceImpl implements UserService {
     }
 
     private void saveTypedUser(UserDto user) {
-        UserRole role = user.getRole();
-        switch (role) {
-            case PORTEUR -> {
-                Porteur porteur = Porteur.builder()
-                        .nom(user.getNom())
-                        .prenom(user.getPrenom())
-                        .email(user.getEmail())
-                        .entreprise(user.getEntreprise())
-                        .adresse(user.getAdresse())
-                        .plateForme(user.getPlateForme())
-                        .password(passwordEncoder.encode(user.getPassword()))
-                        .role(user.getRole()).build();
-                userRepository.save(porteur);
-            }
-            case PARRAIN -> {
-                Parrain parrain = Parrain.builder()
-                        .nom(user.getNom())
-                        .prenom(user.getPrenom())
-                        .email(user.getEmail())
-                        .entreprise(user.getEntreprise())
-                        .adresse(user.getAdresse())
-                        .plateForme(user.getPlateForme())
-                        .password(passwordEncoder.encode(user.getPassword()))
-                        .role(user.getRole()).build();
-                userRepository.save(parrain);
-            }
-            case ASSO -> {
-                SalarieAsso salarieAsso = SalarieAsso.builder()
-                        .nom(user.getNom())
-                        .prenom(user.getPrenom())
-                        .email(user.getEmail())
-                        .entreprise(user.getEntreprise())
-                        .adresse(user.getAdresse())
-                        .plateForme(user.getPlateForme())
-                        .password(passwordEncoder.encode(user.getPassword()))
-                        .role(user.getRole()).build();
-                userRepository.save(salarieAsso);
-            }
+        List<UserRole> roles = user.getRoles();
+        if (roles.contains(UserRole.PORTEUR)) {
+            Porteur porteur = Porteur.builder()
+                    .nom(user.getNom())
+                    .prenom(user.getPrenom())
+                    .email(user.getEmail())
+                    .entreprise(user.getEntreprise())
+                    .adresse(user.getAdresse())
+                    .plateForme(user.getPlateForme())
+                    .password(passwordEncoder.encode(user.getPassword()))
+                    .roles(List.of(UserRole.PORTEUR)).build();
+            userRepository.save(porteur);
+        } else if (roles.contains(UserRole.PARRAIN)) {
+            Parrain parrain = Parrain.builder()
+                    .nom(user.getNom())
+                    .prenom(user.getPrenom())
+                    .email(user.getEmail())
+                    .entreprise(user.getEntreprise())
+                    .adresse(user.getAdresse())
+                    .plateForme(user.getPlateForme())
+                    .password(passwordEncoder.encode(user.getPassword()))
+                    .roles(List.of(UserRole.PARRAIN)).build();
+            userRepository.save(parrain);
+        } else {
+            SalarieAsso salarieAsso = SalarieAsso.builder()
+                    .nom(user.getNom())
+                    .prenom(user.getPrenom())
+                    .email(user.getEmail())
+                    .entreprise(user.getEntreprise())
+                    .adresse(user.getAdresse())
+                    .plateForme(user.getPlateForme())
+                    .password(passwordEncoder.encode(user.getPassword()))
+                    .roles(List.of(UserRole.ASSO, UserRole.ADMIN)).build();
+            userRepository.save(salarieAsso);
         }
+//
+//        switch (role) {
+//            case PORTEUR -> {
+//                Porteur porteur = Porteur.builder()
+//                        .nom(user.getNom())
+//                        .prenom(user.getPrenom())
+//                        .email(user.getEmail())
+//                        .entreprise(user.getEntreprise())
+//                        .adresse(user.getAdresse())
+//                        .plateForme(user.getPlateForme())
+//                        .password(passwordEncoder.encode(user.getPassword()))
+//                        .roles(List.of(UserRole.PORTEUR)).build();
+//                userRepository.save(porteur);
+//            }
+//            case PARRAIN -> {
+//                Parrain parrain = Parrain.builder()
+//                        .nom(user.getNom())
+//                        .prenom(user.getPrenom())
+//                        .email(user.getEmail())
+//                        .entreprise(user.getEntreprise())
+//                        .adresse(user.getAdresse())
+//                        .plateForme(user.getPlateForme())
+//                        .password(passwordEncoder.encode(user.getPassword()))
+//                        .roles(List.of(UserRole.PARRAIN)).build();
+//                userRepository.save(parrain);
+//            }
+//            case ASSO -> {
+//                SalarieAsso salarieAsso = SalarieAsso.builder()
+//                        .nom(user.getNom())
+//                        .prenom(user.getPrenom())
+//                        .email(user.getEmail())
+//                        .entreprise(user.getEntreprise())
+//                        .adresse(user.getAdresse())
+//                        .plateForme(user.getPlateForme())
+//                        .password(passwordEncoder.encode(user.getPassword()))
+//                        .roles(List.of(UserRole.ASSO, UserRole.ADMIN)).build();
+//                userRepository.save(salarieAsso);
+//            }
+//        }
     }
 }
