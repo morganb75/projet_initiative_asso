@@ -22,6 +22,7 @@ import jakarta.persistence.Table;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
@@ -70,6 +71,7 @@ public abstract class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+
     @Override
     public String getUsername() {
         return this.getEmail();
@@ -81,6 +83,23 @@ public abstract class User implements UserDetails {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
                         .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof User user))
+            return false;
+        return Objects.equals(getId(), user.getId()) && Objects.equals(getNom(), user.getNom()) && Objects.equals(
+                getPrenom(), user.getPrenom()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getEntreprise(),
+                user.getEntreprise()) && Objects.equals(getAdresse(), user.getAdresse()) && getPlateForme() == user.getPlateForme()
+                && Objects.equals(getRoles(), user.getRoles()) && Objects.equals(getPassword(), user.getPassword());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getNom(), getPrenom(), getEmail(), getEntreprise(), getAdresse(), getPlateForme(), getRoles(), getPassword());
     }
 
     //   @Override

@@ -25,7 +25,7 @@ public class JwtService {
     private final String ENCRYPTION_KEY = "a786d7b256d30a6cd6cd560123197e2cc18bf09218ef78423c4aab9a049a1573";
     private final UserService userService;
     private final long CURRENT_TIME = System.currentTimeMillis();
-    private final Integer DUREE_DE_VIE_H_TOKEN = 1;
+    private final Integer DUREE_DE_VIE_H_TOKEN = 12;
     private final long EXPIRATION_TIME = CURRENT_TIME + DUREE_DE_VIE_H_TOKEN * 60 * 60 * 1000;
 
     public JwtService(UserService userService) {

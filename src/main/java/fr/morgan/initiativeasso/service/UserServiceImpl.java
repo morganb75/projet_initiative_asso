@@ -7,6 +7,7 @@ import fr.morgan.initiativeasso.model.SalarieAsso;
 import fr.morgan.initiativeasso.model.User;
 import fr.morgan.initiativeasso.model.dto.UserDto;
 import fr.morgan.initiativeasso.model.enums.UserRole;
+import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 import fr.morgan.initiativeasso.repository.AdresseRepository;
 import fr.morgan.initiativeasso.repository.UserRepository;
 
@@ -49,9 +50,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findById(Long id) throws UserNotFoundException {
+        return (userRepository.findById(id))
+                .orElseThrow(() -> new UserNotFoundException("Aucun utilisateur portant l'Id " + id));
+    }
+
+    @Override
+    public void validationInscription(Long id) {
+
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return (userRepository.findUserByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Pas d'utilisateur correspondant à ce username")));
+                .orElseThrow(() -> new UsernameNotFoundException("Pas d'utilisateur correspondant au username" + username)));
     }
 
     private void saveTypedUser(UserDto user) {
@@ -65,7 +87,7 @@ public class UserServiceImpl implements UserService {
                     .adresse(user.getAdresse())
                     .plateForme(user.getPlateForme())
                     .password(passwordEncoder.encode(user.getPassword()))
-                    .roles(List.of(UserRole.PORTEUR)).build();
+                    .roles(user.getRoles()).build();
             userRepository.save(porteur);
         } else if (roles.contains(UserRole.PARRAIN)) {
             Parrain parrain = Parrain.builder()
@@ -76,7 +98,7 @@ public class UserServiceImpl implements UserService {
                     .adresse(user.getAdresse())
                     .plateForme(user.getPlateForme())
                     .password(passwordEncoder.encode(user.getPassword()))
-                    .roles(List.of(UserRole.PARRAIN)).build();
+                    .roles(user.getRoles()).build();
             userRepository.save(parrain);
         } else {
             SalarieAsso salarieAsso = SalarieAsso.builder()
@@ -87,47 +109,8 @@ public class UserServiceImpl implements UserService {
                     .adresse(user.getAdresse())
                     .plateForme(user.getPlateForme())
                     .password(passwordEncoder.encode(user.getPassword()))
-                    .roles(List.of(UserRole.ASSO, UserRole.ADMIN)).build();
+                    .roles(user.getRoles()).build();
             userRepository.save(salarieAsso);
         }
-//
-//        switch (role) {
-//            case PORTEUR -> {
-//                Porteur porteur = Porteur.builder()
-//                        .nom(user.getNom())
-//                        .prenom(user.getPrenom())
-//                        .email(user.getEmail())
-//                        .entreprise(user.getEntreprise())
-//                        .adresse(user.getAdresse())
-//                        .plateForme(user.getPlateForme())
-//                        .password(passwordEncoder.encode(user.getPassword()))
-//                        .roles(List.of(UserRole.PORTEUR)).build();
-//                userRepository.save(porteur);
-//            }
-//            case PARRAIN -> {
-//                Parrain parrain = Parrain.builder()
-//                        .nom(user.getNom())
-//                        .prenom(user.getPrenom())
-//                        .email(user.getEmail())
-//                        .entreprise(user.getEntreprise())
-//                        .adresse(user.getAdresse())
-//                        .plateForme(user.getPlateForme())
-//                        .password(passwordEncoder.encode(user.getPassword()))
-//                        .roles(List.of(UserRole.PARRAIN)).build();
-//                userRepository.save(parrain);
-//            }
-//            case ASSO -> {
-//                SalarieAsso salarieAsso = SalarieAsso.builder()
-//                        .nom(user.getNom())
-//                        .prenom(user.getPrenom())
-//                        .email(user.getEmail())
-//                        .entreprise(user.getEntreprise())
-//                        .adresse(user.getAdresse())
-//                        .plateForme(user.getPlateForme())
-//                        .password(passwordEncoder.encode(user.getPassword()))
-//                        .roles(List.of(UserRole.ASSO, UserRole.ADMIN)).build();
-//                userRepository.save(salarieAsso);
-//            }
-//        }
     }
 }
