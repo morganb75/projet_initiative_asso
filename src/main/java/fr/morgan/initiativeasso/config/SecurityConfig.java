@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         //ATTENTION: /api défini context path dans le yml, si on met l'url /api/user, ça ne marche pas, erreur 403
-                        .requestMatchers("/connexion", "/favicon.ico").permitAll()
+                        .requestMatchers("/connexion","/api-docs/**","/swagger-ui/**", "/favicon.ico").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasAnyRole("PORTEUR", "PARRAIN")
                         .anyRequest().authenticated())

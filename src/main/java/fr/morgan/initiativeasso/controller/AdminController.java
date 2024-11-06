@@ -5,6 +5,8 @@ import fr.morgan.initiativeasso.model.dto.UserDto;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 import fr.morgan.initiativeasso.service.AdresseService;
 import fr.morgan.initiativeasso.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +43,9 @@ public class AdminController {
         userService.preInscriptionUser(user);
     }
 
+    @Operation(summary = "Liste des utilisateurs",
+            description = "Remonte la liste complète des utilisateurs de l'application",
+            security = @SecurityRequirement(name = "bearer-key"))
     @GetMapping("/users")
     public List<User> getAllUsers() {
         return userService.getUsers();
