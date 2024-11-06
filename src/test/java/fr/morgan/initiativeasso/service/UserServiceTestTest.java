@@ -46,8 +46,8 @@ public class UserServiceTestTest {
         List<User> liste2 = List.of(porteur2,parrain2);
 
         //GIVEN
-        when(userRepository.findUserByDomaineActivite(DomainesActivite.INDUSTRIE)).thenReturn(liste1);
-        when(userRepository.findUserByDomaineActivite(DomainesActivite.ENSEIGNEMENT)).thenReturn(liste2);
+        when(userRepository.findUsersByDomaineActivite(DomainesActivite.INDUSTRIE)).thenReturn(liste1);
+        when(userRepository.findUsersByDomaineActivite(DomainesActivite.ENSEIGNEMENT)).thenReturn(liste2);
 
         //WHEN
         List<User> result1 = userService.findByDomaineActivite(DomainesActivite.INDUSTRIE);

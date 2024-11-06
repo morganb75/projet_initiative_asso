@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findByDomaineActivite(DomainesActivite domainesActivite) {
-        return null;
+        return userRepository.findUsersByDomaineActivite(domainesActivite);
     }
 
     private void saveTypedUser(UserDto user) {
