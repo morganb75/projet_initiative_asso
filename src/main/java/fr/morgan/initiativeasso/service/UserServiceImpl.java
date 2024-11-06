@@ -8,6 +8,7 @@ import fr.morgan.initiativeasso.model.User;
 import fr.morgan.initiativeasso.model.dto.UserDto;
 import fr.morgan.initiativeasso.model.enums.DomainesActivite;
 import fr.morgan.initiativeasso.model.enums.UserRole;
+import fr.morgan.initiativeasso.model.enums.ZonesDeplacement;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 import fr.morgan.initiativeasso.repository.AdresseRepository;
 import fr.morgan.initiativeasso.repository.UserRepository;
@@ -80,6 +81,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findByDomaineActivite(DomainesActivite domainesActivite) {
         return userRepository.findUsersByDomaineActivite(domainesActivite);
+    }
+
+    @Override
+    public List<User> findByZoneGeographique(ZonesDeplacement zonesDeplacement) {
+        return null;
     }
 
     private void saveTypedUser(UserDto user) {
