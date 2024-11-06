@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findByZoneGeographique(ZonesDeplacement zonesDeplacement) {
-        return null;
+        return userRepository.findUsersByZoneGeographique(zonesDeplacement);
     }
 
     private void saveTypedUser(UserDto user) {
