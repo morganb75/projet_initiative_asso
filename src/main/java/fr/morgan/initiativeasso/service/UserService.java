@@ -2,6 +2,7 @@ package fr.morgan.initiativeasso.service;
 
 import fr.morgan.initiativeasso.model.User;
 import fr.morgan.initiativeasso.model.dto.UserDto;
+import fr.morgan.initiativeasso.model.enums.DomainesActivite;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 
 import java.util.List;
@@ -25,8 +26,11 @@ public interface UserService extends UserDetailsService {
 
     List<User> getUsers();
 
+
     // Renvoie l'utilisateur de la BDD quand il existe au DAO Provider (userDetailService)
     // Implementé dans UserServiceImpl
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+
+    List<User> findByDomaineActivite(DomainesActivite domainesActivite);
 }

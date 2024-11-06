@@ -1,7 +1,7 @@
 package fr.morgan.initiativeasso.model;
 
 import fr.morgan.initiativeasso.model.enums.PlateForme;
-import fr.morgan.initiativeasso.model.enums.SecteursReseaux;
+import fr.morgan.initiativeasso.model.enums.DomainesActivite;
 import fr.morgan.initiativeasso.model.enums.UserRole;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -24,7 +24,7 @@ import lombok.Setter;
 public class Porteur extends User {
 
     private LocalDate dateDebutActivite;
-    private SecteursReseaux domaineActivite;
+    private DomainesActivite domaineActivite;
     private String descriptifActivite;
     @ManyToMany
     @JoinTable(name = "porteur_typeaccompagnement",
@@ -39,7 +39,7 @@ public class Porteur extends User {
     @Builder
 
     public Porteur(Long id, String nom, String prenom, String email, String entreprise, Adresse adresse, PlateForme plateForme, List<UserRole> roles,
-            String password, LocalDate dateDebutActivite, SecteursReseaux domaineActivite, String descriptifActivite,
+            String password, LocalDate dateDebutActivite, DomainesActivite domaineActivite, String descriptifActivite,
             List<TypeAccompagnement> besoinsPotentiel, Adresse lieuActivite, String disponibilites) {
         super(id, nom, prenom, email, entreprise, adresse, plateForme, roles, password);
         this.dateDebutActivite = dateDebutActivite;

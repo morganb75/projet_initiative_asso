@@ -1,6 +1,6 @@
 package fr.morgan.initiativeasso.model.enums;
 
-public enum SecteursReseaux {
+public enum DomainesActivite {
     SERVICES_ADMINISTRATIFS_ET_SOUTIEN,
     ACTIVITES_SPECIALISEES_SCIENTIFIQUES_ET_TECHNIQUES,
     AGRICULTURE_SYLVICULTURE_PECHE,

@@ -6,6 +6,7 @@ import fr.morgan.initiativeasso.model.Porteur;
 import fr.morgan.initiativeasso.model.SalarieAsso;
 import fr.morgan.initiativeasso.model.User;
 import fr.morgan.initiativeasso.model.dto.UserDto;
+import fr.morgan.initiativeasso.model.enums.DomainesActivite;
 import fr.morgan.initiativeasso.model.enums.UserRole;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 import fr.morgan.initiativeasso.repository.AdresseRepository;
@@ -74,6 +75,11 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return (userRepository.findUserByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Pas d'utilisateur correspondant au username" + username)));
+    }
+
+    @Override
+    public List<User> findByDomaineActivite(DomainesActivite domainesActivite) {
+        return null;
     }
 
     private void saveTypedUser(UserDto user) {
