@@ -25,8 +25,10 @@ public class JwtService {
     private final String ENCRYPTION_KEY = "a786d7b256d30a6cd6cd560123197e2cc18bf09218ef78423c4aab9a049a1573";
     private final UserService userService;
     private final long CURRENT_TIME = System.currentTimeMillis();
-    private final Integer DUREE_DE_VIE_H_TOKEN = 12;
-    private final long EXPIRATION_TIME = CURRENT_TIME + DUREE_DE_VIE_H_TOKEN * 60 * 60 * 1000;
+//    private final long DUREE_DE_VIE_H_TOKEN = 1;
+//    private final long EXPIRATION_TIME =  CURRENT_TIME + DUREE_DE_VIE_H_TOKEN * 60 * 60 * 1000;
+    private final long DUREE_DE_VIE_MN_TOKEN = 1;
+    private final long EXPIRATION_TIME =  CURRENT_TIME + DUREE_DE_VIE_MN_TOKEN  * 60 * 1000;
 
     public JwtService(UserService userService) {
         this.userService = userService;
@@ -43,7 +45,9 @@ public class JwtService {
     private Map<String, String> generateJwt(User user) {
 
         final Map<String, Object> claims = Map.of(
-                "username", user.getUsername(),
+                "nom", user.getNom(),
+                "prenom", user.getPrenom(),
+                "roles", user.getRoles(),
                 Claims.EXPIRATION, new Date(EXPIRATION_TIME),
                 Claims.SUBJECT, user.getUsername()
         );

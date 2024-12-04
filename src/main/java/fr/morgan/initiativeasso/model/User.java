@@ -20,7 +20,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -60,9 +59,6 @@ public abstract class User implements UserDetails {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private PlateForme plateForme;
-//    @Column(nullable = false)
-//    @Enumerated(EnumType.STRING)
-    //   private UserRole role;
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)

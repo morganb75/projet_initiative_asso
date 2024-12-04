@@ -1,0 +1,54 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 1px solid rgba(229, 25, 104, 1);
+  font-size: 0.8rem;
+
+  .footer-top{
+    display: flex;
+    align-items: center;
+
+    .footer-top-left {
+      display: flex;
+      align-items: center;
+
+      .logo-footer{
+        width: 20%;
+        img{
+          width: 60%;
+          height: auto;
+          object-fit: cover;
+        }
+      }
+      .text-footer {
+        display: flex;
+        flex-direction: column;
+
+        .text-tel-footer{
+          display: flex;
+        }
+        .text-mail-footer{
+          display: flex;
+        }
+      }
+    }
+    .footer-top-right {
+      display: flex;
+      .reseaux-sociaux-footer{
+        display: flex;
+        justify-content: space-evenly;
+
+        img{
+          width: 6%;
+          height: auto;
+          object-fit: cover;
+          gap: 10px;
+        }
+      }
+    }
+  }
+  .footer-bottom{
+    font-size: 0.6rem;
+  };
+}
