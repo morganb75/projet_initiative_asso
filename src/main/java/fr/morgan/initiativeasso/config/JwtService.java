@@ -21,19 +21,14 @@ public class JwtService {
 
     //***********************PHASE DE FORGE DU TOKEN**********************************
 
-    //généré sur encryption key generator de RandomGenerate.io
-    private final String ENCRYPTION_KEY = "a786d7b256d30a6cd6cd560123197e2cc18bf09218ef78423c4aab9a049a1573";
     private final UserService userService;
+    private final JwtConfig jwtConfig;
     private final long CURRENT_TIME = System.currentTimeMillis();
-//    private final long DUREE_DE_VIE_H_TOKEN = 1;
-//    private final long EXPIRATION_TIME =  CURRENT_TIME + DUREE_DE_VIE_H_TOKEN * 60 * 60 * 1000;
-    private final long DUREE_DE_VIE_MN_TOKEN = 1;
-    private final long EXPIRATION_TIME =  CURRENT_TIME + DUREE_DE_VIE_MN_TOKEN  * 60 * 1000;
 
-    public JwtService(UserService userService) {
+    public JwtService(UserService userService, JwtConfig jwtConfig) {
         this.userService = userService;
+        this.jwtConfig = jwtConfig;
     }
-
 
     //1. Génération du Token en allant chercher le user dans la BDD
     public Map<String, String> generate(String username) {
@@ -48,16 +43,16 @@ public class JwtService {
                 "nom", user.getNom(),
                 "prenom", user.getPrenom(),
                 "roles", user.getRoles(),
-                Claims.EXPIRATION, new Date(EXPIRATION_TIME),
+                Claims.EXPIRATION, new Date(CURRENT_TIME + jwtConfig.getExpiration()),
                 Claims.SUBJECT, user.getUsername()
         );
 
         final String bearer = Jwts.builder()
                 .setIssuedAt(new Date(CURRENT_TIME))
-                .setExpiration(new Date(EXPIRATION_TIME))
+                .setExpiration(new Date(CURRENT_TIME + jwtConfig.getExpiration()))
                 .setSubject(user.getUsername())
                 .setClaims(claims)
-                .signWith(getKey(), SignatureAlgorithm.HS256)
+                .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret())
                 .compact();
 
         return Map.of("bearer", bearer);
@@ -65,7 +60,7 @@ public class JwtService {
 
     //3. Clé de Cryptage
     private Key getKey() {
-        final byte[] decoder = Decoders.BASE64.decode(ENCRYPTION_KEY);
+        final byte[] decoder = Decoders.BASE64.decode(jwtConfig.getSecret());
         return Keys.hmacShaKeyFor(decoder);
     }
 
@@ -86,7 +81,7 @@ public class JwtService {
 
     private Claims getAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(this.getKey())
+                .setSigningKey(jwtConfig.getSecret())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();

@@ -9,7 +9,7 @@ import LandingPage from "./components/landingpage/LandingPage.jsx";
 import UserContextProvider from "./contexts/UserContext.jsx";
 import AdminPage from "./components/adminpage/AdminPage.jsx";
 import UserPage from "./components/userpage/UserPage.jsx";
-import PreInscription from "./components/PreInscription.jsx";
+import PreInscription from "./components/adminpage/PreInscription.jsx";
 
 const Main = () => {
     return (

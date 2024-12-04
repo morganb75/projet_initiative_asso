@@ -18,6 +18,11 @@ spring:
       name: user
       password: password
 
+# généré sur encryption key generator de RandomGenerate.io
+jwt:
+  secret: "a786d7b256d30a6cd6cd560123197e2cc18bf09218ef78423c4aab9a049a1573"
+  expiration:  3600000 #Durée en millisecondes
+
 server:
   servlet:
     context-path: /api
