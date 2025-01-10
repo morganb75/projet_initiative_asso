@@ -1,6 +1,6 @@
 package fr.morgan.initiativeasso.config;
 
-import fr.morgan.initiativeasso.service.UserService;
+import fr.morgan.initiativeasso.service.interfaces.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

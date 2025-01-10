@@ -1,4 +1,4 @@
-package fr.morgan.initiativeasso.service;
+package fr.morgan.initiativeasso.service.interfaces;
 
 import fr.morgan.initiativeasso.model.Adresse;
 

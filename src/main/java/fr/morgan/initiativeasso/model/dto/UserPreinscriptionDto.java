@@ -12,13 +12,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@NoArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
 @Setter
-public class UserDto {
+public class UserPreinscriptionDto {
 
     private Long id;
     private String nom;

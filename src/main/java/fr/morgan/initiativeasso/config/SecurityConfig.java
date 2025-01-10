@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         //ATTENTION: /api défini en context path dans le yml, si on met l'url /api/user, ça ne marche pas, erreur 403
-                        .requestMatchers("/connexion", "/favicon.ico").permitAll()
+                        .requestMatchers("/connexion","/enums/**", "/favicon.ico").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasAnyRole("PORTEUR", "PARRAIN")
                         .anyRequest().authenticated())
@@ -55,7 +55,6 @@ public class SecurityConfig {
                         httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-
         return http.build();
     }
 
@@ -65,6 +64,7 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
     //2. Permet l'accès à la base de données (DAO Database Access Object)
     @Bean
     public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {

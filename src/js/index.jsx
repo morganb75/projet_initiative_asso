@@ -10,6 +10,7 @@ import UserContextProvider from "./contexts/UserContext.jsx";
 import AdminPage from "./components/adminpage/AdminPage.jsx";
 import UserPage from "./components/userpage/UserPage.jsx";
 import PreInscription from "./components/adminpage/PreInscription.jsx";
+import FirstLoginPage from "./components/userpage/FirstLoginPage.jsx";
 
 const Main = () => {
     return (
@@ -22,6 +23,7 @@ const Main = () => {
                         <Route path="/admin" element={<AdminPage/>}/>
                         <Route path="/admin/preinscrire" element={<PreInscription/>}/>
                         <Route path="/user" element={<UserPage/>}/>
+                        <Route path="/firstlogin" element={<FirstLoginPage/>}/>
                     </Route>
                 </Routes>
             </Router>

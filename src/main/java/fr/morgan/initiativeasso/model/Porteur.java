@@ -37,11 +37,10 @@ public class Porteur extends User {
     private String disponibilites;
 
     @Builder
-
     public Porteur(Long id, String nom, String prenom, String email, String entreprise, Adresse adresse, PlateForme plateForme, List<UserRole> roles,
-            String password, LocalDate dateDebutActivite, SecteursReseaux domaineActivite, String descriptifActivite,
-            List<TypeAccompagnement> besoinsPotentiel, Adresse lieuActivite, String disponibilites) {
-        super(id, nom, prenom, email, entreprise, adresse, plateForme, roles, password);
+            String password, boolean isAccountEnabled, boolean firstLogin, LocalDate dateDebutActivite, SecteursReseaux domaineActivite,
+            String descriptifActivite, List<TypeAccompagnement> besoinsPotentiel, Adresse lieuActivite, String disponibilites) {
+        super(id, nom, prenom, email, entreprise, adresse, plateForme, roles, password, isAccountEnabled, firstLogin);
         this.dateDebutActivite = dateDebutActivite;
         this.domaineActivite = domaineActivite;
         this.descriptifActivite = descriptifActivite;

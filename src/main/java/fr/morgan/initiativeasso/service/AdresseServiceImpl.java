@@ -2,11 +2,12 @@ package fr.morgan.initiativeasso.service;
 
 import fr.morgan.initiativeasso.model.Adresse;
 import fr.morgan.initiativeasso.repository.AdresseRepository;
+import fr.morgan.initiativeasso.service.interfaces.AdresseService;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdresseServiceImpl implements AdresseService{
+public class AdresseServiceImpl implements AdresseService {
 
     private final AdresseRepository adresseRepository;
 

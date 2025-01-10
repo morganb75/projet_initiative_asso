@@ -25,9 +25,11 @@ public class Parrain extends User {
     private String disponibilites;
 
     @Builder
+
     public Parrain(Long id, String nom, String prenom, String email, String entreprise, Adresse adresse, PlateForme plateForme, List<UserRole> roles,
-            String password, String parcours, SecteursReseaux domaineActivite, List<ZonesDeplacement> zonesDeDeplacement, String disponibilites) {
-        super(id, nom, prenom, email, entreprise, adresse, plateForme, roles, password);
+            String password, boolean isAccountEnabled, boolean firstLogin, String parcours, SecteursReseaux domaineActivite,
+            List<ZonesDeplacement> zonesDeDeplacement, String disponibilites) {
+        super(id, nom, prenom, email, entreprise, adresse, plateForme, roles, password, isAccountEnabled, firstLogin);
         this.parcours = parcours;
         this.domaineActivite = domaineActivite;
         this.zonesDeDeplacement = zonesDeDeplacement;

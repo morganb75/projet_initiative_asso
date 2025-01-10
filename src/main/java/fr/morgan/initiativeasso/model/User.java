@@ -66,7 +66,10 @@ public abstract class User implements UserDetails {
     private List<UserRole> roles;
     @Column(nullable = false)
     private String password;
-
+    @Column(nullable = false)
+    private boolean isAccountEnabled;
+    @Column(nullable = false)
+    private boolean firstLogin;
 
     @Override
     public String getUsername() {
@@ -75,10 +78,14 @@ public abstract class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //      return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
                         .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.isAccountEnabled;
     }
 
     @Override
@@ -97,25 +104,5 @@ public abstract class User implements UserDetails {
     public int hashCode() {
         return Objects.hash(getId(), getNom(), getPrenom(), getEmail(), getEntreprise(), getAdresse(), getPlateForme(), getRoles(), getPassword());
     }
-
-    //   @Override
-    //   public boolean isAccountNonExpired() {
-    //      return true;
-    //   }
-    //
-    //   @Override
-    //   public boolean isAccountNonLocked() {
-    //      return true;
-    //   }
-    //
-    //   @Override
-    //   public boolean isCredentialsNonExpired() {
-    //      return true;
-    //   }
-    //
-    //   @Override
-    //   public boolean isEnabled() {
-    //      return true;
-    //   }
 }
 

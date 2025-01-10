@@ -2,7 +2,7 @@ package fr.morgan.initiativeasso.controller;
 
 import fr.morgan.initiativeasso.config.JwtService;
 import fr.morgan.initiativeasso.model.dto.AuthenticationDto;
-import fr.morgan.initiativeasso.service.UserService;
+import fr.morgan.initiativeasso.service.interfaces.UserService;
 
 import java.util.Map;
 
@@ -13,7 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j

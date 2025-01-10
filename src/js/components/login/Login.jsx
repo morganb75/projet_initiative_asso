@@ -11,7 +11,7 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
-    const URL_CONNEXION = 'api/connexion'
+    const URL_CONNEXION = '/api/connexion'
     const HTTP_DATA = {
         method: 'POST',
         headers: {
@@ -28,8 +28,11 @@ const Login = () => {
             setDataUser(decodeToken(token))
             sessionStorage.setItem('authToken', token)
             const roles = (decodeToken(token)).roles
+            const firstLogin = (decodeToken(token).firstLogin)
             if (roles.includes("ADMIN")) {
                 navigate("/admin")
+            } else if (firstLogin) {
+                navigate("/firstlogin/")
             } else {
                 navigate("/user/")
             }

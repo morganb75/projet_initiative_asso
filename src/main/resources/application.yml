@@ -8,6 +8,12 @@ spring:
     username: postgres
     password: postgres
 
+  flyway:
+    locations: classpath:db/migration
+    enabled: true
+    baseline-on-migrate: true
+    validate-on-migrate: true
+
   jpa:
     show-sql: true
     hibernate:
@@ -29,5 +35,7 @@ server:
 
 logging:
   level:
-    org.springframework.security:
-      DEBUG
+    org:
+      flyway: DEBUG
+      springframework.security: DEBUG
+#      springframework: DEBUG

@@ -1,44 +1,11 @@
 import React, {useState} from 'react';
-import RolesSelector from "../selector/RolesSelector.jsx";
 
-const PreInscription = () => {
+const UserForm = ({formState, setFormState}) => {
 
-    const initialState = {
-        nom: '', prenom: '', email: '', entreprise: '', adresse: {
-            numeroDeVoie: '', rue: '', complement: '', codePostal: '', ville: ''
-        }, plateForme: 'DEUXSEVRES', roles: [], password: ''
-    }
 
-    const [formState, setFormState] = useState(initialState)
-
-    const handleRolesChange = (selectedRoles) => {
-        setFormState(formState => ({
-            ...formState, roles: selectedRoles
-        }))
-    }
-
-    function handleSubmit(event) {
-        event.preventDefault()
-        console.log(formState)
-        const URL_PREINSCRIPTION = '/api/admin/user'
-
-        const HTTP_DATA = {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
-            },
-            body: JSON.stringify(formState)
-        }
-        fetch(URL_PREINSCRIPTION,HTTP_DATA)
-            .then(response => alert('Utilisateur pré-enregistré avec succès'))
-            .catch(error => console.error('Error', error))
-    }
-
-    return (<div className="main">
-        <h1 className="text1">Pré-inscrire un utilisateur</h1>
-        <form className="form-preregister" onSubmit={handleSubmit}>
-            <div className="form-preregister-field">
+    return (
+        <>
+            <div className="user-infos">
                 <label htmlFor="nom">Nom:</label>
                 <input
                     type="text"
@@ -67,6 +34,16 @@ const PreInscription = () => {
                     value={formState?.entreprise}
                     onChange={(e) => setFormState({...formState, entreprise: e.target.value})}
                 />
+                <label htmlFor="password">Nouveau mot de passe:</label>
+                <input
+                    type="text"
+                    id="password"
+                    value={formState?.password}
+                    onChange={(e) => setFormState({...formState, password: e.target.value})}
+                />
+            </div>
+
+            <div className="user-adresse">
                 <label htmlFor="numero">N° de voie:</label>
                 <input
                     type="number"
@@ -112,14 +89,10 @@ const PreInscription = () => {
                         ...formState, adresse: {...formState.adresse, ville: e.target.value}
                     })}
                 />
-                <RolesSelector selectedRoles={formState.roles} onRolesChange={handleRolesChange}/>
-                <div>
-                    <strong>Roles:</strong> {formState.roles.map(role => role.label).join(', ')}
-                </div>
-                <button className="button-preregister" type="submit">Enregistrer</button>
             </div>
-        </form>
-    </div>)
-}
+        </>
 
-export default PreInscription;
+    );
+};
+
+export default UserForm;

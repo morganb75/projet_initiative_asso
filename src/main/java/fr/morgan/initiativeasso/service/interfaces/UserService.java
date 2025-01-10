@@ -1,7 +1,7 @@
-package fr.morgan.initiativeasso.service;
+package fr.morgan.initiativeasso.service.interfaces;
 
 import fr.morgan.initiativeasso.model.User;
-import fr.morgan.initiativeasso.model.dto.UserDto;
+import fr.morgan.initiativeasso.model.dto.UserPreinscriptionDto;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 
 import java.util.List;
@@ -13,11 +13,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public interface UserService extends UserDetailsService {
 
-    void preInscriptionUser(UserDto user);
+    void preInscriptionUser(UserPreinscriptionDto user);
 
-    Optional<User> findByEmail(String email);
+    Optional<User> findByEmail(String email) throws UserNotFoundException;
 
-    User findById(Long id) throws UserNotFoundException;
+    Optional<User> findById(Long id) throws UserNotFoundException;
 
     void validationInscription(Long id);
 

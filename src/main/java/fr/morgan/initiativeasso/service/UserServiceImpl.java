@@ -5,11 +5,12 @@ import fr.morgan.initiativeasso.model.Parrain;
 import fr.morgan.initiativeasso.model.Porteur;
 import fr.morgan.initiativeasso.model.SalarieAsso;
 import fr.morgan.initiativeasso.model.User;
-import fr.morgan.initiativeasso.model.dto.UserDto;
+import fr.morgan.initiativeasso.model.dto.UserPreinscriptionDto;
 import fr.morgan.initiativeasso.model.enums.UserRole;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 import fr.morgan.initiativeasso.repository.AdresseRepository;
 import fr.morgan.initiativeasso.repository.UserRepository;
+import fr.morgan.initiativeasso.service.interfaces.UserService;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void preInscriptionUser(UserDto user) {
+    public void preInscriptionUser(UserPreinscriptionDto user) {
         Adresse adresse = user.getAdresse();
         Adresse existingAdresse = adresseRepository.findByNumeroDeVoieAndRueAndComplementAndCodePostalAndVille(adresse.getNumeroDeVoie(),
                 adresse.getRue(), adresse.getComplement(), adresse.getCodePostal(), adresse.getVille());
@@ -45,14 +46,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) throws UserNotFoundException {
         return (Optional<User>) userRepository.findUserByEmail(email);
     }
 
     @Override
-    public User findById(Long id) throws UserNotFoundException {
-        return (userRepository.findById(id))
-                .orElseThrow(() -> new UserNotFoundException("Aucun utilisateur portant l'Id " + id));
+    public Optional<User> findById(Long id) throws UserNotFoundException {
+        return (userRepository.findById(id));
     }
 
     @Override
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("Pas d'utilisateur correspondant au username" + username)));
     }
 
-    private void saveTypedUser(UserDto user) {
+    private void saveTypedUser(UserPreinscriptionDto user) {
         List<UserRole> roles = user.getRoles();
         if (roles.contains(UserRole.PORTEUR)) {
             Porteur porteur = Porteur.builder()
@@ -87,7 +87,9 @@ public class UserServiceImpl implements UserService {
                     .adresse(user.getAdresse())
                     .plateForme(user.getPlateForme())
                     .password(passwordEncoder.encode(user.getPassword()))
-                    .roles(user.getRoles()).build();
+                    .roles(user.getRoles())
+                    .isAccountEnabled(true)
+                    .firstLogin(true).build();
             userRepository.save(porteur);
         } else if (roles.contains(UserRole.PARRAIN)) {
             Parrain parrain = Parrain.builder()
@@ -98,7 +100,9 @@ public class UserServiceImpl implements UserService {
                     .adresse(user.getAdresse())
                     .plateForme(user.getPlateForme())
                     .password(passwordEncoder.encode(user.getPassword()))
-                    .roles(user.getRoles()).build();
+                    .roles(user.getRoles())
+                    .isAccountEnabled(true)
+                    .firstLogin(true).build();
             userRepository.save(parrain);
         } else {
             SalarieAsso salarieAsso = SalarieAsso.builder()
@@ -109,7 +113,9 @@ public class UserServiceImpl implements UserService {
                     .adresse(user.getAdresse())
                     .plateForme(user.getPlateForme())
                     .password(passwordEncoder.encode(user.getPassword()))
-                    .roles(user.getRoles()).build();
+                    .roles(user.getRoles())
+                    .isAccountEnabled(true)
+                    .firstLogin(true).build();
             userRepository.save(salarieAsso);
         }
     }

@@ -1,7 +1,7 @@
 package fr.morgan.initiativeasso.config;
 
 import fr.morgan.initiativeasso.model.User;
-import fr.morgan.initiativeasso.service.UserService;
+import fr.morgan.initiativeasso.service.interfaces.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,7 +23,6 @@ public class JwtService {
 
     private final UserService userService;
     private final JwtConfig jwtConfig;
-    private final long CURRENT_TIME = System.currentTimeMillis();
 
     public JwtService(UserService userService, JwtConfig jwtConfig) {
         this.userService = userService;
@@ -38,11 +37,13 @@ public class JwtService {
 
     //2. Forgeage du token
     private Map<String, String> generateJwt(User user) {
+        final long CURRENT_TIME = System.currentTimeMillis();
 
         final Map<String, Object> claims = Map.of(
                 "nom", user.getNom(),
                 "prenom", user.getPrenom(),
                 "roles", user.getRoles(),
+                "firstLogin", user.isFirstLogin(),
                 Claims.EXPIRATION, new Date(CURRENT_TIME + jwtConfig.getExpiration()),
                 Claims.SUBJECT, user.getUsername()
         );
