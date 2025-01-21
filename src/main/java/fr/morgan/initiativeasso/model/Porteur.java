@@ -3,7 +3,10 @@ package fr.morgan.initiativeasso.model;
 import fr.morgan.initiativeasso.model.enums.PlateForme;
 import fr.morgan.initiativeasso.model.enums.SecteursReseaux;
 import fr.morgan.initiativeasso.model.enums.UserRole;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -31,7 +34,7 @@ public class Porteur extends User {
             joinColumns = @JoinColumn(name = "porteur_id"),
             inverseJoinColumns = @JoinColumn(name = "type_accompagnement_id"))
     private List<TypeAccompagnement> besoinsPotentiel;
-    @ManyToOne
+    @ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "lieu_activite_id")
     private Adresse lieuActivite;
     private String disponibilites;

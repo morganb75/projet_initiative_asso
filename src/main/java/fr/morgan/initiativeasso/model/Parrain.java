@@ -5,6 +5,8 @@ import fr.morgan.initiativeasso.model.enums.SecteursReseaux;
 import fr.morgan.initiativeasso.model.enums.UserRole;
 import fr.morgan.initiativeasso.model.enums.ZonesDeplacement;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 import java.util.List;
 
@@ -25,7 +27,6 @@ public class Parrain extends User {
     private String disponibilites;
 
     @Builder
-
     public Parrain(Long id, String nom, String prenom, String email, String entreprise, Adresse adresse, PlateForme plateForme, List<UserRole> roles,
             String password, boolean isAccountEnabled, boolean firstLogin, String parcours, SecteursReseaux domaineActivite,
             List<ZonesDeplacement> zonesDeDeplacement, String disponibilites) {

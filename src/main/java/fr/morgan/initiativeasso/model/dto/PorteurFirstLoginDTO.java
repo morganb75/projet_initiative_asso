@@ -4,7 +4,6 @@ import fr.morgan.initiativeasso.model.Adresse;
 import fr.morgan.initiativeasso.model.TypeAccompagnement;
 import fr.morgan.initiativeasso.model.enums.PlateForme;
 import fr.morgan.initiativeasso.model.enums.SecteursReseaux;
-import fr.morgan.initiativeasso.model.enums.UserRole;
 
 import java.time.LocalDate;
 import java.util.List;

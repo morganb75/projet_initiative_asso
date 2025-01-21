@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Select from "react-select";
 
-const RolesSelector = ({selectedRoles, onRolesChange}) => {
+const RolesMultiSelector = ({selectedRoles, onRolesChange}) => {
 
     const [roles, setRoles] = useState([])
 
@@ -39,4 +39,4 @@ const RolesSelector = ({selectedRoles, onRolesChange}) => {
     );
 };
 
-export default RolesSelector;
+export default RolesMultiSelector;

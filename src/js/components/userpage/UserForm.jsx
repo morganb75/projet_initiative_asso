@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 const UserForm = ({formState, setFormState}) => {
 
@@ -36,7 +36,7 @@ const UserForm = ({formState, setFormState}) => {
                 />
                 <label htmlFor="password">Nouveau mot de passe:</label>
                 <input
-                    type="text"
+                    type="password"
                     id="password"
                     value={formState?.password}
                     onChange={(e) => setFormState({...formState, password: e.target.value})}

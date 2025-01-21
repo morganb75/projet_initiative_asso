@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import Select from "react-select";
 
-const DomaineActiviteSelector = ({selectedDomaine, onDomaineChange}) => {
+const DomaineActiviteMultiSelector = ({selectedDomaines, onDomainesChange}) => {
 
-    const [domaine, setDomaine] = useState([])
+    const [domaines, setDomaines] = useState([])
 
     useEffect(() => {
         fetch('/api/enums/activites')
@@ -13,27 +13,29 @@ const DomaineActiviteSelector = ({selectedDomaine, onDomaineChange}) => {
                     value: domaine,
                     label: domaine
                 }))
-                setDomaine(options)
+                setDomaines(options)
             })
             .catch((error => {
                 console.error('Erreur lors de la récupération des domaines: ', error)
             }))
     }, []);
 
-    const handleChange = (selectedOption) => {
-        const value = selectedOption ? selectedOption.value : ''
-        onDomaineChange(value)
+    const handleChange = (selectedOptions) => {
+        onDomainesChange(selectedOptions);
     }
+
     return (
         <div>
             <Select
-                options={domaine}
+                isMulti
+                options={domaines}
                 onChange={handleChange}
-                // value={selectedDomaines}
-                value={domaine.find(domaine => domaine.value === selectedDomaine) || null}
+                value={domaines.filter((domaine) =>
+                    selectedDomaines.some((selected) => selected.value === domaine.value)
+                )} // Sélectionner les options déjà choisies
             />
         </div>
     );
 };
 
-export default DomaineActiviteSelector;
+export default DomaineActiviteMultiSelector;

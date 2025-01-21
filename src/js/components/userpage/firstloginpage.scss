@@ -1,37 +1,37 @@
-//.main {
-//  display: flex;
-//  flex-direction: column;
-//
-//  h2 {
-//  }
-//
-//  .form-first-login {
-//    display: grid;
-//    grid-template-columns: repeat(3, 1fr);
-//    gap: 15px;
-//
-//    input{
-//      height: 1.8rem;
-//    }
-//
-//    .user-infos {
-//      display: flex;
-//      flex-direction: column;
-//    }
-//
-//    .user-adresse {
-//      display: flex;
-//      flex-direction: column;
-//    }
-//
-//    .porteur-infos {
-//      display: flex;
-//      flex-direction: column;
-//    }
-//
-//    button {
-//      grid-column: 2;
-//      height: 2rem;
-//    }
-//  }
-//}
+.main {
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+  }
+
+  .form-first-login {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+
+    input{
+      height: 1.8rem;
+    }
+
+    .user-infos {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-adresse {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .porteur-infos {
+      display: flex;
+      flex-direction: column;
+    }
+
+    button {
+      grid-column: 2;
+      height: 2rem;
+    }
+  }
+}

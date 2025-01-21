@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import RolesSelector from "../selector/RolesSelector.jsx";
+import RolesMultiSelector from "../selector/RolesMultiSelector.jsx";
 
 const PreInscription = () => {
 
@@ -112,7 +112,7 @@ const PreInscription = () => {
                         ...formState, adresse: {...formState.adresse, ville: e.target.value}
                     })}
                 />
-                <RolesSelector selectedRoles={formState.roles} onRolesChange={handleRolesChange}/>
+                <RolesMultiSelector selectedRoles={formState.roles} onRolesChange={handleRolesChange}/>
                 <div>
                     <strong>Roles:</strong> {formState.roles.map(role => role.label).join(', ')}
                 </div>

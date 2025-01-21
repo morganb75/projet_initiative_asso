@@ -33,6 +33,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -40,6 +43,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "`user`")
 @Inheritance(strategy = InheritanceType.JOINED)
+
+// Indique que les sous-types sont inclus dans les données JSON
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME, // Utiliser un champ "type" pour identifier le sous-type
+        include = JsonTypeInfo.As.PROPERTY, // Placer le type dans une propriété JSON
+        property = "type" // Le nom du champ pour le type
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Porteur.class, name = "PORTEUR"),
+        @JsonSubTypes.Type(value = Parrain.class, name = "PARRAIN")
+})
 public abstract class User implements UserDetails {
 
     @Id
@@ -67,9 +81,9 @@ public abstract class User implements UserDetails {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
-    private boolean isAccountEnabled;
+    private Boolean isAccountEnabled;
     @Column(nullable = false)
-    private boolean firstLogin;
+    private Boolean firstLogin;
 
     @Override
     public String getUsername() {

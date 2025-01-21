@@ -43,7 +43,7 @@ public class JwtService {
                 "nom", user.getNom(),
                 "prenom", user.getPrenom(),
                 "roles", user.getRoles(),
-                "firstLogin", user.isFirstLogin(),
+                "firstLogin", user.getFirstLogin(),
                 Claims.EXPIRATION, new Date(CURRENT_TIME + jwtConfig.getExpiration()),
                 Claims.SUBJECT, user.getUsername()
         );

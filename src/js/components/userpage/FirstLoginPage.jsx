@@ -3,14 +3,12 @@ import "./firstloginpage.scss"
 import PorteurForm from "./PorteurForm.jsx";
 import ParrainForm from "./ParrainForm.jsx";
 import {useUserContext} from "../../contexts/UserContext.jsx";
-import decodeToken from "../../utils/decodeToken.js";
 import fetchEndPoint from "../../utils/fetchEndPoint.js";
 
 const FirstLoginPage = () => {
 
     const {dataUser} = useUserContext()
-
-    const porteurInitialSate = {
+    const porteurInitialState = {
         nom: '',
         prenom: '',
         email: '',
@@ -51,9 +49,8 @@ const FirstLoginPage = () => {
         zonesDeDeplacement: '',
         disponibilites: ''
     }
-
-    const [porteurFormState, setPorteurFormState] = useState(porteurInitialSate)
-    const [parrainFormState, setParrainFormState] = useState(parrainInitialState)
+    const [formState, setFormState] = useState(() =>
+        dataUser?.roles?.includes('PORTEUR') ? porteurInitialState : parrainInitialState)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -66,25 +63,36 @@ const FirstLoginPage = () => {
                     Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
                 }
             }
-            const data = await fetchEndPoint(URL_USERBYEMAIL, HTTP_DATA)
-            console.log(data)
+            try {
+                const data = await fetchEndPoint(URL_USERBYEMAIL, HTTP_DATA)
+                console.log('fetchdata', data)
+
+                //pre remplissage du formulaire First Login
+                setFormState(prevState => ({
+                    ...prevState,
+                    nom: data.nom,
+                    prenom: data.prenom,
+                    email: data.email,
+                    entreprise: data.entreprise,
+                    adresse: {
+                        ...formState.adresse,
+                        numeroDeVoie: data.adresse.numeroDeVoie,
+                        rue: data.adresse.rue,
+                        complement: data.adresse.complement,
+                        codePostal: data.adresse.codePostal,
+                        ville: data.adresse.ville
+                    }
+                }))
+            } catch (e) {
+                console.error('erreur lors du fetch des données user preenregistré', e)
+            }
         }
         fetchData()
-    }, [dataUser.sub]);
-
-    if (dataUser.roles.includes('PORTEUR')) {
-
-    } else {
-    }
-
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (dataUser.roles.includes('PORTEUR')) {
-            console.log(porteurFormState)
-        } else {
-            console.log(parrainFormState)
-        }
+        console.log(formState)
     }
 
     return (
@@ -94,9 +102,9 @@ const FirstLoginPage = () => {
                 <form className="form-first-login" onSubmit={handleSubmit}>
                     {
                         dataUser.roles.includes('PORTEUR') ?
-                            <PorteurForm formState={porteurFormState} setFormState={setPorteurFormState}/>
+                            <PorteurForm formState={formState} setFormState={setFormState}/>
                             :
-                            <ParrainForm formState={parrainFormState} setFormState={setParrainFormState}/>
+                            <ParrainForm formState={formState} setFormState={setFormState}/>
                     }
                     <button className="button-login" type="submit">Valider</button>
                 </form>

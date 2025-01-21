@@ -25,6 +25,8 @@ public interface UserService extends UserDetailsService {
 
     List<User> getUsers();
 
+    public User updatedUser(Long id, User updatedUser);
+
     // Renvoie l'utilisateur de la BDD quand il existe au DAO Provider (userDetailService)
     // Implementé dans UserServiceImpl
     @Override

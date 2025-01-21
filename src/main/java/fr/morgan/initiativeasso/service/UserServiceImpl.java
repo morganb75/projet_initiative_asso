@@ -37,11 +37,8 @@ public class UserServiceImpl implements UserService {
     public void preInscriptionUser(UserPreinscriptionDto user) {
         Adresse adresse = user.getAdresse();
         Adresse existingAdresse = adresseRepository.findByNumeroDeVoieAndRueAndComplementAndCodePostalAndVille(adresse.getNumeroDeVoie(),
-                adresse.getRue(), adresse.getComplement(), adresse.getCodePostal(), adresse.getVille());
-
-        if (existingAdresse != null) {
-            user.setAdresse(existingAdresse);
-        }
+                adresse.getRue(), adresse.getComplement(), adresse.getCodePostal(), adresse.getVille()).orElse(adresse);
+        user.setAdresse(existingAdresse);
         saveTypedUser(user);
     }
 
@@ -68,6 +65,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User updatedUser(Long id, User updatedUser) {
+        User userToUpdate = updatingUser(id, updatedUser);
+        return userRepository.save(userToUpdate);
     }
 
     @Override
@@ -119,4 +122,84 @@ public class UserServiceImpl implements UserService {
             userRepository.save(salarieAsso);
         }
     }
+
+    @SuppressWarnings("unchecked")
+    private <T extends User> T updatingUser(Long id, T updatedFields) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found!"));
+        if (user instanceof Porteur porteurToUpdate) {
+            Porteur porteurUpdated = (Porteur) updateProcessing(user, updatedFields);
+            return (T) porteurUpdated;
+        } else if (user instanceof Parrain parrainToUpdate) {
+            Parrain parrainUpdated = (Parrain) updateProcessing(user, updatedFields);
+            return (T) parrainUpdated;
+        } else {
+            throw new IllegalArgumentException("L'utilisateur trouvé n'est ni un Porteur ni un Parrain");
+        }
+    }
+
+    private <T extends User> T updateProcessing(T userToUpdate, T updatedFields) {
+
+        if (updatedFields.getNom() != null) {
+            userToUpdate.setNom(updatedFields.getNom());
+        }
+        if (updatedFields.getPrenom() != null) {
+            userToUpdate.setPrenom(updatedFields.getPrenom());
+        }
+        if (updatedFields.getEmail() != null) {
+            userToUpdate.setEmail(updatedFields.getEmail());
+        }
+        if (updatedFields.getEntreprise() != null) {
+            userToUpdate.setEntreprise(updatedFields.getEntreprise());
+        }
+        if (updatedFields.getAdresse() != null) {
+            userToUpdate.setAdresse(updatedFields.getAdresse());
+        }
+        if (updatedFields.getPassword() != null) {
+            userToUpdate.setPassword(passwordEncoder.encode((updatedFields.getPassword())));
+        }
+        userToUpdate.setFirstLogin(false);
+
+        if (userToUpdate instanceof Porteur porteurToUpdate
+                && updatedFields instanceof Porteur updatedPorteur) {
+            if (updatedPorteur.getDateDebutActivite() != null) {
+                porteurToUpdate.setDateDebutActivite(updatedPorteur.getDateDebutActivite());
+            }
+            if (updatedPorteur.getDomaineActivite() != null) {
+                porteurToUpdate.setDomaineActivite(updatedPorteur.getDomaineActivite());
+            }
+            if (updatedPorteur.getBesoinsPotentiel() != null) {
+                porteurToUpdate.setBesoinsPotentiel(updatedPorteur.getBesoinsPotentiel());
+            }
+            if (updatedPorteur.getDisponibilites() != null) {
+                porteurToUpdate.setDisponibilites(updatedPorteur.getDisponibilites());
+            }
+            if (updatedPorteur.getDescriptifActivite() != null) {
+                porteurToUpdate.setDescriptifActivite(updatedPorteur.getDescriptifActivite());
+            }
+            if (updatedPorteur.getLieuActivite() != null) {
+                Adresse updatedAdresse = updatedPorteur.getLieuActivite();
+                Adresse adresse = adresseRepository.findByNumeroDeVoieAndRueAndComplementAndCodePostalAndVille(updatedAdresse.getNumeroDeVoie(),
+                                updatedAdresse.getRue(), updatedAdresse.getComplement(), updatedAdresse.getCodePostal(), updatedAdresse.getVille())
+                        .orElse(updatedAdresse);
+                porteurToUpdate.setLieuActivite(adresse);
+            }
+        }
+        if (userToUpdate instanceof Parrain parrainToUpdate && updatedFields instanceof Parrain updatedParrain) {
+            if (updatedParrain.getParcours() != null) {
+                parrainToUpdate.setParcours(updatedParrain.getParcours());
+            }
+            if (updatedParrain.getDomaineActivite() != null) {
+                parrainToUpdate.setDomaineActivite(updatedParrain.getDomaineActivite());
+            }
+            if (updatedParrain.getZonesDeDeplacement() != null) {
+                parrainToUpdate.setZonesDeDeplacement(updatedParrain.getZonesDeDeplacement());
+            }
+            if (updatedParrain.getDisponibilites() != null) {
+                parrainToUpdate.setDisponibilites(updatedParrain.getDisponibilites());
+            }
+        }
+        return userToUpdate;
+    }
 }
+

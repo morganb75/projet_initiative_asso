@@ -1,15 +1,16 @@
 import React from 'react';
 import UserForm from "./UserForm.jsx";
 import DomaineActiviteSelector from "../selector/DomaineActiviteSelector.jsx";
+import DomaineActiviteMultiSelector from "../selector/DomaineActiviteMultiSelector.jsx";
 
 const PorteurForm = ({formState, setFormState}) => {
 
-    const handleDomaineChange = (selectedDomaine) =>{
-        setFormState(formState => ({...formState, domaineActivite:selectedDomaine}))
+    const handleDomaineChange = (selectedDomaine) => {
+        setFormState(formState => ({...formState, domaineActivite: selectedDomaine}))
     }
 
-    const handleBesoinChange = (selectedDomaine) =>{
-        setFormState(formState => ({...formState, besoinPotentiel:selectedDomaine}))
+    const handleBesoinsChange = (selectedDomaines) => {
+        setFormState(formState => ({...formState, besoinsPotentiels: selectedDomaines}))
     }
 
     return (
@@ -26,8 +27,8 @@ const PorteurForm = ({formState, setFormState}) => {
                 <label htmlFor="domaineactivite">Domaine d'activité:</label>
                 <DomaineActiviteSelector
                     id="domaineactivite"
-                    selectedDomaines={formState.domaineActivite}
-                    onDomainesChange={handleDomaineChange}
+                    selectedDomaine={formState.domaineActivite}
+                    onDomaineChange={handleDomaineChange}
                 />
                 <label htmlFor="lieuactivite">Lieu d'activité:</label>
                 <input
@@ -36,11 +37,11 @@ const PorteurForm = ({formState, setFormState}) => {
                     value={formState.lieuActivite}
                     onChange={(e) => setFormState({...formState, lieuActivite: e.target.value})}
                 />
-                <label htmlFor="besoinpotentiel">Besoin potentiel:</label>
-                <DomaineActiviteSelector
-                    id="besoinpotentiel"
-                    selectedDomaines={formState.besoinPotentiel}
-                    onDomainesChange={handleBesoinChange}
+                <label htmlFor="besoinspotentiels">Besoins potentiels:</label>
+                <DomaineActiviteMultiSelector
+                    id="besoinspotentiels"
+                    selectedDomaines={formState.besoinsPotentiels}
+                    onDomainesChange={handleBesoinsChange}
                 />
                 <label htmlFor="disponibilites">Disponibilités:</label>
                 <input
