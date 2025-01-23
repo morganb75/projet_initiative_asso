@@ -9,53 +9,62 @@ const FirstLoginPage = () => {
 
     const {dataUser} = useUserContext()
     const porteurInitialState = {
-        nom: '',
-        prenom: '',
-        email: '',
-        entreprise: '',
+        type: 'PORTEUR',
+        nom: null,
+        prenom: null,
+        email: null,
+        entreprise: null,
         adresse: {
-            numeroDeVoie: '',
-            rue: '',
-            complement: '',
-            codePostal: '',
-            ville: ''
+            numeroDeVoie: null,
+            rue: null,
+            complement: null,
+            codePostal: null,
+            ville: null
         },
-        plateForme: '',
-        password: '',
-        dateDebutActivite: '',
-        domaineActivite: '',
-        descriptifActivite: '',
-        lieuActivite: '',
+        plateForme: null,
+        password: null,
+        dateDebutActivite: null,
+        domaineActivite: null,
+        descriptifActivite: null,
+        lieuActivite: {
+            numeroDeVoie: null,
+            rue: null,
+            complement: null,
+            codePostal: null,
+            ville: null
+        },
         besoinsPotentiels: [],
-        disponibilites: ''
+        disponibilites: null
     }
 
     const parrainInitialState = {
-        nom: '',
-        prenom: '',
-        email: '',
-        entreprise: '',
+        type: 'PARRAIN',
+        nom: null,
+        prenom: null,
+        email: null,
+        entreprise: null,
         adresse: {
-            numeroDeVoie: '',
-            rue: '',
-            complement: '',
-            codePostal: '',
-            ville: ''
+            numeroDeVoie: null,
+            rue: null,
+            complement: null,
+            codePostal: null,
+            ville: null
         },
-        plateForme: '',
-        password: '',
-        parcours: '',
-        domaineActivite: '',
-        zonesDeDeplacement: '',
-        disponibilites: ''
+        plateForme: null,
+        password: null,
+        parcours: null,
+        domaineActivite: null,
+        zonesDeDeplacement: [],
+        disponibilites: null
     }
     const [formState, setFormState] = useState(() =>
-        dataUser?.roles?.includes('PORTEUR') ? porteurInitialState : parrainInitialState)
+    dataUser?.roles?.includes('PORTEUR') ? porteurInitialState : parrainInitialState
+)
 
     useEffect(() => {
         const fetchData = async () => {
             const URL_USERBYEMAIL = `/api/user?email=${dataUser.sub}`
-
+            // console.log(dataUser)
             const HTTP_DATA = {
                 method: 'GET',
                 headers: {
@@ -90,9 +99,21 @@ const FirstLoginPage = () => {
         fetchData()
     }, []);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         console.log(formState)
+        const URL_FIRSTLOGIN = `/api/user/${dataUser.id}`
+        const HTTP_DATA = {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json',
+                Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
+            },
+            body: JSON.stringify(formState)
+        }
+        fetch(URL_FIRSTLOGIN, HTTP_DATA)
+            .then(response => alert('Informations enregistrées avec succès'))
+            .catch(e => console.error("Fetch error", e))
     }
 
     return (
@@ -110,7 +131,7 @@ const FirstLoginPage = () => {
                 </form>
             </div>
         </>
-    );
-};
+    )
+}
 
 export default FirstLoginPage;

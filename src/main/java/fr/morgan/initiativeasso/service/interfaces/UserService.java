@@ -1,5 +1,7 @@
 package fr.morgan.initiativeasso.service.interfaces;
 
+import fr.morgan.initiativeasso.model.Parrain;
+import fr.morgan.initiativeasso.model.Porteur;
 import fr.morgan.initiativeasso.model.User;
 import fr.morgan.initiativeasso.model.dto.UserPreinscriptionDto;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
@@ -26,6 +28,9 @@ public interface UserService extends UserDetailsService {
     List<User> getUsers();
 
     public User updatedUser(Long id, User updatedUser);
+
+    public List<Porteur> findAllPorteurs();
+    public List<Parrain> findAllParrains();
 
     // Renvoie l'utilisateur de la BDD quand il existe au DAO Provider (userDetailService)
     // Implementé dans UserServiceImpl

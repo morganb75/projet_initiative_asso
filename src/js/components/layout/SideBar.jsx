@@ -7,7 +7,6 @@ const SideBar = () => {
 
     const {dataUser} = useUserContext()
     const navigate = useNavigate()
-    console.log(dataUser)
 
     const handleListUsers = () => {
         alert('liste users')

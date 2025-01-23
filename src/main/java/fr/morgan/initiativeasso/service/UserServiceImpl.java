@@ -74,6 +74,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<Porteur> findAllPorteurs() {
+        return userRepository.findUsersByType(Porteur.class);
+    }
+
+    @Override
+    public List<Parrain> findAllParrains() {
+        return userRepository.findUsersByType(Parrain.class);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return (userRepository.findUserByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Pas d'utilisateur correspondant au username" + username)));
@@ -153,7 +163,11 @@ public class UserServiceImpl implements UserService {
             userToUpdate.setEntreprise(updatedFields.getEntreprise());
         }
         if (updatedFields.getAdresse() != null) {
-            userToUpdate.setAdresse(updatedFields.getAdresse());
+            Adresse updatedAdresse = updatedFields.getAdresse();
+            Adresse existingAdresse = adresseRepository.findByNumeroDeVoieAndRueAndComplementAndCodePostalAndVille(updatedAdresse.getNumeroDeVoie(),
+                            updatedAdresse.getRue(), updatedAdresse.getComplement(), updatedAdresse.getCodePostal(), updatedAdresse.getVille())
+                    .orElse(updatedAdresse);
+            userToUpdate.setAdresse(existingAdresse);
         }
         if (updatedFields.getPassword() != null) {
             userToUpdate.setPassword(passwordEncoder.encode((updatedFields.getPassword())));

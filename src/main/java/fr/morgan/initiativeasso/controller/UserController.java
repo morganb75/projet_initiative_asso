@@ -1,10 +1,15 @@
 package fr.morgan.initiativeasso.controller;
 
+import fr.morgan.initiativeasso.model.Parrain;
 import fr.morgan.initiativeasso.model.Porteur;
 import fr.morgan.initiativeasso.model.User;
+import fr.morgan.initiativeasso.model.enums.UserRole;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 import fr.morgan.initiativeasso.service.interfaces.UserService;
 
+import java.util.List;
+
+import org.springframework.context.annotation.Role;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -38,5 +43,15 @@ public class UserController {
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) throws UserNotFoundException {
         User userUpDated = userService.updatedUser(id, user);
         return ResponseEntity.ok(userUpDated);
+    }
+
+    @GetMapping("/parrains")
+    public List<Parrain> findParrainsForPorteurFeed() {
+        return userService.findAllParrains();
+    }
+
+    @GetMapping("/porteurs")
+    public List<Porteur> findPorteursForParrainFeed() {
+        return userService.findAllPorteurs();
     }
 }

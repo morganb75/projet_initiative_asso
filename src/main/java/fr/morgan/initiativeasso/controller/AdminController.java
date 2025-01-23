@@ -24,11 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
 
     private final UserService userService;
-    private final AdresseService adresseService;
 
     public AdminController(UserService userService, AdresseService adresseService) {
         this.userService = userService;
-        this.adresseService = adresseService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)

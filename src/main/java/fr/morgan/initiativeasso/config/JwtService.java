@@ -40,6 +40,7 @@ public class JwtService {
         final long CURRENT_TIME = System.currentTimeMillis();
 
         final Map<String, Object> claims = Map.of(
+                "id",user.getId(),
                 "nom", user.getNom(),
                 "prenom", user.getPrenom(),
                 "roles", user.getRoles(),

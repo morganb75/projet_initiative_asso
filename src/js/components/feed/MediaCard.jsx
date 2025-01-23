@@ -1,12 +1,18 @@
 import React from 'react';
+import {useDataFeedContext} from "../../contexts/DataFeedContext.jsx";
 
-const MediaCard = () => {
+const MediaCard = ({nom, prenom, entreprise, domaineActivite}) => {
     return (
         <div className="mediacard">
-            <img src='#' alt='img-profil'/>
-            <p>Nom</p>
-            <p>Prénom</p>
-            <p>Entreprise</p>
+            <div className="mediacard-header">
+                <img src='#' alt='img-profil'/>
+            </div>
+            <div className="mediacard-body">
+                <h2>{nom}</h2>
+                <h2>{prenom}</h2>
+                <h3>{entreprise}</h3>
+                <p>{domaineActivite}</p>
+            </div>
         </div>
     );
 };

@@ -44,46 +44,46 @@ const UserForm = ({formState, setFormState}) => {
             </div>
 
             <div className="user-adresse">
-                <label htmlFor="numero">N° de voie:</label>
+                <label htmlFor="user-numero">N° de voie:</label>
                 <input
                     type="number"
-                    id="numero"
+                    id="user-numero"
                     value={formState?.adresse?.numeroDeVoie}
                     onChange={(e) => setFormState({
                         ...formState, adresse: {...formState.adresse, numeroDeVoie: e.target.value}
                     })}
                 />
-                <label htmlFor="rue">Rue:</label>
+                <label htmlFor="user-rue">Rue:</label>
                 <input
                     type="text"
-                    id="rue"
+                    id="user-rue"
                     value={formState?.adresse?.rue}
                     onChange={(e) => setFormState({
                         ...formState, adresse: {...formState.adresse, rue: e.target.value}
                     })}
                 />
-                <label htmlFor="complement">Complement:</label>
+                <label htmlFor="user-complement">Complement:</label>
                 <input
                     type="text"
-                    id="complement"
+                    id="user-complement"
                     value={formState?.adresse?.complement}
                     onChange={(e) => setFormState({
                         ...formState, adresse: {...formState.adresse, complement: e.target.value}
                     })}
                 />
-                <label htmlFor="codePostal">Code postal:</label>
+                <label htmlFor="user-codePostal">Code postal:</label>
                 <input
                     type="codePostal"
-                    id="codePostal"
+                    id="user-codePostal"
                     value={formState?.adresse?.codePostal}
                     onChange={(e) => setFormState({
                         ...formState, adresse: {...formState.adresse, codePostal: e.target.value}
                     })}
                 />
-                <label htmlFor="ville">Ville:</label>
+                <label htmlFor="user-ville">Ville:</label>
                 <input
                     type="text"
-                    id="ville"
+                    id="user-ville"
                     value={formState?.adresse?.ville}
                     onChange={(e) => setFormState({
                         ...formState, adresse: {...formState.adresse, ville: e.target.value}
