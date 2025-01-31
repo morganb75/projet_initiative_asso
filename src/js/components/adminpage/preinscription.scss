@@ -1,11 +1,11 @@
-.first-login-h2 {
+.preinscription-h1 {
   grid-column: 3/11;
   grid-row-start: 1;
 }
 
-.form-first-login {
+.form-preinscription {
   grid-column: 2/12;
-  grid-row: 3/11;
+  grid-row: 2/12;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,10 +13,11 @@
 
   .form {
     display: flex;
+    flex-direction: row;
     gap: 2rem;
   }
 
-  .firstlogin-button {
+  .preinscription-button {
     grid-column: 5/span 3;
     grid-row: 12/13;
     width: 12rem;
@@ -27,7 +28,7 @@
     transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
   }
 
-  .firstlogin-button:hover {
+  .preinscription-button:hover {
     box-shadow: 0.3rem 0.3rem 20px rgba(229, 25, 104, 1);
     transform: translateY(-5px);
   }
@@ -56,40 +57,17 @@
   .item {
     display: flex;
     flex-direction: column;
-
-    .activite-selector, .zone-deplacement-multiselector {
-      border: 1px solid rgba(113, 200, 30, 1);
-      border-radius: 0.5rem;
-    }
-
-    textarea {
-      border: 1px solid rgba(113, 200, 30, 1);
-      border-radius: 0.5rem;
-      padding-left: 0.3rem;
-    }
   }
 
-  .user-infos {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
-
-  .user-adresse {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
-
-  .porteur-infos {
-    display: flex;
-    flex-direction: row;
-    gap: 3rem;
-  }
-
-  .parrain-infos-activite {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
+  //.item-civilité{
+  //  display: flex;
+  //  flex-direction: row;
+  //
+  //  .item-civilite-secondary{
+  //    display: flex;
+  //    flex-direction: column;
+  //    align-items: center;
+  //    width:20%;
+  //  }
+  //}
 }

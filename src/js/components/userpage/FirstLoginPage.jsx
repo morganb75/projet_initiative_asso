@@ -4,10 +4,12 @@ import PorteurForm from "./PorteurForm.jsx";
 import ParrainForm from "./ParrainForm.jsx";
 import {useUserContext} from "../../contexts/UserContext.jsx";
 import fetchEndPoint from "../../utils/fetchEndPoint.js";
+import {useNavigate} from "react-router-dom";
 
 const FirstLoginPage = () => {
 
     const {dataUser} = useUserContext()
+    const navigate = useNavigate()
     const porteurInitialState = {
         type: 'PORTEUR',
         nom: null,
@@ -112,22 +114,27 @@ const FirstLoginPage = () => {
             body: JSON.stringify(formState)
         }
         fetch(URL_FIRSTLOGIN, HTTP_DATA)
-            .then(response => alert('Informations enregistrées avec succès'))
+            .then(response =>{
+                alert('Informations enregistrées avec succès')
+                // navigate("/user")
+            } )
             .catch(e => console.error("Fetch error", e))
     }
 
     return (
         <>
             <div className="main">
-                <h2>Bienvenue, veuillez vérifier et compléter votre profil</h2>
+                <h2 className="first-login-h2">Bienvenue, veuillez vérifier et compléter votre profil</h2>
                 <form className="form-first-login" onSubmit={handleSubmit}>
+                    <div className="form">
                     {
                         dataUser.roles.includes('PORTEUR') ?
                             <PorteurForm formState={formState} setFormState={setFormState}/>
                             :
                             <ParrainForm formState={formState} setFormState={setFormState}/>
                     }
-                    <button className="button-login" type="submit">Valider</button>
+                    </div>
+                    <button className="firstlogin-button" type="submit">Valider</button>
                 </form>
             </div>
         </>

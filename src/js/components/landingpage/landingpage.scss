@@ -1,17 +1,14 @@
 .main {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(12, 1fr);
-  justify-items: center;
-  gap: 10px;
-  height: 65vh;
+  height: 75vh;
 
-  img {
+  .landing-img {
     grid-column: 2/12;
     grid-row: 1/11;
+    border: 1px solid rgba(229, 25, 104, 1);
+    box-shadow: 3px 3px 5px rgba(113, 200, 30, 1);
     border-radius: 20px;
     object-fit: cover;
-    opacity: 0.5;
+    opacity: 0.6;
     width: 90%;
     height: 95%;
   }
@@ -19,21 +16,21 @@
   .text1 {
     z-index: 1;
     grid-column: 3/11;
-    grid-row: 1/2;
+    grid-row: 2/3;
     text-align: center;
   }
 
   .text2 {
     z-index: 1;
     grid-column: 3/11;
-    grid-row: 3/4;
+    grid-row: 5/6;
     text-align: center;
   }
 
   .text3 {
     z-index: 1;
     grid-column: 3/11;
-    grid-row: 10/11;
+    grid-row: 8/9;
     text-align: center;
   }
 
@@ -47,10 +44,15 @@
     font-weight: bold;
     color: rgba(229, 25, 104, 1);
     background-color: #ffffff;
-    box-shadow: 3px 3px 5px darkgrey;
+    box-shadow: 3px 3px 5px rgba(113, 200, 30, 1);
     text-align: center;
     text-decoration: none; /* Enlève la décoration de texte */
     border-radius: 10px;
     transition: background-color 0.3s;
+  }
+
+  .button:hover {
+    box-shadow: 0.3rem 0.3rem 20px rgba(229, 25, 104, 1);
+    transform: translateY(-5px);
   }
 }

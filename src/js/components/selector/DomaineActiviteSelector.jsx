@@ -25,8 +25,9 @@ const DomaineActiviteSelector = ({selectedDomaine, onDomaineChange}) => {
         onDomaineChange(value)
     }
     return (
-        <div>
+        <div className="activite-selector">
             <Select
+                // className="activite-selector"
                 options={domaine}
                 onChange={handleChange}
                 // value={selectedDomaines}

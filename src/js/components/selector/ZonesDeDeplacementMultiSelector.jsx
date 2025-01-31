@@ -26,7 +26,7 @@ const ZonesDeDeplacementMultiSelector = ({selectedZones, onZonesChange}) => {
     }
 
     return (
-        <div>
+        <div className="zone-deplacement-multiselector">
             <Select
                 isMulti
                 options={zones}

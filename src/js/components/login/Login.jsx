@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
 import "./login.scss"
+import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import decodeToken from "../../utils/decodeToken.js";
 import {useUserContext} from "../../contexts/UserContext.jsx";
@@ -32,9 +32,9 @@ const Login = () => {
             if (roles.includes("ADMIN")) {
                 navigate("/admin")
             } else if (firstLogin) {
-                navigate("/firstlogin/")
+                navigate("/firstlogin")
             } else {
-                navigate("/user/")
+                navigate("/user")
             }
         } catch (error) {
             alert(error + " Echec de connexion! Email ou mot de Passe incorrect")
@@ -44,10 +44,12 @@ const Login = () => {
     return (
         <>
             <div className="main">
+                <h2 className="login-h2">Veuillez vous identifier</h2>
                 <form className="form-login" onSubmit={handleSubmit}>
                     <div className="form-login-field">
                         <label htmlFor="Email">Email utilisateur:</label>
                         <input
+                            className="login-input"
                             type="text"
                             id="email"
                             autoComplete="username"
@@ -58,6 +60,7 @@ const Login = () => {
                     <div className="form-login-field">
                         <label htmlFor="password">Mot de passe:</label>
                         <input
+                            className="login-input"
                             type="password"
                             id="password"
                             autoComplete="current-password"
@@ -66,7 +69,9 @@ const Login = () => {
                             }
                         />
                     </div>
-                    <button className="button-login" type="submit">Login</button>
+                    <div className="form-login-field">
+                        <button className="login-button" type="submit">Login</button>
+                    </div>
                 </form>
             </div>
         </>

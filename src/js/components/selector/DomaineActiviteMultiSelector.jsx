@@ -25,7 +25,7 @@ const DomaineActiviteMultiSelector = ({selectedDomaines, onDomainesChange}) => {
     }
 
     return (
-        <div>
+        <div className="activite-selector">
             <Select
                 isMulti
                 options={domaines}

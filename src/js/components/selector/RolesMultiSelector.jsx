@@ -27,15 +27,17 @@ const RolesMultiSelector = ({selectedRoles, onRolesChange}) => {
     }
 
     return (
-        <div>
+        <>
+            <label htmlFor="roles">Roles</label>
             <Select
+                id="roles"
                 isMulti
                 options={roles}
                 onChange={handleChange}
                 // value={selectedRoles}
                 value={roles.filter(role => selectedRoles.includes(role.value))}
             />
-        </div>
+        </>
     );
 };
 

@@ -1,0 +1,31 @@
+// Variables pour Open Sans
+$primary-font: 'Open Sans', sans-serif;
+
+/*!* initialisation page *!*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*!* Styles de base *!*/
+body {
+  font-family: $primary-font;
+  line-height: 1.6;
+  background-color: rgb(85, 78, 79);
+  color: #333;
+  padding: 10px;
+
+  .main {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.6)), url("assets/fondTTM.jpg");
+    background-size:contain;
+    background-position:center;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    justify-items: center;
+    align-items: center;
+    gap: 10px;
+    height: 75vh;
+  }
+}

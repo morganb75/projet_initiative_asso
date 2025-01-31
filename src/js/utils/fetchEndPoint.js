@@ -1,4 +1,4 @@
-const fetchEndPoint = (url, httpData) => {
+const fetchEndPoint = async (url, httpData) => {
     return fetch(url, httpData)
         .then(response => {
             if (!response.ok) {

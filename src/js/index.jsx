@@ -1,4 +1,5 @@
 import {StrictMode} from 'react'
+import "./init.scss"
 import {createRoot} from 'react-dom/client'
 import {Route, BrowserRouter as Router, Routes} from 'react-router-dom'
 
@@ -20,12 +21,12 @@ const Main = () => {
                 <Router>
                     <Routes>
                         <Route element={<Layout/>}>
-                            <Route path="/" element={<LandingPage/>}/>
+                            <Route path="" element={<LandingPage/>}/>
                             <Route path="/login" element={<Login/>}/>
+                            <Route path="/firstlogin" element={<FirstLoginPage/>}/>
+                            <Route path="/user" element={<UserPage/>}/>
                             <Route path="/admin" element={<AdminPage/>}/>
                             <Route path="/admin/preinscrire" element={<PreInscription/>}/>
-                            <Route path="/user" element={<UserPage/>}/>
-                            <Route path="/firstlogin" element={<FirstLoginPage/>}/>
                         </Route>
                     </Routes>
                 </Router>
@@ -37,7 +38,7 @@ const Main = () => {
 export default Main;
 
 createRoot(document.getElementById('root')).render(
-    <StrictMode>
+    // <StrictMode>
         <Main/>
-    </StrictMode>,
+    // </StrictMode>,
 )

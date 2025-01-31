@@ -2,7 +2,7 @@ import {createContext, useContext, useState} from "react";
 
 //1. Creation du context
 export const DataFeedContext = createContext({
-        dataFeed: {},
+        dataFeed: [],
         setDataFeed: () => {
         }
     }

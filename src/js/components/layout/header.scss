@@ -1,8 +1,9 @@
 header {
   display: flex;
   align-items: center;
-  height: 20vh;
+  height: 12vh;
   border-bottom: 1px solid rgba(229, 25, 104, 1);
+  color: #ecdfe0;
 
   .logo1 {
     flex: 1;
@@ -18,11 +19,10 @@ header {
 
     img {
       width: 100%;
-      hight: auto;
+      height: auto;
       object-fit: cover;
     }
   }
-
   .user {
     flex: 1;
     font-weight: bolder;

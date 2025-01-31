@@ -1,10 +1,11 @@
+import './feed.scss'
 import React from 'react';
 import MediaCard from "./MediaCard.jsx";
 import {useDataFeedContext} from "../../contexts/DataFeedContext.jsx";
-import './feed.scss'
 
 const Feed = () => {
     const {dataFeed} = useDataFeedContext()
+    console.log(dataFeed)
     return (
         <div className="feed">
             {dataFeed.map((user) => (

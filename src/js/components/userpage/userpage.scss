@@ -1,0 +1,17 @@
+#main-userpage {
+  height: auto;
+  padding: 10px;
+}
+
+  //.sidebar {
+  //  grid-column: 1/2;
+  //  grid-row: 1/ 12;
+  //}
+
+  .userpage-text2 {
+    z-index: 1;
+    grid-column: 3/11;
+    grid-row: 1/2;
+    text-align: center;
+
+  }
