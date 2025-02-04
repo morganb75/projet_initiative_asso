@@ -116,7 +116,7 @@ const FirstLoginPage = () => {
         fetch(URL_FIRSTLOGIN, HTTP_DATA)
             .then(response =>{
                 alert('Informations enregistrées avec succès')
-                // navigate("/user")
+                navigate("/user")
             } )
             .catch(e => console.error("Fetch error", e))
     }

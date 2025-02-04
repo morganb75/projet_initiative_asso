@@ -53,7 +53,7 @@ const Header = () => {
                 <span>{dataUser.prenom} </span>
                 <span>{dataUser.nom}</span>
                 <button onClick={handleLogout}>
-                    <img src={deconnect}/>
+                    <img src={deconnect} alt="logout"/>
                 </button>
             </>)}
         </div>

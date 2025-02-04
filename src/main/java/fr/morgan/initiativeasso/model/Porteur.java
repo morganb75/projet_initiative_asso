@@ -5,8 +5,6 @@ import fr.morgan.initiativeasso.model.enums.SecteursReseaux;
 import fr.morgan.initiativeasso.model.enums.UserRole;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -14,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -40,10 +39,22 @@ public class Porteur extends User {
     private String disponibilites;
 
     @Builder
+
     public Porteur(Long id, String nom, String prenom, String email, String entreprise, Adresse adresse, PlateForme plateForme, List<UserRole> roles,
-            String password, boolean isAccountEnabled, boolean firstLogin, LocalDate dateDebutActivite, SecteursReseaux domaineActivite,
+            String password, Set<Like> likes, Boolean isAccountEnabled, Boolean firstLogin, LocalDate dateDebutActivite,
+            SecteursReseaux domaineActivite,
             String descriptifActivite, List<TypeAccompagnement> besoinsPotentiel, Adresse lieuActivite, String disponibilites) {
-        super(id, nom, prenom, email, entreprise, adresse, plateForme, roles, password, isAccountEnabled, firstLogin);
+        super(id, nom, prenom, email, entreprise, adresse, plateForme, roles, password, likes, isAccountEnabled, firstLogin);
+        this.dateDebutActivite = dateDebutActivite;
+        this.domaineActivite = domaineActivite;
+        this.descriptifActivite = descriptifActivite;
+        this.besoinsPotentiel = besoinsPotentiel;
+        this.lieuActivite = lieuActivite;
+        this.disponibilites = disponibilites;
+    }
+
+    public Porteur(LocalDate dateDebutActivite, SecteursReseaux domaineActivite, String descriptifActivite, List<TypeAccompagnement> besoinsPotentiel,
+            Adresse lieuActivite, String disponibilites) {
         this.dateDebutActivite = dateDebutActivite;
         this.domaineActivite = domaineActivite;
         this.descriptifActivite = descriptifActivite;

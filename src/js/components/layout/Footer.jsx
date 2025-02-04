@@ -12,7 +12,7 @@ const Footer = () => {
             <div className='footer-top'>
                 <div className='footer-top-left'>
                     <div className='logo-footer'>
-                        <img src={logo}/>
+                        <img src={logo} alt="logo-ttm"/>
                     </div>
                     <div className='text-footer'>
                         <div className='text-tel-footer'>
@@ -27,10 +27,10 @@ const Footer = () => {
                 </div>
                 <div className='footer-top-right'>
                     <div className='reseaux-sociaux-footer'>
-                        <img src={logofb}/>
-                        <img src={logolnkdn}/>
-                        <img src={logotiktok}/>
-                        <img src={logoinsta}/>
+                        <img src={logofb} alt="logo-facebook"/>
+                        <img src={logolnkdn} alt="logo-linkedin"/>
+                        <img src={logotiktok} alt="logo-tiktok"/>
+                        <img src={logoinsta} alt="logo-instagram"/>
                     </div>
                 </div>
             </div>

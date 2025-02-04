@@ -47,7 +47,7 @@ const Login = () => {
                 <h2 className="login-h2">Veuillez vous identifier</h2>
                 <form className="form-login" onSubmit={handleSubmit}>
                     <div className="form-login-field">
-                        <label htmlFor="Email">Email utilisateur:</label>
+                        <label htmlFor="email">Email utilisateur:</label>
                         <input
                             className="login-input"
                             type="text"

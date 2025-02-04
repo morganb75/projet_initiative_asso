@@ -2,9 +2,9 @@ package fr.morgan.initiativeasso.model.exception;
 
 import lombok.Builder;
 
-public class UserNotFoundException extends Exception{
+public class LikeNotFoundException extends Exception{
     @Builder
-    public UserNotFoundException(String message) {
+    public LikeNotFoundException(String message) {
         super(message);
     }
 }
