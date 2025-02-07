@@ -17,14 +17,11 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
@@ -84,9 +81,6 @@ public abstract class User implements UserDetails {
     private List<UserRole> roles;
     @Column(nullable = false)
     private String password;
-    //TODO finir implementation like
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Like> likes = new HashSet<>();
     @Column(nullable = false)
     private Boolean isAccountEnabled;
     @Column(nullable = false)

@@ -7,8 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 
 import java.time.LocalDateTime;
 
@@ -18,28 +16,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 @Entity
-@Table(name = "likes",
-uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "liked_user_id"})})
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Builder
-public class Like {
+public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "sender_id",nullable = false)
+    private User senderUser;
+    @ManyToOne
+    @JoinColumn(name = "receiver_id",nullable = false)
+    private User receiverUser;
     @Column(nullable = false)
-    private LocalDateTime dateCreation;
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-    @ManyToOne
-    @JoinColumn(name = "liked_user_id", nullable = false)
-    private User likedUser;
+    private LocalDateTime dateNotification;
 }

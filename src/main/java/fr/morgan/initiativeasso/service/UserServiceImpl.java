@@ -182,8 +182,8 @@ public class UserServiceImpl implements UserService {
             if (updatedPorteur.getDomaineActivite() != null) {
                 porteurToUpdate.setDomaineActivite(updatedPorteur.getDomaineActivite());
             }
-            if (updatedPorteur.getBesoinsPotentiel() != null) {
-                porteurToUpdate.setBesoinsPotentiel(updatedPorteur.getBesoinsPotentiel());
+            if (updatedPorteur.getBesoinsPotentiels() != null) {
+                porteurToUpdate.setBesoinsPotentiels(updatedPorteur.getBesoinsPotentiels());
             }
             if (updatedPorteur.getDisponibilites() != null) {
                 porteurToUpdate.setDisponibilites(updatedPorteur.getDisponibilites());
