@@ -34,11 +34,11 @@ const Main = () => {
 export default Main;
 
 createRoot(document.getElementById('root')).render(
-    // <StrictMode>
+    <StrictMode>
     <UserContextProvider>
         <DataFeedContextProvider>
             <Main/>
         </DataFeedContextProvider>
     </UserContextProvider>
-    // </StrictMode>
+     </StrictMode>
 )
