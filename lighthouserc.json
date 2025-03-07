@@ -2,9 +2,9 @@
   "ci": {
     "collect": {
       "url": [
-        "http://localhost:4173"
+        "http://localhost:3000"
       ],
-      "startServerCommand": "http-server ./build -p 4173",
+      "startServerCommand": "http-server ./build -p 3000",
       "startServerReadyPattern": "Available on",
       "numberOfRuns": 1
     },
