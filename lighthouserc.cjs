@@ -2,11 +2,9 @@ module.exports = {
   ci: {
     collect: {
       numberOfRuns: 3,
-      url: ["http://localhost:4173"],  // Change 3000 → 4173
+      url: ["http://localhost:4173"], // Assure-toi que le serveur tourne bien ici
       settings: {
-        startServerCommand: "http-server ./build -p 4173",
-        startServerReadyPattern: "Available on",
-        numberOfRuns: 1
+        chromeFlags: "--no-sandbox --ignore-certificate-errors --disable-dev-shm-usage"
       }
     },
     assert: {
