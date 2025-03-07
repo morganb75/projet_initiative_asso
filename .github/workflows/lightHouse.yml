@@ -33,5 +33,16 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Start frontend server
+        run: |
+          cd src/js
+          npm install
+          npm run build
+          nohup npm run preview &  # Démarre le serveur en arrière-plan
+          sleep 5  # Attends quelques secondes que le serveur soit prêt
+
+          - name: Check if frontend is running
+            run: curl -I http://localhost:4173 || exit 1  # Vérifie que le serveur est bien en ligne
+
       - name: Run Lighthouse CI
         run: lhci autorun
