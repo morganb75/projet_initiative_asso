@@ -48,10 +48,22 @@ jobs:
           cache: 'npm'
           cache-dependency-path: package-lock.json
 
-      - name: Install frontend dependencies
+      - name: Désactiver Nexus et forcer npm public
         run: |
-            cd src/js
-            npm install
+          echo "registry=https://registry.npmjs.org/" > ~/.npmrc
+          echo "strict-ssl=false" >> ~/.npmrc
+          npm config list
+
+      - name: Supprimer éventuelles dépendances Nexus
+        run: rm -rf node_modules package-lock.json
+
+      - name: Installer les dépendances depuis npm public
+        run: npm install --no-cache --prefer-online
+
+#      - name: Install frontend dependencies
+#        run: |
+#            cd src/js
+#            npm install
 
       - name: Run frontend lint
         run: |
