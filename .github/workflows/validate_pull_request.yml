@@ -84,7 +84,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: REACT-build
-          path: src/js/dist
+          path: dist
 
       - name: Install backend dependencies
         run: mvn clean install -DskipTests
