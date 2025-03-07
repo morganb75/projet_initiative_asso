@@ -33,8 +33,15 @@ jobs:
       - name: Install http-server
         run: npm install -g http-server
 
-      - name: Build project
-        run: npm run build
+      - name: Start frontend server
+        run: |
+          cd src/js
+          npm run build
+          npm run preview &  # Démarre le serveur en arrière-plan
+          sleep 5  # Attends quelques secondes pour que le serveur démarre
+
+          - name: Check if frontend is running
+            run: curl -I http://localhost:3000 || exit 1
 
       - name: Run Lighthouse CI
         run: lhci autorun
