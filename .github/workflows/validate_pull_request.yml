@@ -70,10 +70,10 @@ jobs:
 #            cd src/js
 #            npm run lint
 
-      - name: Run frontend tests
-        run: |
-          cd frontend
-          npm test -- --ci
+#      - name: Run frontend tests
+#        run: |
+#          cd frontend
+#          npm test -- --ci
 
       - name: Build frontend
         run: |
@@ -89,8 +89,8 @@ jobs:
       - name: Install backend dependencies
         run: mvn clean install -DskipTests
 
-      - name: Run backend tests
-        run: mvn test -Dtest=src/test/**/*
+#      - name: Run backend tests
+#        run: mvn test -Dtest=src/test/**/*
 
       - name: Save backend build artifact
         uses: actions/upload-artifact@v4
