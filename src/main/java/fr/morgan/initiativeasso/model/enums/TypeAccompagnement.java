@@ -1,5 +1,8 @@
 package fr.morgan.initiativeasso.model.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum TypeAccompagnement {
     RESSOURCES_HUMAINES("Ressources humaines"),
     FINANCE_COMPTABILITE("Finance / Comptabilité"),
@@ -11,9 +14,5 @@ public enum TypeAccompagnement {
 
     TypeAccompagnement(String label) {
         this.label = label;
-    }
-
-    public String getLabel() {
-        return label;
     }
 }

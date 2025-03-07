@@ -1,13 +1,14 @@
 name: Validation des pull requests
 
 on:
-  pull_request:
+#  pull_request:
+  push:
     branches:
       - main
-    types:
-      - synchronize
-      - reopened
-      - ready_for_review
+#    types:
+#      - synchronize
+#      - reopened
+#      - ready_for_review
 
 jobs:
   check:
@@ -62,8 +63,25 @@ jobs:
           cd frontend
           npm test -- --ci
 
+      - name: Build frontend
+        run: |
+          cd src/js
+          npm run build
+
+      - name: Save frontend build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: REACT-build
+          path: src/js/build
+
       - name: Install backend dependencies
         run: mvn clean install -DskipTests
 
       - name: Run backend tests
         run: mvn test -Dtest=src/test/**/*
+
+      - name: Save backend build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SPRING-jar
+          path: target/*.jar

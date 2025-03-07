@@ -16,29 +16,29 @@ import DataFeedContextProvider from "./contexts/DataFeedContext.jsx";
 
 const Main = () => {
     return (
-        <UserContextProvider>
-            <DataFeedContextProvider>
-                <Router>
-                    <Routes>
-                        <Route element={<Layout/>}>
-                            <Route path="" element={<LandingPage/>}/>
-                            <Route path="/login" element={<Login/>}/>
-                            <Route path="/firstlogin" element={<FirstLoginPage/>}/>
-                            <Route path="/user" element={<UserPage/>}/>
-                            <Route path="/admin" element={<AdminPage/>}/>
-                            <Route path="/admin/preinscrire" element={<PreInscription/>}/>
-                        </Route>
-                    </Routes>
-                </Router>
-            </DataFeedContextProvider>
-        </UserContextProvider>
-    );
+
+        <Router>
+            <Routes>
+                <Route element={<Layout/>}>
+                    <Route path="" element={<LandingPage/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/firstlogin" element={<FirstLoginPage/>}/>
+                    <Route path="/user" element={<UserPage/>}/>
+                    <Route path="/admin" element={<AdminPage/>}/>
+                    <Route path="/admin/preinscrire" element={<PreInscription/>}/>
+                </Route>
+            </Routes>
+        </Router>)
 };
 
 export default Main;
 
 createRoot(document.getElementById('root')).render(
     // <StrictMode>
-        <Main/>
-    // </StrictMode>,
+    <UserContextProvider>
+        <DataFeedContextProvider>
+            <Main/>
+        </DataFeedContextProvider>
+    </UserContextProvider>
+    // </StrictMode>
 )

@@ -2,6 +2,7 @@ package fr.morgan.initiativeasso.model.dto;
 
 import fr.morgan.initiativeasso.model.Adresse;
 import fr.morgan.initiativeasso.model.enums.SecteursReseaux;
+import fr.morgan.initiativeasso.model.enums.TypeAccompagnement;
 
 import java.time.LocalDate;
 import java.util.List;

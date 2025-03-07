@@ -28,10 +28,10 @@ public class Porteur extends User {
     private LocalDate dateDebutActivite;
     private SecteursReseaux domaineActivite;
     private String descriptifActivite;
-    @ManyToMany
-    @JoinTable(name = "porteur_typeaccompagnement",
-            joinColumns = @JoinColumn(name = "porteur_id"),
-            inverseJoinColumns = @JoinColumn(name = "type_accompagnement_id"))
+//    @ManyToMany
+//    @JoinTable(name = "porteur_typeaccompagnement",
+//            joinColumns = @JoinColumn(name = "porteur_id"),
+//            inverseJoinColumns = @JoinColumn(name = "type_accompagnement_id"))
     private List<TypeAccompagnement> besoinsPotentiels;
     @ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "lieu_activite_id")
