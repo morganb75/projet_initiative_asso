@@ -42,7 +42,7 @@ jobs:
           sleep 5  # Attends quelques secondes que le serveur soit prêt
 
           - name: Check if frontend is running
-            run: curl -I http://localhost:4173 || exit 1  # Vérifie que le serveur est bien en ligne
+            run: curl -I http://localhost:3000 || exit 1  # Vérifie que le serveur est bien en ligne
 
       - name: Run Lighthouse CI
         run: lhci autorun
