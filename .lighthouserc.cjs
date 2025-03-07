@@ -2,10 +2,12 @@ module.exports = {
   ci: {
     collect: {
       numberOfRuns: 3,
-      url: ["http://localhost:3000"],
+      url: ["http://localhost:4173"],  // Change 3000 → 4173
       settings: {
-        startServerCommand: "npm run dev",
-      },
+        startServerCommand: "http-server ./build -p 4173",
+        startServerReadyPattern: "Available on",
+        numberOfRuns: 1
+      }
     },
     assert: {
       assertions: {
