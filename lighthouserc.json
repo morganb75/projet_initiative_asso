@@ -4,7 +4,9 @@
       "numberOfRuns": 3,
       "url": ["http://localhost:3000"],
       "settings": {
-        "chromeFlags": "--no-sandbox --headless"
+        "startServerCommand": "http-server ./build -p 3000",
+        "startServerReadyPattern": "Available on",
+        "numberOfRuns": 1
       }
     },
     "assert": {
@@ -16,8 +18,7 @@
       }
     },
     "upload": {
-      "target": "filesystem",
-      "outputDir": "./lighthouse-results"
+      "target": "temporary-public-storage"
     }
   }
 }
