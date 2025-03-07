@@ -1,4 +1,4 @@
-name: Validation des pull requests
+name: Validation PR
 
 on:
 #  pull_request:

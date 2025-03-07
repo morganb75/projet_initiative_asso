@@ -1,4 +1,4 @@
-name: LIGHTHOUSE ACCES CI
+name: Rapport Lighthouse
 on:
   push:
     branches:
