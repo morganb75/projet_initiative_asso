@@ -13,7 +13,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
 
       - name: Désactiver Nexus et forcer npm public
         run: |
@@ -29,6 +29,9 @@ jobs:
 
       - name: Installer Lighthouse CI
         run: npm install -g @lhci/cli@0.14.x
+
+      - name: Install http-server
+        run: npm install -g http-server
 
       - name: Build project
         run: npm run build
