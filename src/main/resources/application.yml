@@ -37,5 +37,9 @@ logging:
   level:
     org:
       flyway: DEBUG
-      springframework.security: DEBUG
+      springframework:
+        security: DEBUG
+        web.socket: DEBUG
+        messaging: DEBUG
+
 #      springframework: DEBUG

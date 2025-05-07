@@ -1,4 +1,4 @@
-package fr.morgan.initiativeasso.config;
+package fr.morgan.initiativeasso.config.jwt;
 
 import fr.morgan.initiativeasso.model.User;
 import fr.morgan.initiativeasso.service.interfaces.UserService;
@@ -40,7 +40,7 @@ public class JwtService {
         final long CURRENT_TIME = System.currentTimeMillis();
 
         final Map<String, Object> claims = Map.of(
-                "id",user.getId(),
+                "id", user.getId(),
                 "nom", user.getNom(),
                 "prenom", user.getPrenom(),
                 "roles", user.getRoles(),
@@ -81,7 +81,7 @@ public class JwtService {
         return function.apply(claims);
     }
 
-    private Claims getAllClaims(String token) {
+    public Claims getAllClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(jwtConfig.getSecret())
                 .build()

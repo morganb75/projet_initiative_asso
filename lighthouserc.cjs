@@ -9,7 +9,7 @@ module.exports = {
                 "http://localhost:4173/user",
                 "http://localhost:4173/admin",
                 "http://localhost:4173/admin/preinscrire",
-            ], // Assure-toi que le serveur tourne bien ici
+            ],
             settings: {
                 chromeFlags: "--no-sandbox --ignore-certificate-errors --disable-dev-shm-usage"
             }

@@ -9,7 +9,7 @@ const FeedAdmin = () => {
 
     return (
         <div className="feed">
-            {dataFeed.map((user) => (
+            {dataFeed?.map((user) => (
                 <MediaCard
                     key={user.id}
                     nom={user.nom}

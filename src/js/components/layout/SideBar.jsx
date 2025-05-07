@@ -13,6 +13,9 @@ const SideBar = () => {
     const handlePreRegister = () => {
         navigate("/admin/preinscrire")
     }
+    const handleMessagerie = () => {
+        navigate("/user/messagerie")
+    }
     const handleListeProfils = () => {
         navigate("api/")
     }
@@ -24,6 +27,7 @@ const SideBar = () => {
                     <button onClick={handleDevEnCours}>Liste des porteurs</button>
                     <button onClick={handleDevEnCours}>Liste des parrains</button>
                     <button onClick={handleDevEnCours}>Rechercher un profil</button>
+                    <button onClick={handleMessagerie}>Messagerie</button>
                     <button onClick={handleDevEnCours}>Modifier un profil</button>
                     <button onClick={handlePreRegister}>Pre-inscription</button>
                     <button onClick={handleDevEnCours}>Radiation</button>
@@ -36,7 +40,7 @@ const SideBar = () => {
                 <>
                     <button onClick={handleDevEnCours}>Mes profils favoris</button>
                     <button onClick={handleDevEnCours}>Mes Likers</button>
-                    <button onClick={handleDevEnCours}>Messagerie</button>
+                    <button onClick={handleMessagerie}>Messagerie</button>
                     <button onClick={handleDevEnCours}>Rechercher un profil</button>
                     <button onClick={handleDevEnCours}>Modifier mon profil</button>
                 </>

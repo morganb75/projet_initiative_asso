@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "username": "Jean Marc",
+    "name": null,
+    "password": null
+  },
+  {
+    "id": 2,
+    "username": "Pascal",
+    "name": null,
+    "password": null
+  },
+  {
+    "id": 3,
+    "username": "Maxime",
+    "name": null,
+    "password": null
+  },
+  {
+    "id": 4,
+    "username": "Paul",
+    "name": null,
+    "password": null
+  },
+  {
+    "id": 5,
+    "username": "Basil",
+    "name": null,
+    "password": null
+  },
+  {
+    "id": 6,
+    "username": "admin",
+    "name": null,
+    "password": "$2a$10$V/UZlKQkQAMA3K9Ovif.ge7W7VVTEKrfNFvZAx1XiI.77Y.S3iGU."
+  }
+]

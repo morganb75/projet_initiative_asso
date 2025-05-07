@@ -1,6 +1,6 @@
 package fr.morgan.initiativeasso.controller;
 
-import fr.morgan.initiativeasso.config.JwtService;
+import fr.morgan.initiativeasso.config.jwt.JwtService;
 import fr.morgan.initiativeasso.model.dto.AuthenticationDto;
 import fr.morgan.initiativeasso.service.interfaces.UserService;
 

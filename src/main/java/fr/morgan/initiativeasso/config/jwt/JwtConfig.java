@@ -1,4 +1,4 @@
-package fr.morgan.initiativeasso.config;
+package fr.morgan.initiativeasso.config.jwt;
 
 import lombok.Getter;
 import lombok.Setter;

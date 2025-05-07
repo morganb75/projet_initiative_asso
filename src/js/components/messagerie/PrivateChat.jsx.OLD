@@ -1,0 +1,98 @@
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {Client} from "@stomp/stompjs"
+import {useUserContext} from "../../contexts/UserContext.jsx";
+
+const PrivateChat = ({receiverId}) => {
+    const {dataUser} = useUserContext()
+    const [userName, setUserName] = useState(dataUser.sub)
+    const [message, setMessage] = useState('');
+    const [messages, setMessages] = useState([]);
+    const [isConnected, setIsConnected] = useState(false);
+    const currentUserId = dataUser.id;
+    const authToken = sessionStorage.getItem('authToken');
+
+    const client = useMemo(() => {
+        console.log({authToken})
+        return new Client({
+            // brokerURL: 'ws://localhost:8080/api/ws',
+            brokerURL: `ws://localhost:8080/api/ws?token=${authToken}`,
+            connectHeaders: {
+                Authorization: `Bearer ${authToken}`
+            },
+            onConnect: () => {
+                console.log(`✅ Connecté en tant que ${dataUser.sub}`);
+                console.log('WebSocket ready:', client.connected);
+                // setIsConnected(true)
+
+                if(client.connected){
+                    // s’abonner à la destination privée standard
+                    client.subscribe("/user/queue/messages", (msg) => {
+                        console.log('📨 Message reçu :', msg.body);
+                        const payload = JSON.parse(msg.body);
+                        setMessages(prev => [...prev, {from: 'them', text: payload.text}])
+                    })
+                } else {
+                    console.log("❌ WebSocket n'est pas connecté !");
+                }
+            },
+            onStompError: (error) => {
+                console.error('💥 STOMP Error:', error);
+            },
+            reconnectDelay: 5000,
+        })
+    }, [authToken])
+
+
+    useEffect(() => {
+        client.debug = (str) => {
+            console.log("🧩 STOMP DEBUG:", str);
+        };
+
+        client.activate();
+
+        return () => {
+            client.deactivate()
+            // setIsConnected(false)
+        };
+    }, [client]);
+
+    const sendMessage = () => {
+        if (!message.trim() || !client.connected) return;
+
+        const payload = {
+            senderId: currentUserId,
+            receiverId: receiverId,
+            text: message.trim()
+        };
+
+        client.publish({
+            destination: '/app/msg.private',
+            headers: {},
+            body: JSON.stringify(payload)
+        })
+        setMessages(prev => [...prev, {from: 'me', text: payload.text}]);
+        setMessage('');
+    }
+
+    return (
+        <div>
+            <h2>Msg privé avec l'utilisateur {receiverId}</h2>
+            <div style={{border: '1px solid gray', height: 200, overflowY: 'auto', padding: 10}}>
+                {messages.map((m, i) => (
+                    <div key={i} style={{textAlign: m.from === 'me' ? 'right' : 'left'}}>
+                        {m.text}
+                    </div>
+                ))}
+            </div>
+            <input
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Votre message..."
+                style={{width: '80%'}}
+            />
+            <button onClick={sendMessage}>Envoyer</button>
+        </div>
+    )
+}
+
+export default PrivateChat

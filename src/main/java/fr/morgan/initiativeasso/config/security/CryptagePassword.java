@@ -1,4 +1,4 @@
-package fr.morgan.initiativeasso.config;
+package fr.morgan.initiativeasso.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

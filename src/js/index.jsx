@@ -13,6 +13,7 @@ import UserPage from "./components/userpage/UserPage.jsx";
 import PreInscription from "./components/adminpage/PreInscription.jsx";
 import FirstLoginPage from "./components/userpage/FirstLoginPage.jsx";
 import DataFeedContextProvider from "./contexts/DataFeedContext.jsx";
+import Messagerie from "./components/messagerie/Messagerie.jsx";
 
 const Main = () => {
     return (
@@ -26,6 +27,7 @@ const Main = () => {
                     <Route path="/user" element={<UserPage/>}/>
                     <Route path="/admin" element={<AdminPage/>}/>
                     <Route path="/admin/preinscrire" element={<PreInscription/>}/>
+                    <Route path={"/user/messagerie"} element={<Messagerie/>}/>
                 </Route>
             </Routes>
         </Router>)

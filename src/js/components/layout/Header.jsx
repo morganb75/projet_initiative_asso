@@ -25,20 +25,19 @@ const Header = () => {
         }
     }
     const URL_MAJ_NOTIFICATIONS = `/api/notify/${dataUser.id}`
-    console.log(URL_MAJ_NOTIFICATIONS)
-    useEffect(() => {
-        fetch(URL_MAJ_NOTIFICATIONS, HTTP_DATA)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`Erreur de fetch notifications: ${response.status}`)
-                }
-                return response.json()
-            })
-            .then(data => setnotification(data))
-            .catch(error => {
-                console.error("Erreur lors de la requête :", error);
-            });
-    }, [dataUser]);
+    // useEffect(() => {
+    //     fetch(URL_MAJ_NOTIFICATIONS, HTTP_DATA)
+    //         .then((response) => {
+    //             if (!response.ok) {
+    //                 throw new Error(`Erreur de fetch notifications: ${response.status}`)
+    //             }
+    //             return response.json()
+    //         })
+    //         .then(data => setnotification(data))
+    //         .catch(error => {
+    //             console.error("Erreur lors de la requête :", error);
+    //         });
+    // }, [dataUser]);
 
 
     const handleLogout = async () => {

@@ -1,4 +1,4 @@
-package fr.morgan.initiativeasso.config;
+package fr.morgan.initiativeasso.config.jwt;
 
 import fr.morgan.initiativeasso.service.interfaces.UserService;
 import jakarta.servlet.FilterChain;
