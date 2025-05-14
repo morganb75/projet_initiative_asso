@@ -7,9 +7,15 @@ import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 import fr.morgan.initiativeasso.repository.MessageRepository;
 import fr.morgan.initiativeasso.repository.UserRepository;
 import fr.morgan.initiativeasso.service.interfaces.MessageService;
+import fr.morgan.initiativeasso.service.mapper.MessageMapper;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,10 +28,12 @@ public class MessageServiceImpl implements MessageService {
 
     private final MessageRepository messageRepository;
     private final UserRepository userRepository;
+    private final MessageMapper messageMapper;
 
-    public MessageServiceImpl(MessageRepository messageRepository, UserRepository userRepository) {
+    public MessageServiceImpl(MessageRepository messageRepository, UserRepository userRepository, MessageMapper messageMapper) {
         this.messageRepository = messageRepository;
         this.userRepository = userRepository;
+        this.messageMapper = messageMapper;
     }
 
     @Override
@@ -34,25 +42,34 @@ public class MessageServiceImpl implements MessageService {
         User sender = userRepository.findById(messageDto.getSenderId()).orElseThrow(() -> new UserNotFoundException("User not found"));
         User receiver = userRepository.findById(messageDto.getReceiverId()).orElseThrow(() -> new UserNotFoundException("User not found"));
 
-                Message message = Message.builder()
-                        .text(messageDto.getText())
-                        .read(false)
-                        .sender(sender)
-                        .receiver(receiver)
-                        .timeStamp(LocalDateTime.now())
-                        .build();
-
-        log.warn("Sender: " + sender.getUsername() + ", ID: " + sender.getId());
-        log.warn("Sender via Message: " + message.getSender().getUsername() + ", ID: " + message.getSender().getId());
-        log.warn("Receiver: " + receiver.getUsername() + ", ID: " + receiver.getId());
-        log.warn("Receiver via Message: " + message.getReceiver().getUsername() + ", ID: " + message.getReceiver().getId());
-        log.warn("Text: " + message.getText());
+        Message message = Message.builder()
+                .text(messageDto.getText())
+                .read(false)
+                .sender(sender)
+                .receiver(receiver)
+                .timeStamp(LocalDateTime.now())
+                .build();
 
         return messageRepository.save(message);
     }
 
     @Override
-    public Optional<Message> getMessageById(Long id) {
-        return messageRepository.findById(id);
+    public List<MessageDto> findMessagesByReceiverId(Long receiverId) throws UserNotFoundException {
+        List<Message> listeMsg = messageRepository.findByReceiverId(receiverId);
+        return messageMapper.toDtoList(listeMsg);
+    }
+
+    @Override
+    public Map<Long, List<MessageDto>> getConversationByUserId(Long id) {
+//        List<MessageDto> messages = messageMapper.toDtoList(messageRepository.findByReceiverId(id));
+        List<MessageDto> messages = messageMapper.toDtoList(messageRepository.findConversationBetweenUsers(id));
+
+        return messages.stream()
+                .filter(msg -> msg.getSenderId().equals(id) || msg.getReceiverId().equals(id))
+                .collect(Collectors.groupingBy(msg -> {
+                    return msg.getSenderId().equals(id)
+                            ? msg.getReceiverId()
+                            : msg.getSenderId();
+                }));
     }
 }

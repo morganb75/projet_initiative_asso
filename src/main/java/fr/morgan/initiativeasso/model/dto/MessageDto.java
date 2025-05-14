@@ -1,7 +1,5 @@
 package fr.morgan.initiativeasso.model.dto;
 
-import fr.morgan.initiativeasso.model.User;
-
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
@@ -17,8 +15,12 @@ import lombok.Setter;
 @Builder
 public class MessageDto {
 
-    private String text;
+    private Long id;
     private Long senderId;
     private Long receiverId;
+    private String senderName;
+    private String senderFirstName;
+    private String text;
     private LocalDateTime time;
+    private boolean read;
 }

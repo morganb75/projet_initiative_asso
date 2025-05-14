@@ -1,5 +1,6 @@
 package fr.morgan.initiativeasso.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +29,7 @@ public class Message {
     private Long id;
     private LocalDateTime timeStamp;
     private boolean read;
+    @Column(length = 2000)
     private String text;
     @ManyToOne
     @JoinColumn(name = "sender_id")

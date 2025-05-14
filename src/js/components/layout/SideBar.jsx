@@ -16,6 +16,9 @@ const SideBar = () => {
     const handleMessagerie = () => {
         navigate("/user/messagerie")
     }
+    const handleMessagerieTest = () => {
+        navigate("/user/messagerie/test")
+    }
     const handleListeProfils = () => {
         navigate("api/")
     }
@@ -39,7 +42,7 @@ const SideBar = () => {
             {((dataUser.roles.includes('PARRAIN')) || (dataUser.roles.includes('PORTEUR'))) &&
                 <>
                     <button onClick={handleDevEnCours}>Mes profils favoris</button>
-                    <button onClick={handleDevEnCours}>Mes Likers</button>
+                    <button onClick={handleMessagerieTest}>TestMsg</button>
                     <button onClick={handleMessagerie}>Messagerie</button>
                     <button onClick={handleDevEnCours}>Rechercher un profil</button>
                     <button onClick={handleDevEnCours}>Modifier mon profil</button>

@@ -5,7 +5,6 @@ import {useDataFeedContext} from "../../contexts/DataFeedContext.jsx";
 
 const FeedAdmin = () => {
     const {dataFeed} = useDataFeedContext()
-    console.log(dataFeed)
 
     return (
         <div className="feed">
