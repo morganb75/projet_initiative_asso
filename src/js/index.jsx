@@ -13,7 +13,7 @@ import UserPage from "./components/userpage/UserPage.jsx";
 import PreInscription from "./components/adminpage/PreInscription.jsx";
 import FirstLoginPage from "./components/userpage/FirstLoginPage.jsx";
 import DataFeedContextProvider from "./contexts/DataFeedContext.jsx";
-import Messagerie from "./components/messagerie2/Messagerie.jsx";
+import Messagerie from "./components/messagerie/Messagerie.jsx";
 
 const Main = () => {
     return (

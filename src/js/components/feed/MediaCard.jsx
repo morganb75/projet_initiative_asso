@@ -10,9 +10,6 @@ const MediaCard = ({
                        descriptifActivite,
                        disponibilites,
                        userId,
-                       likes,
-                       handleLike,
-                       handleUnLike,
                        handleTest
                    }) => {
     const [isOpen, setIsOpen] = useState(false)
@@ -27,10 +24,6 @@ const MediaCard = ({
             <div className="mediacard" onClick={handleOpen}>
                 <div className="mediacard-header">
                     <img className="mediacard-header-img-avatar" src={avatar} alt='img-profil'/>
-                    {(likes.includes(userId)) &&
-                        (<img className="mediacard-header-img-like" src={likeIcone} alt='img-like'/>)
-                    }
-
                 </div>
                 <div className="mediacard-body">
                     <h2>{nom}</h2>
@@ -55,14 +48,6 @@ const MediaCard = ({
                         </div>
                         <div className="modal-actions">
                             <button onClick={handleClose}>Fermer</button>
-                            {
-                                (likes.includes(userId)) ? (<button onClick={() => {
-                                        handleUnLike(userId)
-                                    }
-                                    }>Unlike</button>)
-                                    :
-                                    (<button onClick={() => handleLike(userId)}>like</button>)
-                            }
                             {/*<button onClick={() => {*/}
                             {/*    handleTest(userId)*/}
                             {/*    console.log("userId: ", userId)*/}

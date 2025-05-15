@@ -4,7 +4,7 @@ import MediaCard from "./MediaCard.jsx";
 import {useDataFeedContext} from "../../contexts/DataFeedContext.jsx";
 import {useUserContext} from "../../contexts/UserContext.jsx";
 
-const FeedUser = ({likes,handleLike,handleUnlike,handleTest} ) => {
+const FeedUser = ({handleTest} ) => {
     const {dataFeed} = useDataFeedContext()
     const {dataUser} = useUserContext()
 
@@ -20,9 +20,6 @@ const FeedUser = ({likes,handleLike,handleUnlike,handleTest} ) => {
                     descriptifActivite={user.descriptifActivite}
                     disponibilites={user.disponibilites}
                     userId={user.id}
-                    likes={likes}
-                    handleLike={handleLike}
-                    handleUnLike={handleUnlike}
                     handleTest={handleTest}
                 />
             ))}
