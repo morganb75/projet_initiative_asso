@@ -16,6 +16,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //Recherche des enfants de User par classe
     @Query("SELECT u FROM User u WHERE TYPE(u) = :type")
     <T extends User> List<T> findUsersByType(@Param("type") Class<T> type);
-//    @Query("SELECT u FROM User u WHERE TYPE(u) = :type")
-//    List<? extends User> findUsersByType(@Param("type") Class<? extends User> type);
+
 }

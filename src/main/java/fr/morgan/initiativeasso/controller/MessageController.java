@@ -3,26 +3,26 @@ package fr.morgan.initiativeasso.controller;
 import fr.morgan.initiativeasso.model.Message;
 import fr.morgan.initiativeasso.model.User;
 import fr.morgan.initiativeasso.model.dto.MessageDto;
+import fr.morgan.initiativeasso.model.dto.UserWsOnLineDto;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
-import fr.morgan.initiativeasso.repository.MessageRepository;
+import fr.morgan.initiativeasso.service.PresenceService;
 import fr.morgan.initiativeasso.service.interfaces.MessageService;
 import fr.morgan.initiativeasso.service.interfaces.UserService;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.user.SimpSession;
 import org.springframework.messaging.simp.user.SimpUser;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,13 +34,16 @@ public class MessageController {
     private final SimpMessagingTemplate messagingTemplate;
     private final MessageService messageService;
     private final UserService userService;
+    private final PresenceService presenceService;
     private final SimpUserRegistry simpUserRegistry;
 
     public MessageController(SimpMessagingTemplate messagingTemplate, MessageService messageService, UserService userService,
+            PresenceService presenceService,
             SimpUserRegistry simpUserRegistry) {
         this.messagingTemplate = messagingTemplate;
         this.messageService = messageService;
         this.userService = userService;
+        this.presenceService = presenceService;
         this.simpUserRegistry = simpUserRegistry;
     }
 
@@ -72,6 +75,18 @@ public class MessageController {
                 "/queue/messages",
                 messageDto
         );
+    }
+
+    @MessageMapping("/presence/register")
+    public void registerPresence(SimpMessageHeaderAccessor headerAccessor, Principal principal) throws UserNotFoundException {
+        if (principal != null) {
+            String sessionId = headerAccessor.getSessionId();
+            presenceService.userConnected(sessionId, principal.getName());
+
+            // Réenvoi immédiat de l'état de présence
+            Collection<UserWsOnLineDto> onlineUsers = presenceService.getConnectedUsers();
+            messagingTemplate.convertAndSendToUser(principal.getName(),"/queue/presence", onlineUsers);
+        }
     }
 
     @GetMapping("/messages")

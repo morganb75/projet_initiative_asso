@@ -10,16 +10,12 @@ import fr.morgan.initiativeasso.service.interfaces.MessageService;
 import fr.morgan.initiativeasso.service.mapper.MessageMapper;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -61,8 +57,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Map<Long, List<MessageDto>> getConversationByUserId(Long id) {
-//        List<MessageDto> messages = messageMapper.toDtoList(messageRepository.findByReceiverId(id));
-        List<MessageDto> messages = messageMapper.toDtoList(messageRepository.findConversationBetweenUsers(id));
+        List<MessageDto> messages = messageMapper.toDtoList(messageRepository.findUserConversations(id));
 
         return messages.stream()
                 .filter(msg -> msg.getSenderId().equals(id) || msg.getReceiverId().equals(id))

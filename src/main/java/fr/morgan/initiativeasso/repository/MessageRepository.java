@@ -14,5 +14,5 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findByReceiverId(Long id);
 
     @Query("SELECT m FROM Message m WHERE m.sender.id = :userId OR m.receiver.id = :userId")
-    List<Message> findConversationBetweenUsers(@Param("userId") Long userId);
+    List<Message> findUserConversations(@Param("userId") Long userId);
 }
