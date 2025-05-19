@@ -4,6 +4,7 @@ import RolesMultiSelector from "../selector/RolesMultiSelector.jsx";
 import UserForm from "../userpage/UserForm.jsx";
 import {useNavigate} from "react-router-dom";
 //TODO Resserez ce components sur les affaires de roles etc etc......
+//TODO Mise en place d'un pwd généré aléatoirement et transmis par mail auto géré côté server, impossible à faire pour l'instant dû à config Maif.....
 const PreInscription = () => {
     const initialState = {
         type: null,

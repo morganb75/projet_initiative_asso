@@ -1,16 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import UserForm from "./UserForm.jsx";
 import DomaineActiviteSelector from "../selector/DomaineActiviteSelector.jsx";
 import DomaineActiviteMultiSelector from "../selector/DomaineActiviteMultiSelector.jsx";
+import TypeAccompagnementMultiSelector from "../selector/TypeAccompagnementMultiSelector.jsx";
 
 const PorteurForm = ({formState, setFormState}) => {
+
 
     const handleDomaineChange = (selectedDomaine) => {
         setFormState(formState => ({...formState, domaineActivite: selectedDomaine}))
     }
 
-    const handleBesoinsChange = (selectedDomaines) => {
-        setFormState(formState => ({...formState, besoinsPotentiels: selectedDomaines}))
+    const handleBesoinsChange = (selectedOptions) => {
+        const values = selectedOptions?.map(opt => opt.value) ?? []
+        setFormState(formState => ({...formState, besoinsPotentiels: values}))
     }
 
     return (
@@ -37,9 +40,10 @@ const PorteurForm = ({formState, setFormState}) => {
                             />
                         </div>
                         <div className="item"><label htmlFor="besoinspotentiels">Besoins potentiels:</label>
-                            <DomaineActiviteMultiSelector
+                            <TypeAccompagnementMultiSelector
                                 id="besoinspotentiels"
                                 selectedDomaines={formState?.besoinsPotentiels}
+                                // selectedDomaines={currentBesoinSelected}
                                 onDomainesChange={handleBesoinsChange}
                             />
                         </div>

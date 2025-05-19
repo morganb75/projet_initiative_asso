@@ -16,13 +16,6 @@ const FirstLoginPage = () => {
         prenom: null,
         email: null,
         entreprise: null,
-        adresse: {
-            numeroDeVoie: null,
-            rue: null,
-            complement: null,
-            codePostal: null,
-            ville: null
-        },
         plateForme: null,
         password: null,
         dateDebutActivite: null,
@@ -45,28 +38,22 @@ const FirstLoginPage = () => {
         prenom: null,
         email: null,
         entreprise: null,
-        adresse: {
-            numeroDeVoie: null,
-            rue: null,
-            complement: null,
-            codePostal: null,
-            ville: null
-        },
         plateForme: null,
-        password: null,
+        password1: null,
+        password2: null,
         parcours: null,
         domaineActivite: null,
         zonesDeDeplacement: [],
         disponibilites: null
     }
     const [formState, setFormState] = useState(() =>
-    dataUser?.roles?.includes('PORTEUR') ? porteurInitialState : parrainInitialState
-)
+        dataUser?.roles?.includes('PORTEUR') ? porteurInitialState : parrainInitialState
+    )
+    //TODO a mettre a jour quand le DTO parrain sera géré
+    const URL_GET_USER_BY_EMAiL = dataUser?.roles?.includes('PORTEUR') ? `/api/user/dto?email=${dataUser.sub}` : `/api/user?email=${dataUser.sub}`
 
     useEffect(() => {
         const fetchData = async () => {
-            const URL_USERBYEMAIL = `/api/user?email=${dataUser.sub}`
-            // console.log(dataUser)
             const HTTP_DATA = {
                 method: 'GET',
                 headers: {
@@ -75,7 +62,7 @@ const FirstLoginPage = () => {
                 }
             }
             try {
-                const data = await fetchEndPoint(URL_USERBYEMAIL, HTTP_DATA)
+                const data = await fetchEndPoint(URL_GET_USER_BY_EMAiL, HTTP_DATA)
                 console.log('fetchdata', data)
 
                 //pre remplissage du formulaire First Login
@@ -84,15 +71,7 @@ const FirstLoginPage = () => {
                     nom: data.nom,
                     prenom: data.prenom,
                     email: data.email,
-                    entreprise: data.entreprise,
-                    adresse: {
-                        ...formState.adresse,
-                        numeroDeVoie: data.adresse.numeroDeVoie,
-                        rue: data.adresse.rue,
-                        complement: data.adresse.complement,
-                        codePostal: data.adresse.codePostal,
-                        ville: data.adresse.ville
-                    }
+                    entreprise: data.entreprise
                 }))
             } catch (e) {
                 console.error('erreur lors du fetch des données user preenregistré', e)
@@ -103,7 +82,16 @@ const FirstLoginPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(formState)
+        console.log({formState})
+
+        if (formState.password1 !== formState.password2 || formState.password1 === null) {
+            alert('Mots de passe différents ou invalides, veuillez à nouveau renseigner')
+            setFormState({...formState, password1: '', password2: ''})
+            return
+        } else {
+            setFormState({...formState, password: formState.password2, password1: null, password2: null})
+        }
+
         const URL_FIRSTLOGIN = `/api/user/${dataUser.id}`
         const HTTP_DATA = {
             method: 'PATCH',
@@ -114,11 +102,17 @@ const FirstLoginPage = () => {
             body: JSON.stringify(formState)
         }
         fetch(URL_FIRSTLOGIN, HTTP_DATA)
-            .then(response =>{
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
                 alert('Informations enregistrées avec succès')
                 navigate("/user")
-            } )
-            .catch(e => console.error("Fetch error", e))
+            })
+            .catch(e => {
+                console.error("Fetch error", e)
+                alert('Une erreur est survenue lors de l’enregistrement.')
+            })
     }
 
     return (
@@ -127,12 +121,12 @@ const FirstLoginPage = () => {
                 <h2 className="first-login-h2">Bienvenue, veuillez vérifier et compléter votre profil</h2>
                 <form className="form-first-login" onSubmit={handleSubmit}>
                     <div className="form">
-                    {
-                        dataUser.roles.includes('PORTEUR') ?
-                            <PorteurForm formState={formState} setFormState={setFormState}/>
-                            :
-                            <ParrainForm formState={formState} setFormState={setFormState}/>
-                    }
+                        {
+                            dataUser.roles.includes('PORTEUR') ?
+                                <PorteurForm formState={formState} setFormState={setFormState}/>
+                                :
+                                <ParrainForm formState={formState} setFormState={setFormState}/>
+                        }
                     </div>
                     <button className="firstlogin-button" type="submit">Valider</button>
                 </form>

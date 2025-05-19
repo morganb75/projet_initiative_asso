@@ -5,12 +5,14 @@ import fr.morgan.initiativeasso.model.Parrain;
 import fr.morgan.initiativeasso.model.Porteur;
 import fr.morgan.initiativeasso.model.SalarieAsso;
 import fr.morgan.initiativeasso.model.User;
+import fr.morgan.initiativeasso.model.dto.PorteurDto;
 import fr.morgan.initiativeasso.model.dto.UserPreinscriptionDto;
 import fr.morgan.initiativeasso.model.enums.UserRole;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 import fr.morgan.initiativeasso.repository.AdresseRepository;
 import fr.morgan.initiativeasso.repository.UserRepository;
 import fr.morgan.initiativeasso.service.interfaces.UserService;
+import fr.morgan.initiativeasso.service.mapper.UserMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,11 +28,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AdresseRepository adresseRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository, AdresseRepository adresseRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, AdresseRepository adresseRepository, BCryptPasswordEncoder passwordEncoder,
+            UserMapper userMapper) {
         this.userRepository = userRepository;
         this.adresseRepository = adresseRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -48,13 +53,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public PorteurDto findPorteurDtoByEmail(String email) throws UserNotFoundException {
+        Porteur porteur = (Porteur) userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("pas de user avec cet email"));
+        return userMapper.porteurToDto(porteur);
+    }
+
+    @Override
     public Optional<User> findById(Long id) throws UserNotFoundException {
         return (userRepository.findById(id));
     }
 
     @Override
     public void validationInscription(Long id) {
-
     }
 
     @Override
@@ -68,7 +78,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updatedUser(Long id, User updatedUser) {
+    public User updatedUser(Long id, User updatedUser) throws UserNotFoundException {
         User userToUpdate = updatingUser(id, updatedUser);
         return userRepository.save(userToUpdate);
     }
@@ -97,7 +107,6 @@ public class UserServiceImpl implements UserService {
                     .prenom(user.getPrenom())
                     .email(user.getEmail())
                     .entreprise(user.getEntreprise())
-                    .adresse(user.getAdresse())
                     .plateForme(user.getPlateForme())
                     .password(passwordEncoder.encode(user.getPassword()))
                     .roles(user.getRoles())
@@ -110,7 +119,6 @@ public class UserServiceImpl implements UserService {
                     .prenom(user.getPrenom())
                     .email(user.getEmail())
                     .entreprise(user.getEntreprise())
-                    .adresse(user.getAdresse())
                     .plateForme(user.getPlateForme())
                     .password(passwordEncoder.encode(user.getPassword()))
                     .roles(user.getRoles())
@@ -123,7 +131,6 @@ public class UserServiceImpl implements UserService {
                     .prenom(user.getPrenom())
                     .email(user.getEmail())
                     .entreprise(user.getEntreprise())
-                    .adresse(user.getAdresse())
                     .plateForme(user.getPlateForme())
                     .password(passwordEncoder.encode(user.getPassword()))
                     .roles(user.getRoles())
@@ -133,7 +140,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private <T extends User> T updatingUser(Long id, T updatedFields) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found!"));
@@ -156,18 +162,11 @@ public class UserServiceImpl implements UserService {
         if (updatedFields.getPrenom() != null) {
             userToUpdate.setPrenom(updatedFields.getPrenom());
         }
-        if (updatedFields.getEmail() != null) {
+        if ((updatedFields.getEmail() != null) && !updatedFields.getEmail().equals(userToUpdate.getEmail())) {
             userToUpdate.setEmail(updatedFields.getEmail());
         }
         if (updatedFields.getEntreprise() != null) {
             userToUpdate.setEntreprise(updatedFields.getEntreprise());
-        }
-        if (updatedFields.getAdresse() != null) {
-            Adresse updatedAdresse = updatedFields.getAdresse();
-            Adresse existingAdresse = adresseRepository.findByNumeroDeVoieAndRueAndComplementAndCodePostalAndVille(updatedAdresse.getNumeroDeVoie(),
-                            updatedAdresse.getRue(), updatedAdresse.getComplement(), updatedAdresse.getCodePostal(), updatedAdresse.getVille())
-                    .orElse(updatedAdresse);
-            userToUpdate.setAdresse(existingAdresse);
         }
         if (updatedFields.getPassword() != null) {
             userToUpdate.setPassword(passwordEncoder.encode((updatedFields.getPassword())));

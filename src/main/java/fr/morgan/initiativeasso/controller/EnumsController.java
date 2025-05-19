@@ -1,6 +1,7 @@
 package fr.morgan.initiativeasso.controller;
 
 import fr.morgan.initiativeasso.model.enums.SecteursReseaux;
+import fr.morgan.initiativeasso.model.enums.TypeAccompagnement;
 import fr.morgan.initiativeasso.model.enums.UserRole;
 import fr.morgan.initiativeasso.model.enums.ZonesDeplacement;
 
@@ -21,6 +22,9 @@ public class EnumsController {
     public SecteursReseaux[] getActivites() {
         return SecteursReseaux.values();
     }
+
+    @GetMapping("/accompagnements")
+    public TypeAccompagnement[] getAccompagnements() {return TypeAccompagnement.values();}
 
     @GetMapping("/zonesdeplacement")
     public ZonesDeplacement[] getZonesDeplacement() {return ZonesDeplacement.values();}

@@ -13,9 +13,9 @@ const UserPage = () => {
 
     let URL_USERFEED
     if (dataUser?.roles.includes('PORTEUR')) {
-        URL_USERFEED = '/api/user/parrains'
+       URL_USERFEED = '/api/user/parrains'
     } else {
-        URL_USERFEED = '/api/user/porteurs'
+       URL_USERFEED = '/api/user/porteurs'
     }
 
     const HTTP_DATA = {

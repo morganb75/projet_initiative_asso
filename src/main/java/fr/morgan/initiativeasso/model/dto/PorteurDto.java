@@ -18,13 +18,14 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class PorteurVersFeedDto {
+public class PorteurDto {
 
     private Long id;
     private String nom;
     private String prenom;
     private String email;
     private String entreprise;
+    private Adresse adresse;
     private LocalDate dateDebutActivite;
     private SecteursReseaux domaineActivite;
     private String descriptifActivite;

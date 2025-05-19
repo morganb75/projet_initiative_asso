@@ -67,9 +67,7 @@ public abstract class User implements UserDetails {
     @Column(nullable = false)
     private String entreprise;
     //TODO gérer orphanRemoval le moment venu (besoin d'une bidirectionnelle ou gestion à la main).
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "adresse_id")
-    private Adresse adresse;
+    //Todo adresse privée, non nécéssaire mais existe toutefois
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private PlateForme plateForme;

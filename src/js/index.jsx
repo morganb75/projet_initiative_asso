@@ -27,7 +27,7 @@ const Main = () => {
                     <Route path="/user" element={<UserPage/>}/>
                     <Route path="/admin" element={<AdminPage/>}/>
                     <Route path="/admin/preinscrire" element={<PreInscription/>}/>
-                    <Route path={"/user/messagerie"} element={<Messagerie/>}/>
+                    <Route path="/user/messagerie" element={<Messagerie/>}/>
                 </Route>
             </Routes>
         </Router>)

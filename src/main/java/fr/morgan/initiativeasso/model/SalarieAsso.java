@@ -23,11 +23,10 @@ public class SalarieAsso extends User {
     private String fonction;
 
     @Builder
-
-    public SalarieAsso(Long id, String nom, String prenom, String email, String entreprise, Adresse adresse, PlateForme plateForme,
+    public SalarieAsso(Long id, String nom, String prenom, String email, String entreprise, PlateForme plateForme,
             List<UserRole> roles,
             String password, Boolean isAccountEnabled, Boolean firstLogin, String fonction) {
-        super(id, nom, prenom, email, entreprise, adresse, plateForme, roles, password, isAccountEnabled, firstLogin);
+        super(id, nom, prenom, email, entreprise, plateForme, roles, password, isAccountEnabled, firstLogin);
         this.fonction = fonction;
     }
 }

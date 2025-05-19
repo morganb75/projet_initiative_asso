@@ -3,6 +3,7 @@ package fr.morgan.initiativeasso.service.interfaces;
 import fr.morgan.initiativeasso.model.Parrain;
 import fr.morgan.initiativeasso.model.Porteur;
 import fr.morgan.initiativeasso.model.User;
+import fr.morgan.initiativeasso.model.dto.PorteurDto;
 import fr.morgan.initiativeasso.model.dto.UserPreinscriptionDto;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 
@@ -19,6 +20,8 @@ public interface UserService extends UserDetailsService {
 
     Optional<User> findByEmail(String email) throws UserNotFoundException;
 
+    PorteurDto findPorteurDtoByEmail(String email) throws UserNotFoundException;
+
     Optional<User> findById(Long id) throws UserNotFoundException;
 
     void validationInscription(Long id);
@@ -27,7 +30,7 @@ public interface UserService extends UserDetailsService {
 
     List<User> getUsers();
 
-    public User updatedUser(Long id, User updatedUser);
+    public User updatedUser(Long id, User updatedUser) throws UserNotFoundException;
 
     public List<Porteur> findAllPorteurs();
     public List<Parrain> findAllParrains();
