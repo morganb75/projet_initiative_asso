@@ -1,9 +1,11 @@
 package fr.morgan.initiativeasso.controller;
 
+import fr.morgan.initiativeasso.exceptions.ParrainAlreadyExist;
 import fr.morgan.initiativeasso.model.Parrain;
 import fr.morgan.initiativeasso.model.Porteur;
 import fr.morgan.initiativeasso.model.User;
-import fr.morgan.initiativeasso.model.dto.PorteurDto;
+import fr.morgan.initiativeasso.model.dto.ParrainDto;
+import fr.morgan.initiativeasso.model.dto.UserDto;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 import fr.morgan.initiativeasso.service.interfaces.UserService;
 
@@ -32,13 +34,8 @@ public class UserController {
     }
 
     @GetMapping
-    public User findUserByEmail(@RequestParam String email) throws UserNotFoundException {
+    public UserDto findUserByEmail(@RequestParam String email) throws UserNotFoundException {
         return userService.findByEmail(email).orElseThrow(() -> new UserNotFoundException("Pas de user associé à cet Email!"));
-    }
-
-    @GetMapping("/dto")
-    public PorteurDto getPorteurDtoByEmail(@RequestParam String email) throws UserNotFoundException {
-        return userService.findPorteurDtoByEmail(email);
     }
 
     @GetMapping("/{id}")
@@ -61,13 +58,33 @@ public class UserController {
         }
     }
 
+    @PatchMapping("/{id}/{parrainId}")
+    public ResponseEntity<?> setParrainToPorteur(@PathVariable Long id, @PathVariable Long parrainId) {
+        try {
+            return ResponseEntity.ok(userService.setParrain(id,parrainId));
+        } catch (UserNotFoundException | ParrainAlreadyExist e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping("/parrains")
-    public List<Parrain> findParrainsForPorteurFeed() {
+    public List<UserDto> findParrainsForPorteurFeed() {
         return userService.findAllParrains();
     }
 
+    @GetMapping("/parrainid")
+    public ResponseEntity<ParrainDto> findParrainIdFromPorteur(Long porteurId) {
+        return null;
+    }
+
     @GetMapping("/porteurs")
-    public List<Porteur> findPorteursForParrainFeed() {
+    public List<UserDto> findPorteursForParrainFeed() {
         return userService.findAllPorteurs();
     }
+
+    @GetMapping("/feed/porteur/{parrainId}")
+    public List<UserDto> getFeedUser(@PathVariable Long parrainId) {
+        return userService.feedPorteur(parrainId);
+    }
+
 }

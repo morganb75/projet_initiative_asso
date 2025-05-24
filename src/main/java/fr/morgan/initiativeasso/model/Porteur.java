@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @NoArgsConstructor
 @Getter
@@ -38,7 +39,8 @@ public class Porteur extends User {
     private String disponibilites;
     @ManyToOne
     @JoinColumn(name= "parrain_id")
-    @JsonBackReference
+    @JsonManagedReference
+//    @JsonBackReference
     private Parrain parrain;
 
 

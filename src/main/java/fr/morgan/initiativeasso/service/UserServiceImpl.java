@@ -1,11 +1,13 @@
 package fr.morgan.initiativeasso.service;
 
+import fr.morgan.initiativeasso.config.jwt.JwtService;
+import fr.morgan.initiativeasso.exceptions.ParrainAlreadyExist;
 import fr.morgan.initiativeasso.model.Adresse;
 import fr.morgan.initiativeasso.model.Parrain;
 import fr.morgan.initiativeasso.model.Porteur;
 import fr.morgan.initiativeasso.model.SalarieAsso;
 import fr.morgan.initiativeasso.model.User;
-import fr.morgan.initiativeasso.model.dto.PorteurDto;
+import fr.morgan.initiativeasso.model.dto.UserDto;
 import fr.morgan.initiativeasso.model.dto.UserPreinscriptionDto;
 import fr.morgan.initiativeasso.model.enums.UserRole;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
@@ -15,6 +17,7 @@ import fr.morgan.initiativeasso.service.interfaces.UserService;
 import fr.morgan.initiativeasso.service.mapper.UserMapper;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,6 +32,7 @@ public class UserServiceImpl implements UserService {
     private final AdresseRepository adresseRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private static final Long ADMIN_ID = 1L;
 
     public UserServiceImpl(UserRepository userRepository, AdresseRepository adresseRepository, BCryptPasswordEncoder passwordEncoder,
             UserMapper userMapper) {
@@ -48,13 +52,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) throws UserNotFoundException {
-        return (Optional<User>) userRepository.findUserByEmail(email);
+    public Optional<UserDto> findByEmail(String email) {
+        return userRepository.findUserByEmail(email)
+                .map(userMapper::userToDto);
     }
 
     @Override
-    public PorteurDto findPorteurDtoByEmail(String email) throws UserNotFoundException {
-        Porteur porteur = (Porteur) userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("pas de user avec cet email"));
+    public UserDto findPorteurDtoByEmail(String email) throws UserNotFoundException {
+        Porteur porteur = (Porteur) userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("pas de user avec cet email"));
         return userMapper.porteurToDto(porteur);
     }
 
@@ -84,19 +90,43 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Porteur> findAllPorteurs() {
-        return userRepository.findUsersByType(Porteur.class);
+    public List<UserDto> findAllPorteurs() {
+        return userMapper.porteurLstToDto(userRepository.findUsersByType(Porteur.class));
     }
 
     @Override
-    public List<Parrain> findAllParrains() {
-        return userRepository.findUsersByType(Parrain.class);
+    public List<UserDto> findAllParrains() {
+        return userMapper.parrainLstToDto(userRepository.findUsersByType(Parrain.class));
+    }
+
+    @Override
+    public List<UserDto> feedPorteur(Long parrainId) {
+        User admin = userRepository.findById(ADMIN_ID).orElseThrow(() ->new UsernameNotFoundException("probleme BDD Admin"));
+        User parrain = userRepository.findById(parrainId).orElseThrow(() ->new UsernameNotFoundException("User Not Found"));
+        UserDto adminDto = userMapper.userToDto(admin);
+        UserDto parrainDto = userMapper.userToDto(parrain);
+
+        return List.of(adminDto,parrainDto);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return (userRepository.findUserByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Pas d'utilisateur correspondant au username" + username)));
+    }
+
+    @Override
+    public User setParrain(Long id, Long parrainId) throws UserNotFoundException, ParrainAlreadyExist {
+        Porteur currentUser = (Porteur) userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Pas d'utilisateur correspondant au parrain"));
+        if (currentUser.getParrain() == null) {
+            User parrain = userRepository.findById(parrainId)
+                    .orElseThrow(() -> new UserNotFoundException("Pas d'utilisateur correspondant au parrain"));
+            currentUser.setParrain((Parrain) parrain);
+        } else {
+            throw new ParrainAlreadyExist("Vous avez déjà un parrain d'affecté!");
+        }
+        return userRepository.save(currentUser);
     }
 
     private void saveTypedUser(UserPreinscriptionDto user) {

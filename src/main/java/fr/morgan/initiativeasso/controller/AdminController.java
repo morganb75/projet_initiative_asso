@@ -2,6 +2,7 @@ package fr.morgan.initiativeasso.controller;
 
 import fr.morgan.initiativeasso.model.Porteur;
 import fr.morgan.initiativeasso.model.User;
+import fr.morgan.initiativeasso.model.dto.UserDto;
 import fr.morgan.initiativeasso.model.dto.UserPreinscriptionDto;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 import fr.morgan.initiativeasso.service.interfaces.AdresseService;
@@ -42,10 +43,10 @@ public class AdminController {
     }
 
     @GetMapping("/users/porteurs")
-    public List<Porteur> getAllPorteurs() {return userService.findAllPorteurs();}
+    public List<UserDto> getAllPorteurs() {return userService.findAllPorteurs();}
 
     @GetMapping("/users/parrains")
-    public List<Porteur> getAllParrains() {return userService.findAllPorteurs();}
+    public List<UserDto> getAllParrains() {return userService.findAllPorteurs();}
 
     @GetMapping("/user/{id}")
     public Optional<User> findUserById(@PathVariable Long id) throws UserNotFoundException {

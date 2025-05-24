@@ -50,7 +50,7 @@ const FirstLoginPage = () => {
         dataUser?.roles?.includes('PORTEUR') ? porteurInitialState : parrainInitialState
     )
     //TODO a mettre a jour quand le DTO parrain sera géré
-    const URL_GET_USER_BY_EMAiL = dataUser?.roles?.includes('PORTEUR') ? `/api/user/dto?email=${dataUser.sub}` : `/api/user?email=${dataUser.sub}`
+    const URL_GET_USER_BY_EMAiL = dataUser?.roles?.includes('PORTEUR') ? `/api/user?email=${dataUser.sub}` : `/api/user?email=${dataUser.sub}`
 
     useEffect(() => {
         const fetchData = async () => {
@@ -63,7 +63,6 @@ const FirstLoginPage = () => {
             }
             try {
                 const data = await fetchEndPoint(URL_GET_USER_BY_EMAiL, HTTP_DATA)
-                console.log('fetchdata', data)
 
                 //pre remplissage du formulaire First Login
                 setFormState(prevState => ({
@@ -82,7 +81,6 @@ const FirstLoginPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log({formState})
 
         if (formState.password1 !== formState.password2 || formState.password1 === null) {
             alert('Mots de passe différents ou invalides, veuillez à nouveau renseigner')

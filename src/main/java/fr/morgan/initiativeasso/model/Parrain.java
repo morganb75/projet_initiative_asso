@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @NoArgsConstructor
@@ -28,7 +29,8 @@ public class Parrain extends User {
     private List<ZonesDeplacement> zonesDeDeplacement;
     private String disponibilites;
     @OneToMany(mappedBy = "parrain")
-    @JsonManagedReference
+    @JsonBackReference
+//    @JsonManagedReference
     private List<Porteur> listePorteurs;
 
 

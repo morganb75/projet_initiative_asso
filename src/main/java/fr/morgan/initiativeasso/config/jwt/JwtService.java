@@ -1,5 +1,7 @@
 package fr.morgan.initiativeasso.config.jwt;
 
+import fr.morgan.initiativeasso.model.Parrain;
+import fr.morgan.initiativeasso.model.Porteur;
 import fr.morgan.initiativeasso.model.User;
 import fr.morgan.initiativeasso.service.interfaces.UserService;
 import io.jsonwebtoken.Claims;
@@ -10,7 +12,9 @@ import io.jsonwebtoken.security.Keys;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,22 +42,27 @@ public class JwtService {
     //2. Forgeage du token
     private Map<String, String> generateJwt(User user) {
         final long CURRENT_TIME = System.currentTimeMillis();
+        Map<String, Object> claims = new HashMap<>();
 
-        final Map<String, Object> claims = Map.of(
-                "id", user.getId(),
-                "nom", user.getNom(),
-                "prenom", user.getPrenom(),
-                "roles", user.getRoles(),
-                "firstLogin", user.getFirstLogin(),
-                Claims.EXPIRATION, new Date(CURRENT_TIME + jwtConfig.getExpiration()),
-                Claims.SUBJECT, user.getUsername()
-        );
+        claims.put("id", user.getId());
+        claims.put("nom", user.getNom());
+        claims.put("prenom", user.getPrenom());
+        claims.put("roles", user.getRoles());
+        claims.put("firstLogin", user.getFirstLogin());
+
+        if (user instanceof Porteur porteur) {
+            Long parrainId = Optional.ofNullable(porteur.getParrain())
+                            .map(Parrain::getId)
+                                    .orElse(null);
+
+            claims.put("parrainId", parrainId);
+        }
 
         final String bearer = Jwts.builder()
+                .setClaims(claims)
                 .setIssuedAt(new Date(CURRENT_TIME))
                 .setExpiration(new Date(CURRENT_TIME + jwtConfig.getExpiration()))
                 .setSubject(user.getUsername())
-                .setClaims(claims)
                 .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret())
                 .compact();
 

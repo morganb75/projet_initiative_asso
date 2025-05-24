@@ -1,20 +1,13 @@
 import React, {useState} from 'react';
 import avatar from '../../assets/avatar_h.jpg'
-import likeIcone from '../../assets/like-coeur.jpg'
 
-const MediaCard = ({
-                       nom,
-                       prenom,
-                       entreprise,
-                       domaineActivite,
-                       descriptifActivite,
-                       disponibilites,
-                       userId,
-                       handleTest
-                   }) => {
+const MediaCard = ({user, handleParrainAffect, setCurrentUser}) => {
+
     const [isOpen, setIsOpen] = useState(false)
-
-    const handleOpen = () => setIsOpen(true)
+    const handleOpen = () => {
+        setIsOpen(true)
+        setCurrentUser(user)
+    }
     const handleClose = () => {
         setIsOpen(false)
     }
@@ -26,11 +19,10 @@ const MediaCard = ({
                     <img className="mediacard-header-img-avatar" src={avatar} alt='img-profil'/>
                 </div>
                 <div className="mediacard-body">
-                    <h2>{nom}</h2>
-                    <h2>{prenom}</h2>
+                    <h2>{user.nom}</h2>
+                    <h2>{user.prenom}</h2>
                     <h3>Société:</h3>
-                    <h3>{entreprise}</h3>
-                    {/*<h3>{userId}</h3>*/}
+                    <h3>{user.entreprise}</h3>
                 </div>
             </div>
 
@@ -38,22 +30,21 @@ const MediaCard = ({
                 <div className="modal-overlay">
                     <div className="modal">
                         <div className="modal-infos">
-                            <h2>Détails de l'utilisateur</h2>
-                            <p><strong>Nom :</strong> {nom}</p>
-                            <p><strong>Prénom :</strong> {prenom}</p>
-                            <p><strong>Entreprise :</strong> {entreprise}</p>
-                            <p><strong>Domaine :</strong> {domaineActivite}</p>
-                            <p><strong>Activité :</strong> {descriptifActivite}</p>
-                            <p><strong>Disponibilités :</strong> {disponibilites}</p>
+                            <h2>Fiche détaillée</h2>
+                            <p><strong>Nom :</strong> {user.nom}</p>
+                            <p><strong>Prénom :</strong> {user.prenom}</p>
+                            {user.type === "PARRAIN" ?
+                                <p><strong>Parcours :</strong> {user.parcours}</p>
+                                :
+                                <p><strong>Entreprise :</strong> {user.entreprise}</p>
+                            }
+                            {user.roles.includes("PORTEUR")  && <p><strong>Domaine :</strong> {user.domaineActivite}</p>}
+                            {user.roles.includes("PORTEUR") && <p><strong>Activité :</strong> {user.descriptifActivite}</p>}
+                            <p><strong>Disponibilités :</strong> {user.disponibilites}</p>
                         </div>
                         <div className="modal-actions">
                             <button onClick={handleClose}>Fermer</button>
-                            {/*<button onClick={() => {*/}
-                            {/*    handleTest(userId)*/}
-                            {/*    console.log("userId: ", userId)*/}
-                            {/*}*/}
-                            {/*}>Test*/}
-                            {/*</button>*/}
+                            {user.roles.includes("PARRAIN") && <button onClick={handleParrainAffect}>Choisir</button>}
                         </div>
                     </div>
                 </div>

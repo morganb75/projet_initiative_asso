@@ -34,21 +34,17 @@ const SideBar = () => {
                     <button onClick={handleDevEnCours}>Modifier un profil</button>
                     <button onClick={handlePreRegister}>Pre-inscription</button>
                     <button onClick={handleDevEnCours}>Radiation</button>
-                    <button onClick={handleDevEnCours}>Matchs</button>
                     <button onClick={handleDevEnCours}>KPI</button>
                 </>
             }
 
             {((dataUser.roles.includes('PARRAIN')) || (dataUser.roles.includes('PORTEUR'))) &&
                 <>
-                    <button onClick={handleDevEnCours}>Mes profils favoris</button>
-                    <button onClick={handleMessagerieTest}>TestMsg</button>
-                    <button onClick={handleMessagerie}>Messagerie</button>
-                    <button onClick={handleDevEnCours}>Rechercher un profil</button>
                     <button onClick={handleDevEnCours}>Modifier mon profil</button>
+                    <button onClick={handleDevEnCours}>Mes profils favoris</button>
+                    <button onClick={handleMessagerie}>Messagerie</button>
                 </>
             }
-
         </div>
     );
 };

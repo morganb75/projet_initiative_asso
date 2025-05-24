@@ -3,6 +3,7 @@ package fr.morgan.initiativeasso.controller;
 import fr.morgan.initiativeasso.model.Message;
 import fr.morgan.initiativeasso.model.User;
 import fr.morgan.initiativeasso.model.dto.MessageDto;
+import fr.morgan.initiativeasso.model.dto.UserDto;
 import fr.morgan.initiativeasso.model.dto.UserWsOnLineDto;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 import fr.morgan.initiativeasso.service.PresenceService;
@@ -24,6 +25,7 @@ import org.springframework.messaging.simp.user.SimpSession;
 import org.springframework.messaging.simp.user.SimpUser;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,7 +52,7 @@ public class MessageController {
     @MessageMapping("/msg.private")
     public void handlePrivateMessage(MessageDto messageDto, Principal principal) throws UserNotFoundException {
         String username = principal.getName();
-        User sender = userService.findByEmail(username).orElseThrow(() -> new UserNotFoundException("user not found!"));
+        UserDto sender = userService.findByEmail(username).orElseThrow(() -> new UserNotFoundException("user not found!"));
         User receiver = userService.findById(messageDto.getReceiverId()).orElseThrow(() -> new UserNotFoundException("user not found!"));
         messageDto.setSenderId(sender.getId());
         messageDto.setReceiverId(receiver.getId());
@@ -98,4 +100,5 @@ public class MessageController {
     public Map<Long, List<MessageDto>> getConversationByUserId(@RequestParam Long userId) {
         return messageService.getConversationByUserId(userId);
     }
+
 }

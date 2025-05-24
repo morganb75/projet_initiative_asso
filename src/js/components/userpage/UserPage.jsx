@@ -1,53 +1,51 @@
 import "./userpage.scss"
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import SideBar from "../layout/SideBar.jsx";
 import FeedUser from "../feed/FeedUser.jsx";
 import {useDataFeedContext} from "../../contexts/DataFeedContext.jsx";
 import {useUserContext} from "../../contexts/UserContext.jsx";
-import fetchEndPoint from "../../utils/fetchEndPoint.js";
-import mapTabLikedId from "../../utils/mapTabLikedId.js";
 
 const UserPage = () => {
     const {dataUser} = useUserContext()
-    const {dataFeed, setDataFeed} = useDataFeedContext()
+    const {dataFeed} = useDataFeedContext()
+    const [currentUser, setCurrentUser] = useState(null);
+    const [isParrain, setIsParrain] = useState(false)
 
-    let URL_USERFEED
-    if (dataUser?.roles.includes('PORTEUR')) {
-       URL_USERFEED = '/api/user/parrains'
-    } else {
-       URL_USERFEED = '/api/user/porteurs'
-    }
-
-    const HTTP_DATA = {
-        method: 'GET',
-        headers: {
-            'content-type': 'application/json',
-            Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
+    const handleParrainAffect = () => {
+        const URL_PATCH_PARRAIN = `/api/user/${dataUser.id}/${currentUser.id}`
+        const HTTP_PATCH_PARRAIN = {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json',
+                Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
+            },
+            body: JSON.stringify(null)
         }
-    }
-
-    const handleTest = () => {
-        console.log("Contexte dataUser", dataUser)
-    }
-
-    //------------------------------------------------------------------------
-
-    useEffect(() => {
-        fetchEndPoint(URL_USERFEED, HTTP_DATA)
-            .then(data => {
-                setDataFeed(data)
+        fetch(URL_PATCH_PARRAIN, HTTP_PATCH_PARRAIN)
+            .then(async response => {
+                if (!response.ok) {
+                    const errorMessage = await response.text()
+                    throw new Error(errorMessage)
+                }
+                return response.json()
             })
-            .catch((e) => {
-                alert(e + 'Echec de fetch users feed')
+            .then(()=> {
+                alert('Parrain affecté avec succès!')
+                setIsParrain(true)
             })
-    }, []);
+            .catch(e => alert('Erreur: '+ e.message))
+    }
 
     return (
         <>{dataFeed ?
             (<div className="main" id="main-userpage">
                 <SideBar/>
-                <h2 className="userpage-text2">Profils qui peuvent vous correspondre:</h2>
-                <FeedUser  handleTest={handleTest}/>
+                <FeedUser
+                    handleParrainAffect={handleParrainAffect}
+                    currentUser={currentUser}
+                    setCurrentUser={setCurrentUser}
+                    isParrain={isParrain}
+                />
             </div>)
             :
             (<p>CHARGEMENT EN COURS .....</p>)}

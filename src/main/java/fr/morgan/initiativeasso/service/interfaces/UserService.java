@@ -1,13 +1,13 @@
 package fr.morgan.initiativeasso.service.interfaces;
 
-import fr.morgan.initiativeasso.model.Parrain;
-import fr.morgan.initiativeasso.model.Porteur;
+import fr.morgan.initiativeasso.exceptions.ParrainAlreadyExist;
 import fr.morgan.initiativeasso.model.User;
-import fr.morgan.initiativeasso.model.dto.PorteurDto;
+import fr.morgan.initiativeasso.model.dto.UserDto;
 import fr.morgan.initiativeasso.model.dto.UserPreinscriptionDto;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,9 +18,9 @@ public interface UserService extends UserDetailsService {
 
     void preInscriptionUser(UserPreinscriptionDto user);
 
-    Optional<User> findByEmail(String email) throws UserNotFoundException;
+    Optional<UserDto> findByEmail(String email) throws UserNotFoundException;
 
-    PorteurDto findPorteurDtoByEmail(String email) throws UserNotFoundException;
+    UserDto findPorteurDtoByEmail(String email) throws UserNotFoundException;
 
     Optional<User> findById(Long id) throws UserNotFoundException;
 
@@ -31,9 +31,12 @@ public interface UserService extends UserDetailsService {
     List<User> getUsers();
 
     public User updatedUser(Long id, User updatedUser) throws UserNotFoundException;
+    public User setParrain(Long id, Long parrainId) throws UserNotFoundException, ParrainAlreadyExist;
 
-    public List<Porteur> findAllPorteurs();
-    public List<Parrain> findAllParrains();
+    public List<UserDto> findAllPorteurs();
+    public List<UserDto> findAllParrains();
+
+    public List<UserDto> feedPorteur(Long parrainId);
 
     // Renvoie l'utilisateur de la BDD quand il existe au DAO Provider (userDetailService)
     // Implementé dans UserServiceImpl

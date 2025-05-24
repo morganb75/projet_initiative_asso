@@ -25,7 +25,6 @@ public class PorteurDto {
     private String prenom;
     private String email;
     private String entreprise;
-    private Adresse adresse;
     private LocalDate dateDebutActivite;
     private SecteursReseaux domaineActivite;
     private String descriptifActivite;

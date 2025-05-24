@@ -16,7 +16,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class ParrainVersFeedDto {
+public class ParrainDto {
 
     private Long id;
     private String nom;
