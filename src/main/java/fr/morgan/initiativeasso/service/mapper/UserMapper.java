@@ -28,6 +28,8 @@ public interface UserMapper {
 
     UserDto adminToDto(SalarieAsso admin);
 
+    List<UserDto> adminLstToDto(List<User> users);
+
     default UserDto userToDto(User user) {
         if (user instanceof Porteur porteur) {
             return porteurToDto(porteur);

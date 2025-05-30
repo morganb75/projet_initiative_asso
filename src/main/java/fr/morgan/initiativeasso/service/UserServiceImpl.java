@@ -79,8 +79,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public List<UserDto> getUsers() {
+        return userMapper.adminLstToDto(userRepository.findAll());
     }
 
     @Override
@@ -105,8 +105,17 @@ public class UserServiceImpl implements UserService {
         User parrain = userRepository.findById(parrainId).orElseThrow(() ->new UsernameNotFoundException("User Not Found"));
         UserDto adminDto = userMapper.userToDto(admin);
         UserDto parrainDto = userMapper.userToDto(parrain);
-
         return List.of(adminDto,parrainDto);
+    }
+
+    @Override
+    public List<UserDto> feedParrain(Long parrainId) {
+        User user= userRepository.findById(parrainId).orElseThrow(() ->new UsernameNotFoundException("User Not Found"));
+        User admin = userRepository.findById(ADMIN_ID).orElseThrow(() ->new UsernameNotFoundException("probleme BDD Admin"));
+        UserDto adminDto = userMapper.userToDto(admin);
+        List<UserDto> lstPorteurs= userMapper.porteurLstToDto(((Parrain) user).getListePorteurs());
+        lstPorteurs.add(adminDto);
+        return lstPorteurs;
     }
 
     @Override

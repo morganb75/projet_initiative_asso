@@ -39,8 +39,7 @@ const FirstLoginPage = () => {
         email: null,
         entreprise: null,
         plateForme: null,
-        password1: null,
-        password2: null,
+        password: null,
         parcours: null,
         domaineActivite: null,
         zonesDeDeplacement: [],
@@ -49,7 +48,6 @@ const FirstLoginPage = () => {
     const [formState, setFormState] = useState(() =>
         dataUser?.roles?.includes('PORTEUR') ? porteurInitialState : parrainInitialState
     )
-    //TODO a mettre a jour quand le DTO parrain sera géré
     const URL_GET_USER_BY_EMAiL = dataUser?.roles?.includes('PORTEUR') ? `/api/user?email=${dataUser.sub}` : `/api/user?email=${dataUser.sub}`
 
     useEffect(() => {
@@ -99,6 +97,7 @@ const FirstLoginPage = () => {
             },
             body: JSON.stringify(formState)
         }
+        console.log({formState})
         fetch(URL_FIRSTLOGIN, HTTP_DATA)
             .then(response => {
                 if (!response.ok) {

@@ -1,6 +1,8 @@
 package fr.morgan.initiativeasso.service;
 
 import fr.morgan.initiativeasso.model.Message;
+import fr.morgan.initiativeasso.model.Parrain;
+import fr.morgan.initiativeasso.model.Porteur;
 import fr.morgan.initiativeasso.model.User;
 import fr.morgan.initiativeasso.model.dto.MessageDto;
 import fr.morgan.initiativeasso.model.exception.UserNotFoundException;
@@ -12,6 +14,7 @@ import fr.morgan.initiativeasso.service.mapper.MessageMapper;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +59,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Map<Long, List<MessageDto>> getConversationByUserId(Long id) {
+    public Map<Long, List<MessageDto>> getConversationByUserId(Long id){
         List<MessageDto> messages = messageMapper.toDtoList(messageRepository.findUserConversations(id));
 
         return messages.stream()

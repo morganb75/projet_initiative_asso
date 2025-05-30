@@ -27,7 +27,7 @@ const ChatWindow = ({myDataUser, contact, messages, stompClient}) => {
                 return () => {
                     subscription.unsubscribe()
                 }
-            }, [contact.id,stompClient]
+            }, [contact.id, stompClient]
         )
 
         const handleSendMessage = (e) => {

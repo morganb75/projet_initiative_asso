@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +39,7 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public List<User> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         return userService.getUsers();
     }
 
@@ -46,7 +47,7 @@ public class AdminController {
     public List<UserDto> getAllPorteurs() {return userService.findAllPorteurs();}
 
     @GetMapping("/users/parrains")
-    public List<UserDto> getAllParrains() {return userService.findAllPorteurs();}
+    public List<UserDto> getAllParrains() {return userService.findAllParrains();}
 
     @GetMapping("/user/{id}")
     public Optional<User> findUserById(@PathVariable Long id) throws UserNotFoundException {

@@ -29,9 +29,10 @@ public class Parrain extends User {
     private List<ZonesDeplacement> zonesDeDeplacement;
     private String disponibilites;
     @OneToMany(mappedBy = "parrain")
-    @JsonBackReference
-//    @JsonManagedReference
+    @JsonManagedReference
     private List<Porteur> listePorteurs;
+    @OneToMany(mappedBy = "parrain")
+    private List<Reunion> listeReunions;
 
 
     @Builder

@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom";
 import deconnect from '../../assets/icons8-se-déconnecter-32.png'
 import fetchEndPoint from "../../utils/fetchEndPoint.js";
 import {useDataFeedContext} from "../../contexts/DataFeedContext.jsx";
-import Notification from "../Notification/Notification.jsx";
+import Notification from "../notification/Notification.jsx";
 
 const Header = () => {
 

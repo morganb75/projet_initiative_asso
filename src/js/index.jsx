@@ -14,6 +14,8 @@ import PreInscription from "./components/adminpage/PreInscription.jsx";
 import FirstLoginPage from "./components/userpage/FirstLoginPage.jsx";
 import DataFeedContextProvider from "./contexts/DataFeedContext.jsx";
 import Messagerie from "./components/messagerie/Messagerie.jsx";
+import RechercheProfils from "./components/rechercheProfils/RechercheProfils.jsx";
+import AllUsersForAdminContextProvider from "./contexts/AllUsersForAdminContext.jsx";
 
 const Main = () => {
     return (
@@ -24,10 +26,11 @@ const Main = () => {
                     <Route path="" element={<LandingPage/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/firstlogin" element={<FirstLoginPage/>}/>
-                    <Route path="/user" element={<UserPage/>}/>
+                    <Route path="/user/*" element={<UserPage/>}/>
+                    <Route path="/user/messagerie" element={<Messagerie/>}/>
                     <Route path="/admin" element={<AdminPage/>}/>
                     <Route path="/admin/preinscrire" element={<PreInscription/>}/>
-                    <Route path="/user/messagerie" element={<Messagerie/>}/>
+                    <Route path="/admin/recherche" element={<RechercheProfils/>}/>
                 </Route>
             </Routes>
         </Router>)
@@ -37,10 +40,12 @@ export default Main;
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
-    <UserContextProvider>
-        <DataFeedContextProvider>
-            <Main/>
-        </DataFeedContextProvider>
-    </UserContextProvider>
-     </StrictMode>
+        <AllUsersForAdminContextProvider>
+            <UserContextProvider>
+                <DataFeedContextProvider>
+                    <Main/>
+                </DataFeedContextProvider>
+            </UserContextProvider>
+        </AllUsersForAdminContextProvider>
+    </StrictMode>
 )

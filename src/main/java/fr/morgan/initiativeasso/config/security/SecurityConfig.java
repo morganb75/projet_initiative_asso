@@ -45,7 +45,7 @@ public class SecurityConfig {
                         .requestMatchers("/connexion","/enums/**", "/favicon.ico","/ws/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasAnyRole("PORTEUR", "PARRAIN")
-                        .requestMatchers("/notify/**","/messages/**").hasAnyRole("ADMIN", "PORTEUR", "PARRAIN")
+                        .requestMatchers("/notify/**","/messages/**", "/reunions/**").hasAnyRole("ADMIN", "PORTEUR", "PARRAIN")
                         .anyRequest().authenticated())
                 .logout(logout -> logout
                         .logoutUrl("/logout")

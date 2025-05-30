@@ -72,11 +72,6 @@ public class UserController {
         return userService.findAllParrains();
     }
 
-    @GetMapping("/parrainid")
-    public ResponseEntity<ParrainDto> findParrainIdFromPorteur(Long porteurId) {
-        return null;
-    }
-
     @GetMapping("/porteurs")
     public List<UserDto> findPorteursForParrainFeed() {
         return userService.findAllPorteurs();
@@ -87,4 +82,8 @@ public class UserController {
         return userService.feedPorteur(parrainId);
     }
 
+    @GetMapping("/feed/parrain/{id}")
+    public List<UserDto> getFeedParrain(@PathVariable Long id) {
+        return userService.feedParrain(id);
+    }
 }

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {createContext} from "react";
 
 //1. Creation du context
@@ -14,6 +14,21 @@ export const UserContext = createContext({
 
 export default function UserContextProvider({children}) {
     const [dataUser, setDataUser] = useState([])
+
+    // // Met à jour le state ET stocke dans sessionStorage
+    // const setUser = (user) => {
+    //     setDataUser(user);
+    //     sessionStorage.setItem("dataUser", JSON.stringify(user));
+    // };
+    //
+    // // Initialise depuis sessionStorage
+    // useEffect(() => {
+    //     const storedUser = sessionStorage.getItem("dataUser");
+    //     if (storedUser) {
+    //         setDataUser(JSON.parse(storedUser));
+    //     }
+    // }, []);
+
     const valueUserContext = {
         dataUser,
         setDataUser

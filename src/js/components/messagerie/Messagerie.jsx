@@ -5,9 +5,11 @@ import fetchEndPoint from "../../utils/fetchEndPoint.js";
 import MsgSideBar from "./MsgSideBar.jsx";
 import ChatWindow from "./ChatWindow.jsx";
 import {Stomp} from "@stomp/stompjs";
+import {useDataFeedContext} from "../../contexts/DataFeedContext.jsx";
 
 const Messagerie = () => {
     const {dataUser} = useUserContext()
+    const {dataFeed} = useDataFeedContext()
     const authToken = useMemo(() => sessionStorage.getItem("authToken"), []);
     const [conversationsFromServer, setConversationsFromServer] = useState({})
     const [contacts, setContacts] = useState([])
@@ -15,12 +17,10 @@ const Messagerie = () => {
     const [currentContact, setCurrentContact] = useState(null)
     const [stompClient, setStompClient] = useState(null)
     const [onLineUsers, setOnLineUsers] = useState([])
-
-
     const URL_MESSAGES = useMemo(
         () => `/api/messages/conversations?userId=${dataUser.id}`,
         [dataUser.id]
-    );
+    )
 
     const HttpData = useMemo(
         () => ({
@@ -39,30 +39,20 @@ const Messagerie = () => {
             setConversationsFromServer(results);
             setLoading(false)
         }
+        console.log('MISE A JOUR CONV FROM SERVER')
         getConversations();
-    }, [URL_MESSAGES, HttpData]);
+    }, [URL_MESSAGES, HttpData, currentContact]);
 
     useEffect(() => {
-        console.log({conversationsFromServer})
+        console.log({dataFeed})
 
-        const newContacts = []
-        Object.entries(conversationsFromServer).forEach(([userId, messages]) => {
-            const userIdNum = Number(userId);
-            const msg =
-                messages.find((msg) => msg.senderId === userIdNum) ||
-                messages.find((msg) => msg.receiverId === userIdNum)
+        const tabContacts = dataFeed?.map((user) => ({
+            id: user.id,
+            firstName: user.prenom,
+            name: user.nom
+        }))
 
-            if (!msg) return;
-
-            newContacts.push({
-                id: userId,
-                name: msg.senderId === userIdNum ? msg.senderName : msg.receiverName,
-                firstName: msg.senderId === userIdNum ? msg.senderFirstName : msg.receiverFirstName,
-            })
-            console.log({conversationsFromServer})
-        })
-
-        setContacts(newContacts);
+        setContacts(tabContacts);
 
     }, [conversationsFromServer])
 
@@ -88,8 +78,7 @@ const Messagerie = () => {
                 })
 
                 // Envoi explicite de l'enregistrement de présence
-            client.send("/app/presence/register", {});
-
+                client.send("/app/presence/register", {});
             }
         )
         setStompClient(client)

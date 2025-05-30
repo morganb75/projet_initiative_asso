@@ -2,51 +2,64 @@ import './sidebar.scss'
 import React, {useEffect, useState} from 'react';
 import {useUserContext} from "../../contexts/UserContext.jsx";
 import {useNavigate} from "react-router-dom";
-import Notification from "../Notification/Notification.jsx";
+import Notification from "../notification/Notification.jsx";
 import fetchEndPoint from "../../utils/fetchEndPoint.js";
 
-const SideBar = () => {
-
-    const {dataUser} = useUserContext()
+const SideBar = ({
+                     handleRetourHome,
+                     handlePreRegister,
+                     handleMessagerie,
+                     handleListePorteurs,
+                     handleListeParrains,
+                     handleSearch,
+                 }) => {
     const navigate = useNavigate()
+    const [showMeetingsMenu, setShowMeetingsMenu] = useState(false)
+    const {dataUser} = useUserContext()
     const handleDevEnCours = () => alert('DEVELOPPEMENT EN COURS .... PATIENCE.')
-    const handlePreRegister = () => {
-        navigate("/admin/preinscrire")
-    }
-    const handleMessagerie = () => {
-        navigate("/user/messagerie")
-    }
-    const handleMessagerieTest = () => {
-        navigate("/user/messagerie/test")
-    }
-    const handleListeProfils = () => {
-        navigate("api/")
-    }
 
     return (
         <div className="sidebar">
-            {dataUser.roles.includes('ADMIN') &&
+            {dataUser.roles.includes('ADMIN') && (
                 <>
-                    <button onClick={handleDevEnCours}>Liste des porteurs</button>
-                    <button onClick={handleDevEnCours}>Liste des parrains</button>
-                    <button onClick={handleDevEnCours}>Rechercher un profil</button>
+                    <button onClick={handleRetourHome}>Home</button>
+                    <button onClick={() => setShowMeetingsMenu(!showMeetingsMenu)}>
+                        <span>Gestion utilisateurs</span>
+                        <span className={`chevron ${showMeetingsMenu ? 'rotated' : ''}`}>&#9662;</span>
+                    </button>
+                    {showMeetingsMenu && (
+                        <div className="submenu">
+                            <div className="submenu-item" onClick={handlePreRegister}>Pre-inscription</div>
+                            <div className="submenu-item" onClick={handleListePorteurs}>Liste des porteurs</div>
+                            <div className="submenu-item" onClick={handleListeParrains}>Liste des parrains</div>
+                            <div className="submenu-item" onClick={handleSearch}>Recherche un profil</div>
+                        </div>
+                    )}
                     <button onClick={handleMessagerie}>Messagerie</button>
-                    <button onClick={handleDevEnCours}>Modifier un profil</button>
-                    <button onClick={handlePreRegister}>Pre-inscription</button>
-                    <button onClick={handleDevEnCours}>Radiation</button>
                     <button onClick={handleDevEnCours}>KPI</button>
                 </>
-            }
+            )}
 
-            {((dataUser.roles.includes('PARRAIN')) || (dataUser.roles.includes('PORTEUR'))) &&
+            {(dataUser.roles.includes('PARRAIN') || dataUser.roles.includes('PORTEUR')) && (
                 <>
-                    <button onClick={handleDevEnCours}>Modifier mon profil</button>
-                    <button onClick={handleDevEnCours}>Mes profils favoris</button>
+                    <button onClick={handleRetourHome}>Home</button>
+                    <button onClick={() => navigate("modify")}>Modifier mon profil</button>
+                    <button onClick={() => navigate("feed")}>Mes Contacts</button>
+                    <button onClick={() => setShowMeetingsMenu(!showMeetingsMenu)}>
+                        <span>Mes Rendez-Vous</span>
+                        <span className={`chevron ${showMeetingsMenu ? 'rotated' : ''}`}>&#9662;</span>
+                    </button>
+                    {showMeetingsMenu && (
+                        <div className="submenu">
+                            <div className="submenu-item" onClick={() => navigate("reunion/create")}>Créer une réunion</div>
+                            <div className="submenu-item" onClick={() => navigate("reunions")}>Voir les réunions</div>
+                        </div>
+                    )}
                     <button onClick={handleMessagerie}>Messagerie</button>
                 </>
-            }
+            )}
         </div>
     );
-};
+}
 
-export default SideBar;
+export default SideBar

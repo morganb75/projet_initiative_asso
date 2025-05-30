@@ -4,13 +4,17 @@ import {useNavigate} from "react-router-dom";
 import decodeToken from "../../utils/decodeToken.js";
 import {useUserContext} from "../../contexts/UserContext.jsx";
 import fetchEndPoint from "../../utils/fetchEndPoint.js";
+import {useDataFeedContext} from "../../contexts/DataFeedContext.jsx";
 
 const Login = () => {
 
-    const {setDataUser} = useUserContext();
+    const {dataUser,setDataUser} = useUserContext();
+    const {dataFeed, setDataFeed} = useDataFeedContext()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
+    console.log({dataFeed,dataUser})
+
     const URL_CONNEXION = '/api/connexion'
     const HTTP_DATA = {
         method: 'POST',

@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
-const MsgSideBar = ({onLineUsers, loading, contacts, setCurrentConversationContact}) => {
-
-    useEffect(() => {
-        console.log({onLineUsers})
-    }, [onLineUsers]);
+const MsgSideBar = ({onLineUsers, loading, contacts, currentConversationContact, setCurrentConversationContact}) => {
+        console.log({contacts})
+        useEffect(() => {
+            console.log({onLineUsers})
+        }, [onLineUsers]);
 
         return (
             <aside className="msg-sidebar">
@@ -28,7 +28,7 @@ const MsgSideBar = ({onLineUsers, loading, contacts, setCurrentConversationConta
                                         }))}
                                         style={{
                                             cursor: "pointer",
-                                            // backgroundColor: currentConversationContact?.id === ct.id ? "#e0e0e0" : "transparent"
+                                            backgroundColor: currentConversationContact?.id === ct.id ? "#e0e0e0" : "transparent"
                                         }}
                                     >
                                         <span>{onLineUsers.includes(Number(ct.id)) ? '🟢 ' : '🔴 '}</span>{ct.firstName} {ct.name}

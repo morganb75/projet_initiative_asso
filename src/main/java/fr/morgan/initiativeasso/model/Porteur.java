@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -39,9 +40,10 @@ public class Porteur extends User {
     private String disponibilites;
     @ManyToOne
     @JoinColumn(name= "parrain_id")
-    @JsonManagedReference
-//    @JsonBackReference
+    @JsonBackReference
     private Parrain parrain;
+    @OneToMany(mappedBy = "porteur")
+    private List<Reunion> listeReunions;
 
 
     @Builder
