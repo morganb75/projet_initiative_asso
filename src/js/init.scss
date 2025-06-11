@@ -34,7 +34,7 @@ body {
       position: fixed;
       bottom: 0;
       left: 0;
-      height: 60px; // Hauteur fixe du footer
+      height: 100px; // Hauteur fixe du footer
       width: 100%;
       background-color: white;
       z-index: 10;
@@ -43,8 +43,8 @@ body {
 
     .main {
       margin-top: 115px;  // Hauteur du header
-      margin-bottom: 60px; // Hauteur du footer
-      height: calc(100vh - 115px - 60px);
+      margin-bottom: 100px; // Hauteur du footer
+      height: calc(100vh - 115px - 100px);
       width:100%;
       display: flex;
       background-image: url("./assets/fond_init.jpg");

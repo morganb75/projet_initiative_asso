@@ -2,10 +2,11 @@
 
   .footer-content {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
+    padding-right: 1rem;
   }
 
   .footer-left {
@@ -14,7 +15,7 @@
     gap: 1rem;
 
     .footer-logo {
-      width: 60px;
+      width: 90px;
       height: auto;
     }
 
