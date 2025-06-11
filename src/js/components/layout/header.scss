@@ -1,9 +1,4 @@
 header {
-  display: flex;
-  align-items: center;
-  height: 12vh;
-  border-bottom: 1px solid rgba(229, 25, 104, 1);
-  color: #ecdfe0;
 
   .logo1 {
     flex: 1;
@@ -16,6 +11,7 @@ header {
 
   .logo2 {
     flex: 1.5;
+    padding-left: 1rem;
 
     img {
       width: 100%;
@@ -23,6 +19,7 @@ header {
       object-fit: cover;
     }
   }
+
   .user {
     flex: 1;
     font-weight: bolder;
@@ -30,5 +27,6 @@ header {
     justify-content: flex-end;
     align-items: center;
     gap:0.4rem;
+    padding-right: 1rem;
   }
 }

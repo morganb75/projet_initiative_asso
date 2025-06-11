@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import './rechercheProfils.scss'
-import MediaCard from "../feed/MediaCard.jsx";
 import {useAllUsersForAdminContext} from "../../contexts/AllUsersForAdminContext.jsx";
 import fetchEndPoint from "../../utils/fetchEndPoint.js";
-import SideBar from "../layout/SideBar.jsx";
 
-const RechercheProfils = () => {
+const RechercheProfils = ({showSearchModal, setShowSearchModal, setAdminfeed}) => {
+
     const {allUsers, setAllUsers} = useAllUsersForAdminContext()
+
     const URL = '/api/admin/users'
+
     const HTTP_DATA = {
         method: 'GET',
         headers: {
@@ -23,13 +24,11 @@ const RechercheProfils = () => {
     }
 
     const [searchForm, setSearchForm] = useState(initialForm)
-    const [showModal, setShowModal] = useState(true)
-    const [searchResults, setSearchResults] = useState([])
 
     useEffect(() => {
         const fetchUsers = async () => {
-                const data = await fetchEndPoint(URL, HTTP_DATA);
-                setAllUsers(data);
+            const data = await fetchEndPoint(URL, HTTP_DATA);
+            setAllUsers(data);
         }
         fetchUsers();
     }, []);
@@ -45,33 +44,22 @@ const RechercheProfils = () => {
     }
 
     const handleSearch = () => {
-        console.log({allUsers, searchForm})
+
         const filteredResults = allUsers.filter(user =>
             (searchForm.nom === '' || user.nom.toLowerCase().includes(searchForm.nom.toLowerCase())) &&
             (searchForm.prenom === '' || user.prenom.toLowerCase().includes(searchForm.prenom.toLowerCase())) &&
             (searchForm.role === '' || user.roles.includes(searchForm.role))
-    )
-        console.log({filteredResults})
-        setSearchResults(filteredResults)
-        setShowModal(false)
+        )
+        setAdminfeed(filteredResults)
+        setShowSearchModal(false)
     }
     return (
         <>
-            <SideBar/>
-            {(!showModal && searchResults.length > 0) && (
-                <div className="search-results">
-                    <h2>Résultats de recherche</h2>
-                    {searchResults.map((user) => (
-                        <MediaCard
-                            user={user}/>
-                    ))}
-                </div>
-            )}
-
-            {showModal && (
+            {showSearchModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">
                         <form onSubmit={handleSearch}>
+                            <div>
                             <input type="text" value={searchForm.nom} onChange={handleChangeName} placeholder="Nom"/>
                             <input type="text" value={searchForm.prenom} onChange={handleChangeFirstName} placeholder="Prénom"/>
                             <select value={searchForm.role} onChange={handleChangeRole}>
@@ -79,15 +67,17 @@ const RechercheProfils = () => {
                                 <option value="PORTEUR">PORTEUR</option>
                                 <option value="PARRAIN">PARRAIN</option>
                             </select>
+                            </div>
+                            <div>
                             <button type="submit">Chercher</button>
-                            <button type="cancel">Annuler</button>
+                            <button type="cancel" onClick={() => setShowSearchModal(false)}>Annuler</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             )}
         </>
     )
-        ;
-};
+}
 
 export default RechercheProfils;

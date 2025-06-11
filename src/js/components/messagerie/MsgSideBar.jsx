@@ -1,14 +1,21 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+import {useNavigate} from "react-router-dom";
+import {useUserContext} from "../../contexts/UserContext.jsx";
 
 const MsgSideBar = ({onLineUsers, loading, contacts, currentConversationContact, setCurrentConversationContact}) => {
-        console.log({contacts})
-        useEffect(() => {
-            console.log({onLineUsers})
-        }, [onLineUsers]);
+        const {dataUser} = useUserContext()
+        const navigate = useNavigate()
+        const handleHome = () => {
+            (dataUser.roles.includes('ADMIN')) ? navigate('/admin') : navigate('/user')
+        }
+
 
         return (
             <aside className="msg-sidebar">
                 <div className="sidebar-header">
+                    <h2 onClick={handleHome} style={{
+                        cursor: "pointer"
+                    }}>Retour Accueil </h2>
                     <h2>Conversations</h2>
                 </div>
                 <div className="conversation-list">

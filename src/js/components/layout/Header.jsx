@@ -1,21 +1,18 @@
-import React, {useEffect, useState} from 'react'
-// import "../../init.scss"
+import React from 'react'
+import "../../init.scss"
 import "./header.scss"
 import logottm from "../../assets/logo1.png"
 import logoids from "../../assets/logo.png"
 import {useUserContext} from "../../contexts/UserContext.jsx";
 import {useNavigate} from "react-router-dom";
 import deconnect from '../../assets/icons8-se-déconnecter-32.png'
-import fetchEndPoint from "../../utils/fetchEndPoint.js";
 import {useDataFeedContext} from "../../contexts/DataFeedContext.jsx";
-import Notification from "../notification/Notification.jsx";
 
 const Header = () => {
 
     const {dataUser, setDataUser} = useUserContext()
-    const {dataFeed, setDataFeed} = useDataFeedContext()
+    const {setDataFeed} = useDataFeedContext()
     const navigate = useNavigate()
-    const [notification, setnotification] = useState([])
 
     const HTTP_DATA = {
         method: 'GET',
@@ -24,21 +21,6 @@ const Header = () => {
             Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
         }
     }
-    const URL_MAJ_NOTIFICATIONS = `/api/notify/${dataUser.id}`
-    // useEffect(() => {
-    //     fetch(URL_MAJ_NOTIFICATIONS, HTTP_DATA)
-    //         .then((response) => {
-    //             if (!response.ok) {
-    //                 throw new Error(`Erreur de fetch notifications: ${response.status}`)
-    //             }
-    //             return response.json()
-    //         })
-    //         .then(data => setnotification(data))
-    //         .catch(error => {
-    //             console.error("Erreur lors de la requête :", error);
-    //         });
-    // }, [dataUser]);
-
 
     const handleLogout = async () => {
         const urlLogout = "/api/logout"
@@ -70,7 +52,7 @@ const Header = () => {
         </div>
         <div className="user">
             {(dataUser.length !== 0) && (<>
-                <Notification notification={notification}/>
+                {/*<Notification notification={notification}/>*/}
                 <span>{dataUser.prenom} </span>
                 <span>{dataUser.nom}</span>
                 <button onClick={handleLogout}>

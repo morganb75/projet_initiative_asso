@@ -5,20 +5,17 @@ import FeedUser from "../feed/FeedUser.jsx";
 import {useDataFeedContext} from "../../contexts/DataFeedContext.jsx";
 import {useUserContext} from "../../contexts/UserContext.jsx";
 import fetchEndPoint from "../../utils/fetchEndPoint.js";
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import FeedReunion from "../feed/FeedReunion.jsx";
 import CreateReunionForm from "../feed/CreateReunionForm.jsx";
-import FirstLoginPage from "./FirstLoginPage.jsx";
 
 const UserPage = () => {
     const navigate = useNavigate()
-    const {dataUser} = useUserContext()
+    const {dataUser, setDataUser} = useUserContext()
     const {dataFeed, setDataFeed} = useDataFeedContext()
     const [currentUser, setCurrentUser] = useState(null);
-    const [isParrain, setIsParrain] = useState(false)
 
     let URL_FEED
-    const URL_REUNION_FEED = `/api/reunions/all/${dataUser.id}`
     const HTTP_FEED_DATA = {
         method: 'GET',
         headers: {
@@ -29,7 +26,7 @@ const UserPage = () => {
 
     useEffect(() => {
         const fetchFeed = async () => {
-            if (dataUser?.parrainId == null && !isParrain) {
+            if (dataUser?.parrainId == null) {
                 if (dataUser.roles.includes('PORTEUR')) {
                     URL_FEED = '/api/user/parrains'
                 } else if (dataUser.roles.includes('PARRAIN')) {
@@ -46,11 +43,8 @@ const UserPage = () => {
         }
         fetchFeed()
 
-    }, [isParrain]);
+    }, [dataUser]);
 
-
-    const handleRetourHome = () => {
-    }
 
     const handleMessagerie = () => {
         navigate("/user/messagerie")
@@ -58,79 +52,102 @@ const UserPage = () => {
     }
 
     const handleParrainAffect = () => {
-        const URL_PATCH_PARRAIN = `/api/user/${dataUser.id}/${currentUser.id}`
-        const HTTP_PATCH_PARRAIN = {
-            method: 'PATCH',
-            headers: {
-                'content-type': 'application/json',
-                Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
-            },
-            body: JSON.stringify(null)
-        }
-        fetch(URL_PATCH_PARRAIN, HTTP_PATCH_PARRAIN)
-            .then(async response => {
-                if (!response.ok) {
-                    const errorMessage = await response.text()
-                    throw new Error(errorMessage)
-                }
-                return response.json()
-            })
-            .then(() => {
-                alert('Parrain affecté avec succès!')
-                setIsParrain(true)
+        if (window.confirm(`Vous êtes sur le point de choisir ${currentUser.prenom} ${currentUser.nom} en tant que Parrain, êtes vous sûr?`)) {
+            const URL_PATCH_PARRAIN = `/api/user/${dataUser.id}/${currentUser.id}`
+            const HTTP_PATCH_PARRAIN = {
+                method: 'PATCH',
+                headers: {
+                    'content-type': 'application/json',
+                    Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
+                },
+                body: JSON.stringify(null)
+            }
+            fetch(URL_PATCH_PARRAIN, HTTP_PATCH_PARRAIN)
+                .then(async response => {
+                    if (!response.ok) {
+                        const errorMessage = await response.text()
+                        throw new Error(errorMessage)
+                    }
+                    return response.json()
+                })
+                .then(() => {
+                    alert('Parrain affecté avec succès!')
+                    setDataUser({...dataUser, parrainId: currentUser.id})
+                    navigate('/user/feed')
 
-            })
-            .catch(e => alert('Erreur: ' + e.message))
+
+                })
+                .catch(e => alert('Erreur: ' + e.message))
+        }
     }
+
+    useEffect(() => {
+        if (!dataUser.parrainId) {
+            navigate('/user/feed')
+        }
+    }, []);
 
     return (
         <>
-            {/*{!dataUser.parrainId &&*/}
-            {/*    <h2>{`Bienvenue dans votre espace ${dataUser.prenom}, veuillez choisir le parrain qui vous accompagnera dans votre projet dans la liste`}</h2>*/}
-            {/*}*/}
-            {/*{dataUser.parrainId &&*/}
-            {/*    <h2>{`Bienvenue dans votre espace ${dataUser.prenom}`}</h2>*/}
-            {/*}*/}
-            {dataFeed ?
-                (<div className="main" id="main-userpage">
-                    <SideBar
-                        handleRetourHome={handleRetourHome}
-                        handleMessagerie={handleMessagerie}
-                    />
+            <div className="main">
+                {dataFeed ?
+                    (
+                        <>
+                            {(dataUser.parrainId || dataUser.roles.includes('PARRAIN')) &&
+                                <SideBar
+                                    handleMessagerie={handleMessagerie}
+                                />}
 
-                    <Routes>
-                        <Route path="modify" element=
-                            {
-                                // <FirstLoginPage/>
-                                <h1> DEV en cours.......</h1>
-                            }
-                        />
-                        <Route path="feed" element=
-                            {
-                                <FeedUser
-                                    handleParrainAffect={handleParrainAffect}
-                                    setCurrentUser={setCurrentUser}
-                                    dataFeed={dataFeed}
+                            <Routes>
+                                <Route path="" element=
+                                    {
+                                    <h1 className="content-accueil">{`Bienvenue dans votre espace ${dataUser.prenom}`}</h1>
+                                }
                                 />
-                            }
-                        />
-                        <Route path="reunions" element=
-                            {
-                                <FeedReunion/>
-                            }
-                        />
-                        <Route path="reunion/create" element=
-                            {
-                                <CreateReunionForm/>
-                            }
-                        />
+                                <Route path="modify" element=
+                                    {
+                                        // <FirstLoginPage/>
+                                        <h1> NON DEVELOPPE A CE JOUR.......</h1>
+                                    }
+                                />
+                                <Route path="feed" element=
+                                    {
+                                        <div className="feed-user-content">
+                                            {(dataUser.roles.includes('PORTEUR') && !dataUser.parrainId) &&
+                                                <div className="feed-user-text-content">
+                                                    <h2>{`Bienvenue dans votre espace ${dataUser.prenom}`} < /h2>
+                                                    <h2>veuillez choisir le parrain qui vous accompagnera dans votre projet</h2>
+                                                </div>
+                                            }
 
-                    </Routes>
-                </div>)
-                :
-                (<p>CHARGEMENT EN COURS .....</p>)}
+
+                                            <FeedUser
+                                                handleParrainAffect={handleParrainAffect}
+                                                setCurrentUser={setCurrentUser}
+                                                dataFeed={dataFeed}
+                                            />
+                                        </div>
+                                    }
+                                />
+                                <Route path="reunions" element=
+                                    {
+                                        <FeedReunion/>
+                                    }
+                                />
+                                <Route path="reunion/create" element=
+                                    {
+                                        <CreateReunionForm/>
+                                    }
+                                />
+
+                            </Routes>
+                        </>
+                    )
+                    :
+                    (<p>CHARGEMENT EN COURS .....</p>)}
+            </div>
         </>
-    );
-};
+    )
+}
 
 export default UserPage;

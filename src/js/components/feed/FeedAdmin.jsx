@@ -20,9 +20,11 @@ const FeedAdmin = ({adminFeed}) => {
                 </div>)
                 :
                 (<>
-                        <h1>RESEAU INITIATIVE</h1>
-                        <h1>PLATEFORME: DEUX-SEVRES</h1>
-                        <h2>Page d'administration de l'application "Trouve ton match"</h2>
+                        <div className="admin-content">
+                            <h1 className="color-text">RESEAU INITIATIVE</h1>
+                            <h1 className="color-text">PLATEFORME: DEUX-SEVRES</h1>
+                            <h2 className="color-text">Page d'administration de l'application "Trouve ton match"</h2>
+                        </div>
                     </>
                 )
             }

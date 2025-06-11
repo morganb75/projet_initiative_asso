@@ -1,33 +1,72 @@
-// Variables pour Open Sans
 $primary-font: 'Open Sans', sans-serif;
 
-/*!* initialisation page *!*/
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/*!* Styles de base *!*/
 body {
   font-family: $primary-font;
   line-height: 1.6;
-  background-color: gray ;
+  background-color: white;
   color: #191919;
-  padding: 10px;
+  overflow: hidden;
 
-  .main {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.6)), url("assets/fondTTM.jpg");
-    background-size:contain;
-    background-position:center;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(12, 1fr);
-    flex: 1;
-    overflow-y: auto;
-    justify-items: center;
-    align-items: start;
-    gap: 10px;
-    height: 75vh;
+  .layout {
+    display: flex;
+    min-height: 100vh;
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 115px; // Hauteur fixe du header
+      width: 100%;
+      background-color: white;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 60px; // Hauteur fixe du footer
+      width: 100%;
+      background-color: white;
+      z-index: 10;
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .main {
+      margin-top: 115px;  // Hauteur du header
+      margin-bottom: 60px; // Hauteur du footer
+      height: calc(100vh - 115px - 60px);
+      width:100%;
+      display: flex;
+      background-image: url("./assets/fond_init.jpg");
+
+      .sidebar {
+        width: 250px;
+        height: 100vh;
+        background-color: #f5f5f5;
+        z-index: 1;
+      }
+
+      .feed {
+        margin-left: 30vh;
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 1rem;
+        gap: 1rem;
+        overflow-x: auto;
+      }
+    }
   }
 }

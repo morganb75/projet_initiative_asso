@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
+import './createreunionform.scss'
 import {useUserContext} from "../../contexts/UserContext.jsx";
 import fetchEndPoint from "../../utils/fetchEndPoint.js";
+import {useNavigate} from "react-router-dom";
 
 const CreateReunionForm = () => {
     const {dataUser} = useUserContext()
+    const navigate = useNavigate()
     const initialReunionForm = {
         motif: '',
         date: '',
@@ -11,6 +14,7 @@ const CreateReunionForm = () => {
         parrainId: dataUser.parrainId
     }
     const [formState, setFormState] = useState(initialReunionForm)
+    console.log({formState})
     const URL_POST_DATA = '/api/reunions/create'
     const HTTP_POST_DATA = {
         method: 'POST',
@@ -26,42 +30,52 @@ const CreateReunionForm = () => {
         setFormState({...formState, [name]: value});
     }
 
-    const handleCreate =  (e) => {
+    const handleCreate = async (e) => {
         e.preventDefault()
-        console.log({formState})
-        fetchEndPoint(URL_POST_DATA,HTTP_POST_DATA)
-
+        try {
+            await fetchEndPoint(URL_POST_DATA, HTTP_POST_DATA)
+            alert("Réunion créée avec succès ✅")
+            navigate("/user/reunions");
+        } catch (error) {
+            alert("Échec de la création de la réunion ❌")
+        }
     }
 
-    return (
-        <div className="feed">
-            <form onSubmit={handleCreate}>
-                <fieldset>
-                    <legend>Nouvelle réunion</legend>
-                    <label htmlFor="motif">Motif</label>
-                    <input
-                        type="text"
-                        id="motif"
-                        name="motif"
-                        value={formState.motif}
-                        onChange={handleChange}
-                        required
-                    />
-                    <label htmlFor="date">Date</label>
-                    <input
-                        type="datetime-local"
-                        id="date"
-                        name="date"
-                        value={formState.date}
-                        onChange={handleChange}
-                        required
-                    />
+
+const handleCancel = () => navigate('/user/reunions')
+
+return (
+    <div className="feed">
+        <form onSubmit={handleCreate}>
+            <fieldset>
+                <legend>Nouvelle réunion</legend>
+                <label htmlFor="motif">Motif</label>
+                <input
+                    type="text"
+                    id="motif"
+                    name="motif"
+                    value={formState.motif}
+                    onChange={handleChange}
+                    required
+                />
+                <label htmlFor="date">Date</label>
+                <input
+                    type="datetime-local"
+                    id="date"
+                    name="date"
+                    value={formState.date}
+                    onChange={handleChange}
+                    required
+                />
+                <div className="btn-group">
                     <button type="submit">Créer</button>
-                    <button type="Cancel">Annuler</button>
-                </fieldset>
-            </form>
-        </div>
-    );
-};
+                    <button type="button" onClick={handleCancel}>Annuler</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+)
+}
+
 
 export default CreateReunionForm;

@@ -8,12 +8,12 @@ import {useDataFeedContext} from "../../contexts/DataFeedContext.jsx";
 
 const Login = () => {
 
-    const {dataUser,setDataUser} = useUserContext();
+    const {dataUser, setDataUser} = useUserContext();
     const {dataFeed, setDataFeed} = useDataFeedContext()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
-    console.log({dataFeed,dataUser})
+    console.log({dataFeed, dataUser})
 
     const URL_CONNEXION = '/api/connexion'
     const HTTP_DATA = {
@@ -48,35 +48,37 @@ const Login = () => {
     return (
         <>
             <div className="main">
-                <h2 className="login-h2">Veuillez vous identifier</h2>
-                <form className="form-login" onSubmit={handleSubmit}>
-                    <div className="form-login-field">
-                        <label htmlFor="email">Email utilisateur:</label>
-                        <input
-                            className="login-input"
-                            type="text"
-                            id="email"
-                            autoComplete="username"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
-                    <div className="form-login-field">
-                        <label htmlFor="password">Mot de passe:</label>
-                        <input
-                            className="login-input"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)
-                            }
-                        />
-                    </div>
-                    <div className="form-login-field">
-                        <button className="login-button" type="submit">Login</button>
-                    </div>
-                </form>
+                <div className="login-content">
+                    <h2 className="login-h2">Veuillez vous identifier</h2>
+                    <form className="form-login" onSubmit={handleSubmit}>
+                        <div className="form-login-field">
+                            <label htmlFor="email">Email utilisateur:</label>
+                            <input
+                                className="login-input"
+                                type="text"
+                                id="email"
+                                autoComplete="username"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
+                        <div className="form-login-field">
+                            <label htmlFor="password">Mot de passe:</label>
+                            <input
+                                className="login-input"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)
+                                }
+                            />
+                        </div>
+                        <div className="form-login-field">
+                            <button className="login-button" type="submit">Login</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </>
 

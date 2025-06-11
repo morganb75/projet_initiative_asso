@@ -1,18 +1,56 @@
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  left: 100px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-content {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 6px;
-    min-width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 2px solid rgba(229, 25, 104, 1);
+  box-shadow: 0.2rem 0.2rem 10px rgba(113, 200, 30, 1);
+  border-radius: 8px;
+  width: 100vh;
+  text-align: center;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.6)), url("../../assets/fond-mediacard.jpg");
+  background-size: cover;
+  background-position: center;
+
+  form {
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    input,select {
+      height: 2rem;
+      width: 12rem;
+      gap:0.2rem;
+      border: 1px solid rgba(113, 200, 30, 1);
+      border-radius: 0.5rem;
+      padding-left: 0.3rem;
+    }
+
+    button {
+      width: 12rem;
+      height: 2.5rem;
+      border: 2px solid rgba(229, 25, 104, 1);
+      border-radius: 0.5rem;
+      box-shadow: 0.2rem 0.2rem 10px rgba(113, 200, 30, 1);
+      transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    button:hover {
+      box-shadow: 0.3rem 0.3rem 20px rgba(229, 25, 104, 1);
+      transform: translateY(-5px);
+    }
+  }
 }

@@ -1,95 +1,120 @@
-.first-login-h2 {
-  grid-column: 3/11;
-  grid-row-start: 1;
+.main {
+
+  .first-login-h2 {
+    color: rgba(229, 25, 104, 1);
+  }
+
+  .first-login-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+    //background-color:darkgrey;
+    border-radius: 2rem;
+
+    .form-first-login {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+
+      .form {
+        display: flex;
+        gap: 2rem;
+        fieldset{
+          legend{
+            background-color: rgba(0, 0, 0, 0.5);
+            color:white;
+          }
+          background-color: rgba(0, 0, 0, 0.7);
+          color:white;
+        }
+        .item{
+          label{
+            color: white;
+          }
+          color: black;
+        }
+      }
+
+      .firstlogin-button {
+        width: 12rem;
+        height: 2.5rem;
+        border: 2px solid rgba(229, 25, 104, 1);
+        border-radius: 0.5rem;
+        box-shadow: 0.2rem 0.2rem 10px rgba(113, 200, 30, 1);
+        transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+      }
+
+      .firstlogin-button:hover {
+        box-shadow: 0.3rem 0.3rem 20px rgba(229, 25, 104, 1);
+        transform: translateY(-5px);
+      }
+
+      fieldset {
+        border: 2px solid rgba(229, 25, 104, 1);
+        box-shadow: 0.2rem 0.2rem 10px rgba(113, 200, 30, 1);
+        padding: 14px;
+        border-radius: 8px;
+
+        legend {
+          font-size: 1.0rem;
+          font-weight: bold;
+        }
+      }
+
+      input {
+        height: 2rem;
+        width: 12rem;
+        //border: 1px solid rgba(229, 25, 104, 1);
+        border: 1px solid rgba(113, 200, 30, 1);
+        border-radius: 0.5rem;
+        padding-left: 0.3rem;
+      }
+
+      .item {
+        display: flex;
+        flex-direction: column;
+
+        .activite-selector, .zone-deplacement-multiselector {
+          border: 1px solid rgba(113, 200, 30, 1);
+          border-radius: 0.5rem;
+        }
+
+        textarea {
+          border: 1px solid rgba(113, 200, 30, 1);
+          border-radius: 0.5rem;
+          padding-left: 0.3rem;
+        }
+      }
+
+      .user-infos {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      .user-adresse {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      .porteur-infos {
+        display: flex;
+        flex-direction: row;
+        gap: 3rem;
+      }
+
+      .parrain-infos-activite {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+    }
+  }
+
 }
 
-.form-first-login {
-  grid-column: 2/12;
-  grid-row: 3/11;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
 
-  .form {
-    display: flex;
-    gap: 2rem;
-  }
-
-  .firstlogin-button {
-    grid-column: 5/span 3;
-    grid-row: 12/13;
-    width: 12rem;
-    height: 2.5rem;
-    border: 2px solid rgba(229, 25, 104, 1);
-    border-radius: 0.5rem;
-    box-shadow: 0.2rem 0.2rem 10px rgba(113, 200, 30, 1);
-    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
-  }
-
-  .firstlogin-button:hover {
-    box-shadow: 0.3rem 0.3rem 20px rgba(229, 25, 104, 1);
-    transform: translateY(-5px);
-  }
-
-  fieldset {
-    border: 2px solid rgba(229, 25, 104, 1);
-    box-shadow: 0.2rem 0.2rem 10px rgba(113, 200, 30, 1);
-    padding: 14px;
-    border-radius: 8px;
-
-    legend {
-      font-size: 1.0rem;
-      font-weight: bold;
-    }
-  }
-
-  input {
-    height: 2rem;
-    width: 12rem;
-    //border: 1px solid rgba(229, 25, 104, 1);
-    border: 1px solid rgba(113, 200, 30, 1);
-    border-radius: 0.5rem;
-    padding-left: 0.3rem;
-  }
-
-  .item {
-    display: flex;
-    flex-direction: column;
-
-    .activite-selector, .zone-deplacement-multiselector {
-      border: 1px solid rgba(113, 200, 30, 1);
-      border-radius: 0.5rem;
-    }
-
-    textarea {
-      border: 1px solid rgba(113, 200, 30, 1);
-      border-radius: 0.5rem;
-      padding-left: 0.3rem;
-    }
-  }
-
-  .user-infos {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
-
-  .user-adresse {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
-
-  .porteur-infos {
-    display: flex;
-    flex-direction: row;
-    gap: 3rem;
-  }
-
-  .parrain-infos-activite {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
-}

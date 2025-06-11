@@ -5,11 +5,15 @@ import {useUserContext} from "../../contexts/UserContext.jsx";
 import FeedAdmin from "../feed/FeedAdmin.jsx";
 import {useNavigate} from "react-router-dom";
 import fetchEndPoint from "../../utils/fetchEndPoint.js";
+import RechercheProfils from "../rechercheProfils/RechercheProfils.jsx";
 
 const AdminPage = () => {
     const navigate = useNavigate()
     const {dataUser} = useUserContext()
     const [adminFeed, setAdminFeed] = useState(null)
+    const [showSearchModal, setShowSearchModal] = useState(false)
+    const [searchResults, setSearchResults] = useState([])
+
     const HTTP_GET_DATA = {
         method: 'GET',
         headers: {
@@ -26,6 +30,7 @@ const AdminPage = () => {
         navigate("/admin/preinscrire")
     }
     const handleMessagerie = () => {
+
         navigate("/user/messagerie")
         // window.open('/user/messagerie','_blank')
     }
@@ -40,11 +45,13 @@ const AdminPage = () => {
         setAdminFeed(data)
     }
 
-    const handleSearch = () => navigate("/admin/recherche")
+    // const handleSearch = () => navigate("/admin/recherche")
+    const handleSearch = () => setShowSearchModal(true)
+
 
     return (
         <>
-            <div className="main" id="main-admin">
+            <div className="main">
                 <SideBar
                     handleRetourHome={handleRetourHome}
                     handleMessagerie={handleMessagerie}
@@ -53,13 +60,17 @@ const AdminPage = () => {
                     handleListeParrains={handleListeParrains}
                     handleSearch={handleSearch}
                 />
-                <div className="admin-feed">
-                    <FeedAdmin
-                        adminFeed={adminFeed}/>
-                </div>
+                <FeedAdmin
+                    adminFeed={adminFeed}
+                />
+                <RechercheProfils
+                    showSearchModal={showSearchModal}
+                    setShowSearchModal={setShowSearchModal}
+                    setAdminfeed={setAdminFeed}
+                />
             </div>
         </>
-    );
-};
+    )
+}
 
 export default AdminPage;

@@ -1,0 +1,13 @@
+INSERT INTO public.user_roles (user_id, roles) VALUES (1, 'ADMIN');
+INSERT INTO public.user_roles (user_id, roles) VALUES (2, 'PORTEUR');
+INSERT INTO public.user_roles (user_id, roles) VALUES (3, 'PORTEUR');
+INSERT INTO public.user_roles (user_id, roles) VALUES (4, 'PORTEUR');
+INSERT INTO public.user_roles (user_id, roles) VALUES (5, 'PORTEUR');
+INSERT INTO public.user_roles (user_id, roles) VALUES (6, 'PORTEUR');
+INSERT INTO public.user_roles (user_id, roles) VALUES (7, 'PORTEUR');
+INSERT INTO public.user_roles (user_id, roles) VALUES (8, 'PORTEUR');
+INSERT INTO public.user_roles (user_id, roles) VALUES (9, 'PARRAIN');
+INSERT INTO public.user_roles (user_id, roles) VALUES (10, 'PARRAIN');
+INSERT INTO public.user_roles (user_id, roles) VALUES (11, 'PARRAIN');
+INSERT INTO public.user_roles (user_id, roles) VALUES (12, 'PARRAIN');
+INSERT INTO public.user_roles (user_id, roles) VALUES (13, 'PARRAIN');

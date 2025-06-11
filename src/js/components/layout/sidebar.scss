@@ -1,52 +1,65 @@
-.sidebar {
-  //grid-column: 1/3;
-  //grid-row: 1/13;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-right: 3px solid rgba(229, 25, 104, 1);
-  margin-top: 15px;
-  gap: 15px;
+.main {
 
-  button {
-    width: 90%;
-    height: 3rem;
-    border-radius: 15px;
-    border: 1px solid rgba(229, 25, 104, 1);
-    box-shadow: 6px 6px 10px darkgrey;
-  }
-
-  button:hover {
-    transform: scale(1.05);
-  }
-  .submenu {
+  .sidebar {
+    position: fixed; // la sidebar est fixe à l'écran
+    top: 13vh; // en dessous du header (hauteur header = 13vh)
+    bottom: 10vh; // au-dessus du footer (hauteur footer = 10vh)
+    left: 0;
+    width: 250px; // largeur fixe
+    background-color: white;
+    border-right: 3px solid rgba(229, 25, 104, 1);
     display: flex;
     flex-direction: column;
-    margin-left: 15px;
-    margin-top: 5px;
-    gap: 6px;
-  }
+    align-items: center;
+    padding: 3rem 0;
+    gap: 15px;
+    z-index: 100; // en dessous du header/footer si besoin
 
-  .submenu-item {
-    cursor: pointer;
-    padding: 6px 10px;
-    border-left: 2px solid #ccc;
-    color: #444;
-    transition: background-color 0.2s;
-  }
+    button {
+      width: 90%;
+      height: 3rem;
+      font-weight: bolder;
+      border-radius: 15px;
+      border: 1px solid rgba(229, 25, 104, 1);
+      box-shadow: 6px 6px 10px darkgrey;
+      background-color: white;
+      cursor: pointer;
+      transition: transform 0.2s ease;
 
-  .submenu-item:hover {
-    background-color: #eaeaea;
-  }
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
 
-  .chevron {
-    display: inline-block;
-    transition: transform 0.3s ease;
-    margin-left: 10px;
-  }
+    .submenu {
+      display: flex;
+      flex-direction: column;
+      margin-left: 15px;
+      margin-top: 5px;
+      gap: 6px;
+      width: 100%;
+    }
 
-  .chevron.rotated {
-    transform: rotate(180deg);
+    .submenu-item {
+      cursor: pointer;
+      padding: 6px 10px;
+      border-left: 2px solid #ccc;
+      color: #444;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: #eaeaea;
+      }
+    }
+
+    .chevron {
+      display: inline-block;
+      transition: transform 0.3s ease;
+      margin-left: 10px;
+    }
+
+    .chevron.rotated {
+      transform: rotate(180deg);
+    }
   }
 }

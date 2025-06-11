@@ -1,15 +1,12 @@
 import React, {useState} from 'react';
 import "./preinscription.scss"
-import RolesMultiSelector from "../selector/RolesMultiSelector.jsx";
 import UserForm from "../userpage/UserForm.jsx";
 import {useNavigate} from "react-router-dom";
-//TODO Resserez ce components sur les affaires de roles etc etc......
-//TODO Mise en place d'un pwd généré aléatoirement et transmis par mail auto géré côté server, impossible à faire pour l'instant dû à config Maif.....
+
 const PreInscription = () => {
     const initialState = {
         type: null,
         roles: [],
-        // civilite: "",
         nom: null,
         prenom: null,
         email: null,
@@ -52,21 +49,25 @@ const PreInscription = () => {
             .catch(error => console.error('Error', error))
     }
 
-    function handleCancel(event){
+    function handleCancel(event) {
         event.preventDefault()
         navigate('/admin')
     }
 
     return (
         <div className="main">
-            <h1 className="preinscription-h1">Pré-inscrire un utilisateur</h1>
+            <div className="preinscription-content">
+            <h1 className="color-text">Pré-inscrire un utilisateur</h1>
             <form className="form-preinscription" onSubmit={handleSubmit}>
                 <div className="form">
                     <UserForm formState={formState} setFormState={setFormState}/>
                 </div>
-                <button className="preinscription-button" onClick={handleSubmit} type="submit">Enregistrer</button>
-                <button className="preinscription-button" onClick={handleCancel} type="submit">Annuler</button>
+                <div className="form-preinscription-buttons">
+                    <button className="preinscription-button" onClick={handleSubmit} type="submit">Enregistrer</button>
+                    <button className="preinscription-button" onClick={handleCancel} type="submit">Annuler</button>
+                </div>
             </form>
+            </div>
         </div>
     )
 }

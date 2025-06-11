@@ -116,17 +116,19 @@ const FirstLoginPage = () => {
         <>
             <div className="main">
                 <h2 className="first-login-h2">Bienvenue, veuillez vérifier et compléter votre profil</h2>
-                <form className="form-first-login" onSubmit={handleSubmit}>
-                    <div className="form">
-                        {
-                            dataUser.roles.includes('PORTEUR') ?
-                                <PorteurForm formState={formState} setFormState={setFormState}/>
-                                :
-                                <ParrainForm formState={formState} setFormState={setFormState}/>
-                        }
-                    </div>
-                    <button className="firstlogin-button" type="submit">Valider</button>
-                </form>
+                <div className="first-login-content">
+                    <form className="form-first-login" onSubmit={handleSubmit}>
+                        <div className="form">
+                            {
+                                dataUser.roles.includes('PORTEUR') ?
+                                    <PorteurForm formState={formState} setFormState={setFormState}/>
+                                    :
+                                    <ParrainForm formState={formState} setFormState={setFormState}/>
+                            }
+                        </div>
+                        <button className="firstlogin-button" type="submit">Valider</button>
+                    </form>
+                </div>
             </div>
         </>
     )

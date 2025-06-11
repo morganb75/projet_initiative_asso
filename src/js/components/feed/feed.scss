@@ -1,119 +1,128 @@
-.feed {
-  grid-column: 3/13;
-  grid-row: 2/13;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
-  gap: 50px;
-
-  .mediacard {
-    //background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.6)), url("../../assets/fond-mediacard.jpg");
-    background-size:contain;
-    background-position:center;
-    width: 300px;
-    height: 300px;
-    //background-color: #c8c6c6;
-    background-color: #ffffff;
-    border: 2px solid rgba(229, 25, 104, 1);
-    border-radius: 15px;
-    box-shadow: 0 4px 8px black;
-
-    .mediacard-header {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      height: 30%;
-      padding-top: 10px;
-
-      img {
-        border-radius: 50%;
-        object-fit: cover;
-      }
-      .mediacard-header-img-avatar{
-        width: 60px;
-        height: 60px;
-      }
-      .mediacard-header-img-like{
-        width: 30px;
-        height: 30px;
-      }
-    }
-
-    .mediacard-body {
-      height: 80%;
+.main {
+  .feed {
+    .mediacard {
+      background-color: #ffffff;
+      border: 2px solid rgba(229, 25, 104, 1);
+      border-radius: 15px;
+      box-shadow: 0 4px 8px black;
+      width: 250px;
+      height: 250px;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      .mediacard-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 30%;
+        padding: 10px;
+
+        .mediacard-header-img-avatar {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+
+      .mediacard-body {
+        flex: 1;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        text-align: center;
+
+        .info-block {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          line-height: 1.1;
+
+          h3 {
+            margin: 0;
+          }
+        }
+
+        h2, h3 {
+          margin: 4px 0;
+          font-size: 16px;
+          word-break: break-word;
+        }
+
+        h2 {
+          font-weight: bold;
+        }
+
+        h3 {
+          font-weight: normal;
+          color: #666;
+        }
+      }
+    }
+
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
       align-items: center;
     }
-  }
 
-  .mediacard:hover {
-    transform: scale(1.05);
-  }
-
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .modal {
-    display: flex;
-    flex-direction: column;
-    //background: #eae5e5;
-    padding: 20px;
-    border: 2px solid rgba(229, 25, 104, 1);
-    box-shadow: 0.2rem 0.2rem 10px rgba(113, 200, 30, 1);
-    border-radius: 8px;
-    width: 100vh;
-    text-align: center;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.6)), url("../../assets/fond-mediacard.jpg");
-    background-size:cover;
-    background-position:center;
-  }
-
-  .modal-actions {
-    display: flex;
-    justify-content: center;
-    gap:10px;
-
-    //button {
-    //  width: 60px;
-    //  height: 30px;
-    //  background: rgba(229, 25, 104, 1);
-    //  color: white;
-    //  padding: 10px;
-    //  border: 1px solid rgba(113, 200, 30, 1);
-    //  border-radius: 5px;
-    //  cursor: pointer;
-    //  margin-top: 10px;
-    //}
-    button {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      font-family: inherit;
-      background-color: #f0f0f0;
-      border: 1px solid #ccc;
+    .modal {
+      display: flex;
+      flex-direction: column;
+      //background: #eae5e5;
+      padding: 20px;
+      border: 2px solid rgba(229, 25, 104, 1);
+      box-shadow: 0.2rem 0.2rem 10px rgba(113, 200, 30, 1);
       border-radius: 8px;
-      cursor: pointer;
+      width: 100vh;
       text-align: center;
-      display: inline-block;
-      line-height: 1.2;
-      white-space: nowrap;
-      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.6)), url("../../assets/fond-mediacard.jpg");
+      background-size: cover;
+      background-position: center;
     }
 
-    button:hover {
-      background-color: #e0e0e0;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
+    .modal-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
 
+      button {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        font-family: inherit;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+        line-height: 1.2;
+        white-space: nowrap;
+        transition: background-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      button:hover {
+        background-color: #e0e0e0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+    }
   }
 }
+

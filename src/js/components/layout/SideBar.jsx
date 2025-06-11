@@ -1,9 +1,7 @@
 import './sidebar.scss'
-import React, {useEffect, useState} from 'react';
-import {useUserContext} from "../../contexts/UserContext.jsx";
-import {useNavigate} from "react-router-dom";
-import Notification from "../notification/Notification.jsx";
-import fetchEndPoint from "../../utils/fetchEndPoint.js";
+import React, { useState } from 'react';
+import { useUserContext } from "../../contexts/UserContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 const SideBar = ({
                      handleRetourHome,
@@ -15,14 +13,19 @@ const SideBar = ({
                  }) => {
     const navigate = useNavigate()
     const [showMeetingsMenu, setShowMeetingsMenu] = useState(false)
-    const {dataUser} = useUserContext()
+    const { dataUser } = useUserContext()
+
+    if (!dataUser || !dataUser.roles) {
+        return null; // ou un loader si tu préfères
+    }
+
     const handleDevEnCours = () => alert('DEVELOPPEMENT EN COURS .... PATIENCE.')
 
     return (
         <div className="sidebar">
             {dataUser.roles.includes('ADMIN') && (
                 <>
-                    <button onClick={handleRetourHome}>Home</button>
+                    <button onClick={handleRetourHome}>Accueil</button>
                     <button onClick={() => setShowMeetingsMenu(!showMeetingsMenu)}>
                         <span>Gestion utilisateurs</span>
                         <span className={`chevron ${showMeetingsMenu ? 'rotated' : ''}`}>&#9662;</span>
@@ -42,16 +45,18 @@ const SideBar = ({
 
             {(dataUser.roles.includes('PARRAIN') || dataUser.roles.includes('PORTEUR')) && (
                 <>
-                    <button onClick={handleRetourHome}>Home</button>
-                    <button onClick={() => navigate("modify")}>Modifier mon profil</button>
-                    <button onClick={() => navigate("feed")}>Mes Contacts</button>
+                    <button onClick={() => navigate('/user')}>Accueil</button>
+                    <button onClick={() => navigate("/user/modify")}>Modifier mon profil</button>
+                    <button onClick={() => navigate("/user/feed")}>Mes Contacts</button>
                     <button onClick={() => setShowMeetingsMenu(!showMeetingsMenu)}>
                         <span>Mes Rendez-Vous</span>
                         <span className={`chevron ${showMeetingsMenu ? 'rotated' : ''}`}>&#9662;</span>
                     </button>
                     {showMeetingsMenu && (
                         <div className="submenu">
+                            {dataUser.roles.includes("PORTEUR") &&
                             <div className="submenu-item" onClick={() => navigate("reunion/create")}>Créer une réunion</div>
+                            }
                             <div className="submenu-item" onClick={() => navigate("reunions")}>Voir les réunions</div>
                         </div>
                     )}
@@ -62,4 +67,4 @@ const SideBar = ({
     );
 }
 
-export default SideBar
+export default SideBar;

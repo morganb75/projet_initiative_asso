@@ -17,6 +17,7 @@ const Messagerie = () => {
     const [currentContact, setCurrentContact] = useState(null)
     const [stompClient, setStompClient] = useState(null)
     const [onLineUsers, setOnLineUsers] = useState([])
+    const URL_ADMIN_USERS = "/api/admin/users"
     const URL_MESSAGES = useMemo(
         () => `/api/messages/conversations?userId=${dataUser.id}`,
         [dataUser.id]
@@ -33,6 +34,19 @@ const Messagerie = () => {
         [authToken]
     )
 
+    const handleContactsAdmin = async () => {
+        const data = await fetchEndPoint(URL_ADMIN_USERS, HttpData)
+        console.log({data})
+        const liste = data
+            .filter(user => user.id !== dataUser.id)
+            .map(user => ({
+                id: user.id,
+                name: user.nom,
+                firstName: user.prenom
+            }))
+        setContacts(liste)
+    }
+
     useEffect(() => {
         const getConversations = async () => {
             const results = await fetchEndPoint(URL_MESSAGES, HttpData)
@@ -44,16 +58,16 @@ const Messagerie = () => {
     }, [URL_MESSAGES, HttpData, currentContact]);
 
     useEffect(() => {
-        console.log({dataFeed})
-
-        const tabContacts = dataFeed?.map((user) => ({
-            id: user.id,
-            firstName: user.prenom,
-            name: user.nom
-        }))
-
-        setContacts(tabContacts);
-
+        if (dataUser.roles.includes('ADMIN')) {
+            handleContactsAdmin()
+        } else {
+            const tabContacts = dataFeed?.map((user) => ({
+                id: user.id,
+                firstName: user.prenom,
+                name: user.nom
+            }))
+            setContacts(tabContacts);
+        }
     }, [conversationsFromServer])
 
     //Setup Stomp
@@ -91,7 +105,7 @@ const Messagerie = () => {
     }, [authToken])
 
     return (
-        <div className="main">
+        <div className="main" id="main-messagerie">
             <MsgSideBar
                 loading={loading}
                 contacts={contacts}
