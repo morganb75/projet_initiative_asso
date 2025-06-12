@@ -27,9 +27,9 @@ const UserPage = () => {
     useEffect(() => {
         const fetchFeed = async () => {
             if (dataUser?.parrainId == null) {
-                if (dataUser.roles.includes('PORTEUR')) {
+                if (dataUser?.roles.includes('PORTEUR')) {
                     URL_FEED = '/api/user/parrains'
-                } else if (dataUser.roles.includes('PARRAIN')) {
+                } else if (dataUser?.roles.includes('PARRAIN')) {
                     URL_FEED = `/api/user/feed/parrain/${dataUser.id}`
                 }
             } else if (dataUser?.parrainId) {
@@ -53,7 +53,7 @@ const UserPage = () => {
 
     const handleParrainAffect = () => {
         if (window.confirm(`Vous êtes sur le point de choisir ${currentUser.prenom} ${currentUser.nom} en tant que Parrain, êtes vous sûr?`)) {
-            const URL_PATCH_PARRAIN = `/api/user/${dataUser.id}/${currentUser.id}`
+            const URL_PATCH_PARRAIN = `/api/user/${dataUser?.id}/${currentUser.id}`
             const HTTP_PATCH_PARRAIN = {
                 method: 'PATCH',
                 headers: {
@@ -82,7 +82,7 @@ const UserPage = () => {
     }
 
     useEffect(() => {
-        if (!dataUser.parrainId) {
+        if (!dataUser?.parrainId) {
             navigate('/user/feed')
         }
     }, []);
@@ -93,7 +93,7 @@ const UserPage = () => {
                 {dataFeed ?
                     (
                         <>
-                            {(dataUser.parrainId || dataUser.roles.includes('PARRAIN')) &&
+                            {(dataUser?.parrainId || dataUser?.roles.includes('PARRAIN')) &&
                                 <SideBar
                                     handleMessagerie={handleMessagerie}
                                 />}
@@ -101,7 +101,7 @@ const UserPage = () => {
                             <Routes>
                                 <Route path="" element=
                                     {
-                                    <h1 className="content-accueil">{`Bienvenue dans votre espace ${dataUser.prenom}`}</h1>
+                                    <h1 className="content-accueil">{`Bienvenue dans votre espace ${dataUser?.prenom}`}</h1>
                                 }
                                 />
                                 <Route path="modify" element=
@@ -113,9 +113,9 @@ const UserPage = () => {
                                 <Route path="feed" element=
                                     {
                                         <div className="feed-user-content">
-                                            {(dataUser.roles.includes('PORTEUR') && !dataUser.parrainId) &&
+                                            {(dataUser?.roles.includes('PORTEUR') && !dataUser?.parrainId) &&
                                                 <div className="feed-user-text-content">
-                                                    <h2>{`Bienvenue dans votre espace ${dataUser.prenom}`} < /h2>
+                                                    <h2>{`Bienvenue dans votre espace ${dataUser?.prenom}`} < /h2>
                                                     <h2>veuillez choisir le parrain qui vous accompagnera dans votre projet</h2>
                                                 </div>
                                             }

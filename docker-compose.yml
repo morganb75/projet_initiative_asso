@@ -44,6 +44,7 @@ services:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - db
+
 networks:
   db:
   traefik:

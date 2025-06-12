@@ -30,6 +30,7 @@ const Login = () => {
             const data = await fetchEndPoint(URL_CONNEXION, HTTP_DATA)
             const token = data.bearer
             setDataUser(decodeToken(token))
+            localStorage.setItem('authToken', token)
             sessionStorage.setItem('authToken', token)
             const roles = (decodeToken(token)).roles
             const firstLogin = (decodeToken(token).firstLogin)

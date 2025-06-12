@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {createContext} from "react";
+import decodeToken from "../utils/decodeToken.js";
 
 //1. Creation du context
 
@@ -13,7 +14,7 @@ export const UserContext = createContext({
 //2. Installation du context (Provider)
 
 export default function UserContextProvider({children}) {
-    const [dataUser, setDataUser] = useState([])
+    const [dataUser, setDataUser] = useState(null)
 
     // // Met à jour le state ET stocke dans sessionStorage
     // const setUser = (user) => {
@@ -22,12 +23,12 @@ export default function UserContextProvider({children}) {
     // };
     //
     // // Initialise depuis sessionStorage
-    // useEffect(() => {
-    //     const storedUser = sessionStorage.getItem("dataUser");
-    //     if (storedUser) {
-    //         setDataUser(JSON.parse(storedUser));
-    //     }
-    // }, []);
+    useEffect(() => {
+        const token = sessionStorage.getItem("authToken");
+        if (token) {
+            setDataUser(decodeToken(token));
+        }
+    }, []);
 
     const valueUserContext = {
         dataUser,

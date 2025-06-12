@@ -51,7 +51,7 @@ const Header = () => {
             <img src={logottm} alt="logo"/>
         </div>
         <div className="user">
-            {(dataUser.length !== 0) && (<>
+            {dataUser && (<>
                 {/*<Notification notification={notification}/>*/}
                 <span>{dataUser.prenom} </span>
                 <span>{dataUser.nom}</span>

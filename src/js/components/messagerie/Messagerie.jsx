@@ -18,10 +18,14 @@ const Messagerie = () => {
     const [stompClient, setStompClient] = useState(null)
     const [onLineUsers, setOnLineUsers] = useState([])
     const URL_ADMIN_USERS = "/api/admin/users"
-    const URL_MESSAGES = useMemo(
-        () => `/api/messages/conversations?userId=${dataUser.id}`,
-        [dataUser.id]
-    )
+    // const URL_MESSAGES = useMemo(
+    //     () => `/api/messages/conversations?userId=${dataUser.id}`,
+    //     [dataUser.id]
+    // )
+    const URL_MESSAGES = useMemo(() => {
+        if (!dataUser) return null;
+        return `/api/messages/conversations?userId=${dataUser.id}`;
+    }, [dataUser]);
 
     const HttpData = useMemo(
         () => ({
@@ -105,23 +109,29 @@ const Messagerie = () => {
     }, [authToken])
 
     return (
-        <div className="main" id="main-messagerie">
-            <MsgSideBar
-                loading={loading}
-                contacts={contacts}
-                currentConversationContact={currentContact}
-                setCurrentConversationContact={setCurrentContact}
-                onLineUsers={onLineUsers}
-            />
-            {currentContact && (
-                <ChatWindow
-                    myDataUser={dataUser}
-                    contact={currentContact}
-                    messages={conversationsFromServer[currentContact.id] || []}
-                    stompClient={stompClient}
-                />
+        <>
+            {!dataUser ? (
+                <div className="loader">Chargement...</div>
+            ) : (
+                <div className="main" id="main-messagerie">
+                    <MsgSideBar
+                        loading={loading}
+                        contacts={contacts}
+                        currentConversationContact={currentContact}
+                        setCurrentConversationContact={setCurrentContact}
+                        onLineUsers={onLineUsers}
+                    />
+                    {currentContact && (
+                        <ChatWindow
+                            myDataUser={dataUser}
+                            contact={currentContact}
+                            messages={conversationsFromServer[currentContact.id] || []}
+                            stompClient={stompClient}
+                        />
+                    )}
+                </div>
             )}
-        </div>
+        </>
     )
 }
 

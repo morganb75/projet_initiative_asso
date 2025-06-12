@@ -23,7 +23,7 @@ const Main = () => {
         <Router>
             <Routes>
                 <Route element={<Layout/>}>
-                    <Route path="" element={<LandingPage/>}/>
+                    <Route path="/" element={<LandingPage/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/firstlogin" element={<FirstLoginPage/>}/>
                     <Route path="/user/*" element={<UserPage/>}/>
