@@ -4,7 +4,7 @@ spring:
 
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/db_initiative_asso
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:db_initiative_asso}
     username: postgres
     password: postgres
 
@@ -24,9 +24,8 @@ spring:
       name: user
       password: password
 
-# généré sur encryption key generator de RandomGenerate.io
 jwt:
-  secret: "a786d7b256d30a6cd6cd560123197e2cc18bf09218ef78423c4aab9a049a1573"
+  secret: "jW91clNlY3JldEtleUhhc2hCYXNlNjRTbG9uZ1BhZGRpbmc="
   expiration:  3600000 #Durée en millisecondes
 
 server:
