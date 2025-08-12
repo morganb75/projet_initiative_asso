@@ -31,6 +31,8 @@ jobs:
             else
               cd projet_initiative_asso
               git pull origin main
+              docker compose build --no-cache frontend
+              docker compose up -d
             fi
             ls -ltr
             docker compose pull
