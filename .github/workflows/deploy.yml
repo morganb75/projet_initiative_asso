@@ -27,12 +27,11 @@ jobs:
             cd /var/home/mbleunven/fil_rouge/
             if [ ! -d "projet_initiative_asso/.git" ]; then
               git clone https://github.com/morganb75/projet_initiative_asso.git projet_initiative_asso
+              cd projet_initiative_asso
             else
               cd projet_initiative_asso
               git pull origin main
             fi
-            ls -ltr
-            cd projet_initiative_asso
             ls -ltr
             docker compose pull
             docker compose up -d --build
