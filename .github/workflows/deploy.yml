@@ -25,8 +25,13 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no mbleunven@ssh.shiipou.fr << 'EOF'
             cd /var/home/mbleunven/fil_rouge/
-            ls -la
-            git pull origin main
+            if [ ! -d "projet_initiative_asso/.git" ]; then
+              git clone https://ton-repo-git.git projet_initiative_asso
+            else
+              cd projet_initiative_asso
+              git pull origin main
+            fi
+            cd projet_initiative_asso
             docker compose pull
             docker compose up -d --build
           EOF
