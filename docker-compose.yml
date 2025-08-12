@@ -50,5 +50,8 @@ networks:
   traefik:
     external: true
     name: traefik_default
+  app:
+    driver: bridge
+    
 volumes:
   postgres-data:
