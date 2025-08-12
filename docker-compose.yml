@@ -31,7 +31,8 @@ services:
         DB_USERNAME: postgres
         DB_PASSWORD: postgres
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - db
       - app
@@ -42,6 +43,11 @@ services:
       POSTGRES_DB: db_initiative_asso
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d db_initiative_asso" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
