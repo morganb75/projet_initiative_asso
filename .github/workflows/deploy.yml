@@ -31,7 +31,9 @@ jobs:
               cd projet_initiative_asso
               git pull origin main
             fi
+            ls -ltr
             cd projet_initiative_asso
+            ls -ltr
             docker compose pull
             docker compose up -d --build
           EOF
