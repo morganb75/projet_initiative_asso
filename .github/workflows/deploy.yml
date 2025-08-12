@@ -16,7 +16,7 @@ jobs:
       - name: Setup SSH key
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_SECRET }}
 
       - name: Test SSH connection
         run: ssh -o StrictHostKeyChecking=no user@ton_serveur "echo 'Connexion SSH OK'"
