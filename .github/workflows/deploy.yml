@@ -24,7 +24,8 @@ jobs:
       - name: Deploy to server via SSH
         run: |
           ssh -o StrictHostKeyChecking=no mbleunven@ssh.shiipou.fr << 'EOF'
-            cd /var/home/mbleunven/fil_rouge
+            cd /var/home/mbleunven/fil_rouge/
+            ls -la
             git pull origin main
             docker compose pull
             docker compose up -d --build
