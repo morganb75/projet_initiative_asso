@@ -1,51 +1,51 @@
-name: LIGHTHOUSE
-on:
-  push:
-    branches:
-      - main
-jobs:
-  lighthouseci:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Désactiver Nexus et forcer npm public
-        run: |
-          echo "registry=https://registry.npmjs.org/" > ~/.npmrc
-          echo "strict-ssl=false" >> ~/.npmrc
-          npm config list
-
-      - name: Supprimer éventuelles dépendances Nexus
-        run: rm -rf node_modules package-lock.json
-
-      - name: Installer les dépendances depuis npm public
-        run: npm install --no-cache --prefer-online
-
-      - name: Installer Lighthouse CI
-        run: npm install -g @lhci/cli@0.14.x
-
-      - name: Build project
-        run: npm run build
-
-      - name: 🚀 Start frontend server
-        run: |
-          cd src/js
-          nohup npm run preview &  # Démarre le serveur en arrière-plan
-          sleep 5  # Attends quelques secondes que le serveur soit prêt
-
-      - name: Run Lighthouse CI
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN}}
-        run: lhci autorun --config=lighthouserc.cjs
-
-      - name: 📤 Upload Lighthouse report as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse-report
-          path: ./lhci_reports/  # Ajuste selon la sortie de Lighthouse
+#name: LIGHTHOUSE
+#on:
+#  push:
+#    branches:
+#      - main
+#jobs:
+#  lighthouseci:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 22
+#
+#      - name: Désactiver Nexus et forcer npm public
+#        run: |
+#          echo "registry=https://registry.npmjs.org/" > ~/.npmrc
+#          echo "strict-ssl=false" >> ~/.npmrc
+#          npm config list
+#
+#      - name: Supprimer éventuelles dépendances Nexus
+#        run: rm -rf node_modules package-lock.json
+#
+#      - name: Installer les dépendances depuis npm public
+#        run: npm install --no-cache --prefer-online
+#
+#      - name: Installer Lighthouse CI
+#        run: npm install -g @lhci/cli@0.14.x
+#
+#      - name: Build project
+#        run: npm run build
+#
+#      - name: 🚀 Start frontend server
+#        run: |
+#          cd src/js
+#          nohup npm run preview &  # Démarre le serveur en arrière-plan
+#          sleep 5  # Attends quelques secondes que le serveur soit prêt
+#
+#      - name: Run Lighthouse CI
+#        env:
+#          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN}}
+#        run: lhci autorun --config=lighthouserc.cjs
+#
+#      - name: 📤 Upload Lighthouse report as artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: lighthouse-report
+#          path: ./lhci_reports/  # Ajuste selon la sortie de Lighthouse

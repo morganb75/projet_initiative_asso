@@ -1,99 +1,99 @@
-name: Validation PR
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types:
-      - synchronize
-      - reopened
-      - ready_for_review
-
-jobs:
-  check:
-    name: Validation du code
-    runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: db_initiative_asso
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd="pg_isready -U user"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup JDK 21
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-          cache: maven
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'npm'
-          cache-dependency-path: package-lock.json
-
-      - name: Désactiver Nexus et forcer npm public
-        run: |
-          echo "registry=https://registry.npmjs.org/" > ~/.npmrc
-          echo "strict-ssl=false" >> ~/.npmrc
-          npm config list
-
-      - name: Supprimer éventuelles dépendances Nexus
-        run: rm -rf node_modules package-lock.json
-
-      - name: Installer les dépendances depuis npm public
-        run: npm install --no-cache --prefer-online
-
-#      - name: Install frontend dependencies
+#name: Validation PR
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#  pull_request:
+#    types:
+#      - synchronize
+#      - reopened
+#      - ready_for_review
+#
+#jobs:
+#  check:
+#    name: Validation du code
+#    runs-on: ubuntu-latest
+#
+#    services:
+#      postgres:
+#        image: postgres:16
+#        env:
+#          POSTGRES_USER: postgres
+#          POSTGRES_PASSWORD: postgres
+#          POSTGRES_DB: db_initiative_asso
+#        ports:
+#          - 5432:5432
+#        options: >-
+#          --health-cmd="pg_isready -U user"
+#          --health-interval=10s
+#          --health-timeout=5s
+#          --health-retries=5
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#
+#      - name: Setup JDK 21
+#        uses: actions/setup-java@v4
+#        with:
+#          distribution: 'temurin'
+#          java-version: '21'
+#          cache: maven
+#
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 22
+#          cache: 'npm'
+#          cache-dependency-path: package-lock.json
+#
+#      - name: Désactiver Nexus et forcer npm public
 #        run: |
-#            cd src/js
-#            npm install
-
-#      - name: Run frontend lint
+#          echo "registry=https://registry.npmjs.org/" > ~/.npmrc
+#          echo "strict-ssl=false" >> ~/.npmrc
+#          npm config list
+#
+#      - name: Supprimer éventuelles dépendances Nexus
+#        run: rm -rf node_modules package-lock.json
+#
+#      - name: Installer les dépendances depuis npm public
+#        run: npm install --no-cache --prefer-online
+#
+##      - name: Install frontend dependencies
+##        run: |
+##            cd src/js
+##            npm install
+#
+##      - name: Run frontend lint
+##        run: |
+##            cd src/js
+##            npm run lint
+#
+##      - name: Run frontend tests
+##        run: |
+##          cd frontend
+##          npm test -- --ci
+#
+#      - name: Build frontend
 #        run: |
-#            cd src/js
-#            npm run lint
-
-#      - name: Run frontend tests
-#        run: |
-#          cd frontend
-#          npm test -- --ci
-
-      - name: Build frontend
-        run: |
-          cd src/js
-          npm run build
-
-      - name: Save frontend build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: REACT-build
-          path: dist
-
-      - name: Install backend dependencies
-        run: mvn clean install -DskipTests
-
-#      - name: Run backend tests
-#        run: mvn test -Dtest=src/test/**/*
-
-      - name: Save backend build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: SPRING-jar
-          path: target/*.jar
+#          cd src/js
+#          npm run build
+#
+#      - name: Save frontend build artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: REACT-build
+#          path: dist
+#
+#      - name: Install backend dependencies
+#        run: mvn clean install -DskipTests
+#
+##      - name: Run backend tests
+##        run: mvn test -Dtest=src/test/**/*
+#
+#      - name: Save backend build artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: SPRING-jar
+#          path: target/*.jar

@@ -2,8 +2,9 @@
   display:flex;
 
   .content-accueil{
-    color:rgba(229, 25, 104, 1);
-    background-color: rgb(0,0,0,0.8);
+    //color:rgba(229, 25, 104, 1);
+    color:white;
+    background-color: rgb(0,0,0,0.5);
     border-radius: 1rem;
   }
 
@@ -17,8 +18,9 @@
 
     .feed-user-text-content{
       margin-left: calc(250px + (100vh - 1164px)/2);
-      color:rgba(229, 25, 104, 1);
-      background-color: rgb(0,0,0,0.8);
+      //color:rgba(229, 25, 104, 1);
+      color:white;
+      background-color: rgb(0,0,0,0.5);
       border-radius: 1rem;
     }
   }
