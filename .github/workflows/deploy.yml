@@ -19,7 +19,7 @@ jobs:
           ssh-private-key: ${{ secrets.DEPLOY_SSH_SECRET }}
 
       - name: Test SSH connection
-        run: ssh -o StrictHostKeyChecking=no user@ton_serveur "echo 'Connexion SSH OK'"
+        run: ssh -o StrictHostKeyChecking=no mbleunven@ssh.shiipou.fr "echo 'Connexion SSH OK'"
 
       - name: Deploy to server via SSH
         run: |
