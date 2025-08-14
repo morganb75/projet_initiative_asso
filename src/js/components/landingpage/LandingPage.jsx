@@ -8,6 +8,7 @@ const LandingPage = () => {
         <>
             <div className="main">
                 <div className="content">
+                    <h2 className="color-text">TA MERE EN STRING A NIORT</h2>
                     <h2 className="color-text">Trouve ton match c'est quoi?</h2>
                     <h3>Trouve ton match est L'APPLI qui vous permettra de trouver LA personne pour vous accompagner et vous
                         soutenir, une épaule sur
