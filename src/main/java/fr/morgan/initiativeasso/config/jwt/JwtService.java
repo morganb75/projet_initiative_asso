@@ -80,10 +80,20 @@ public class JwtService {
         return this.getClaim(token, Claims::getSubject);
     }
 
+//    public boolean isTokenExpired(String token) {
+//        Date expirationDate = this.getClaim(token, Claims::getExpiration);
+//        return expirationDate.before(new Date());
+//    }
+
     public boolean isTokenExpired(String token) {
-        Date expirationDate = this.getClaim(token, Claims::getExpiration);
-        return expirationDate.before(new Date());
+        try {
+            Date expirationDate = this.getClaim(token, Claims::getExpiration);
+            return expirationDate.before(new Date());
+        } catch (io.jsonwebtoken.ExpiredJwtException e) {
+            return true; // retourne vrai si le token est déjà expiré
+        }
     }
+
 
     private <T> T getClaim(String token, Function<Claims, T> function) {
         Claims claims = getAllClaims(token);
