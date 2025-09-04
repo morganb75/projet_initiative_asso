@@ -26,7 +26,7 @@ spring:
 
 jwt:
   secret: "jW91clNlY3JldEtleUhhc2hCYXNlNjRTbG9uZ1BhZGRpbmc="
-  expiration:  3600000 #Durée en millisecondes
+  expiration:  900000 #Durée en millisecondes
 
 server:
   servlet:
