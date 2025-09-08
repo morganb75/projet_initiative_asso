@@ -41,9 +41,9 @@ git clone https://github.com/ton-compte/projet-initiative-asso.git
 cd projet-initiative-asso
 ```
 
-### 3. Configuration des bases de données
+### 3. Configuration base de données
 
-1. Créer une base **PostgreSQL** (ex. `db_initiative_asso`).  
+1. Créer une base **PostgreSQL** (ex. `db_initiative_asso`).
 3. Vérifier ou adapter la configuration dans `src/main/resources/application.yml` :
 
 ```yaml
@@ -52,10 +52,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/initiative_asso
     username: votre_user
     password: votre_password
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/initiative_asso_mongo
-```
+  ```
 
 ### 4. Lancement du backend (Spring Boot)
 
