@@ -1,50 +1,81 @@
-# React + TypeScript + Vite
+# 🌐 Projet Initiative Asso
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application web complète destinée à la gestion parrain/porteurs de projet pour le compte de l'association Initative Deux-Sèvres.  
+Le projet repose sur une architecture **Java Spring Boot** (backend) et **React (Vite)** (frontend).  
+Il inclut un système de **messagerie en temps réel** via WebSocket, une **authentification sécurisée avec JWT**, et une gestion des utilisateurs/membres.
 
-Currently, two official plugins are available:
+## Technologies utilisées
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Backend (Java Spring Boot)
+- **Spring Boot 3**
+- **Spring Data JPA** (PostgreSQL)
+- **Spring Security + JWT** (authentification & autorisation)
+- **WebSocket (STOMP)** pour la messagerie en temps réel
+- **Architecture MVC**
 
-## Expanding the ESLint configuration
+### Frontend (React + Vite)
+- **React 18**
+- **React Router** (navigation)
+- **WebSocket client (STOMP.js)** pour la messagerie
+- **Vite** pour le bundling
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## ⚙️ Installation et démarrage
 
-- Configure the top-level `parserOptions` property like this:
+### 1. Prérequis
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Avant de lancer le projet, assurez-vous d’avoir installé sur votre machine :
+
+- **Java 17+**
+- **Maven** (ou wrapper intégré de Spring Boot)
+- **Node.js 18+** et **npm**
+- **PostgreSQL** (base relationnelle)
+
+---
+
+### 2. Récupération du projet
+
+Cloner le dépôt :
+
+```bash
+git clone https://github.com/ton-compte/projet-initiative-asso.git
+cd projet-initiative-asso
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 3. Configuration des bases de données
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Créer une base **PostgreSQL** (ex. `db_initiative_asso`).  
+3. Vérifier ou adapter la configuration dans `src/main/resources/application.yml` :
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```yaml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/initiative_asso
+    username: votre_user
+    password: votre_password
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/initiative_asso_mongo
 ```
+
+### 4. Lancement du backend (Spring Boot)
+
+Depuis la racine du projet :
+
+```bash
+mvn spring-boot:run
+```
+
+### 5. Installation et lancement du frontend (React + Vite)
+
+Depuis le dossier frontend :
+
+```bash
+cd src/js
+npm install
+npm run dev
+```
+
+
+
+
+
