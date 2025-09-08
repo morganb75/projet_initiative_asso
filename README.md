@@ -72,6 +72,8 @@ npm install
 npm run dev
 ```
 
+### 6. Users: 
+On les trouve en base de données suite à la migration flyway
 
 
 
